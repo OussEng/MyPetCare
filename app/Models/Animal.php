@@ -25,7 +25,7 @@ class Animal extends Model
         return $this->belongsTo(Sexe::class);
     }
 
-    public function espese(): BelongsTo
+    public function espece(): BelongsTo
     {
         return $this->belongsTo(Espece::class);
     }

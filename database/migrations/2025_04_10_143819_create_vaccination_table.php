@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nom_vaccine');
-            $table->date('info');
+            $table->text('info');
             $table->foreignId('espece_id')->constrained('espece');
         });
     }

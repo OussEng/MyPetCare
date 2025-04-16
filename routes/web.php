@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
 
     //Vaccination
     Route::get('/vaccinations/{id}', [AnimalController::class, 'list_vaccinations'])->name('vaccinations');
+    Route::post('/vaccinations/{id}', [AnimalController::class, 'ajouter_vaccinations'])->name('vaccinations.add');
+
+    Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');
+
 });
 
 require __DIR__.'/auth.php';

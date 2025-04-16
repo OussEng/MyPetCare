@@ -12,4 +12,5 @@
 <body>
 @yield('content')
 </body>
+@include('layouts._footer')
 </html>

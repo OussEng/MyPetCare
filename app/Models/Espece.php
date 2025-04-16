@@ -19,4 +19,9 @@ class Espece extends Model
 
     }
 
+    public function vaccinations(): HasMany
+    {
+        return $this->hasMany(Vaccination::class);
+    }
+
 }

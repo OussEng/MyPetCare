@@ -68,15 +68,44 @@ class AnimalController extends Controller
 
     public function list_vaccinations($id){
 
+        $chat_vaccinations = Espece::where('libelle', 'chat')->first()->vaccinations;
+        $chien_vaccination = Espece::where('libelle', 'chien')->first()->vaccinations;
+
         $animal = Animal::find($id);
         $vaccinations = $animal->vaccinations;
 
 
         return view('animal.list-vaccinations',[
             'vaccinations' => $vaccinations,
+            'animal' => $animal,
+            'chat_vaccinations' => $chat_vaccinations,
+            'chien_vaccination' => $chien_vaccination
         ]);
 
     }
+
+
+    public function ajouter_vaccinations($id, Request $request){
+
+        $animal = Animal::find($id);
+        $vaccinations = $request->input("vaccinations" , []);
+        $animal->vaccinations()->syncWithoutDetaching($vaccinations);
+        return redirect()->route('vaccinations' , $id);
+    }
+
+    public function supprimer_vaccination($animal_id,$vaccination_id, Request $request){
+
+        $animal = Animal::find($animal_id);
+        $vaccination = Vaccination::find($vaccination_id);
+        $animal->vaccinations()->detach($vaccination);
+        return redirect()->route('vaccinations' , $animal_id);
+    }
+
+
+
+
+
+
 
 
 

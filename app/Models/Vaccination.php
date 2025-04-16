@@ -12,7 +12,7 @@ class Vaccination extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['libelle', 'info'];
+    protected $fillable = ['nom_vaccine', 'info'];
 
 
 
@@ -20,6 +20,11 @@ class Vaccination extends Model
     public function animals(): BelongsToMany
     {
         return $this->belongsToMany(Animal::class);
+    }
+
+    public function espece() : BelongsTo
+    {
+        return $this->belongsTo(Espece::class);
     }
 
 }

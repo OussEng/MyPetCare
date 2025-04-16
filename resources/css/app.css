@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.text-outline {
+    -webkit-text-stroke: 1px #A8E6CF;
+    color: transparent;
+}
