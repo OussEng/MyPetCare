@@ -8,9 +8,15 @@
     @vite('resources/css/app.css')
     <title>My little Pet</title>
 </head>
-@include('layouts._navbar')
+
 <body>
+
+@include('layouts._navbar')
+
 @yield('content')
+
+{{--@include('layouts._footer')--}}
+
 </body>
-@include('layouts._footer')
+
 </html>

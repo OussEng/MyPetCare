@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,9 +26,17 @@ Route::middleware('auth')->group(function () {
     //Vaccination
     Route::get('/vaccinations/{id}', [AnimalController::class, 'list_vaccinations'])->name('vaccinations');
     Route::post('/vaccinations/{id}', [AnimalController::class, 'ajouter_vaccinations'])->name('vaccinations.add');
-
     Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');
 
+
+    //Rendez-Vous
+        //vet list
+    Route::get('/rendez-vous', [RendezVousController::class, 'list_vets'])->name('list.vets');
+        //Vet profile
+    Route::get('/veterinaires/{id}', [RendezVousController::class, 'vet_profile'])->name('vet.profile');
+
 });
+
+
 
 require __DIR__.'/auth.php';
