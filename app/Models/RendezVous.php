@@ -11,7 +11,7 @@ class RendezVous extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['dateHeureRoudezVous', 'motif'];
+    protected $fillable = ['dateHeuredebut', 'motif'];
 
 
 
