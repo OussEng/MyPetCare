@@ -24,4 +24,14 @@ class RendezVous extends Model
     {
         return $this->belongsTo(Etat::class);
     }
+
+    public function animal() :  BelongsTo
+    {
+        return $this->belongsTo(Animal::class);
+    }
+
+    public function veterinaire() :   BelongsTo
+    {
+        return $this->belongsTo(Vet::class);
+    }
 }

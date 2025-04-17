@@ -25,4 +25,10 @@ class Vet extends Model
     {
         return $this->belongsToMany(Langues::class);
     }
+
+    public function rendez_vous(): HasMany
+    {
+        return $this->hasMany(RendezVous::class);
+
+    }
 }

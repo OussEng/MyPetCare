@@ -35,12 +35,9 @@ Route::middleware('auth')->group(function () {
         //Vet profile
     Route::get('/veterinaires/{id}', [RendezVousController::class, 'vet_profile'])->name('vet.profile');
 
-    Route::get('/book', function (){
-        return view('rendez-vous.rendez-vous');
-    });
 
-    Route::get('/rendez', [RendezVousController::class, 'index'])->name('rendez-vous.index');
-    Route::post('/rendez', [RendezVousController::class, 'store'])->name('rendez-vous.store');
+    Route::get('/rendez/{id}', [RendezVousController::class, 'index'])->name('rendez-vous.index');
+    Route::post('/rendez/{id}', [RendezVousController::class, 'store'])->name('rendez-vous.store');
 
 
 });

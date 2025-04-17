@@ -40,6 +40,11 @@ class Animal extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function rendezvous(): HasMany
+    {
+        return $this->hasMany(RendezVous::class);
+    }
+
 
 }
 
