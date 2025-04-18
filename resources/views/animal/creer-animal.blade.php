@@ -4,7 +4,6 @@
 
     <div class="flex justify-center">
         <div class="w-1/2 mt-20">
-
         <form method="POST" action="{{route('animaux.save')}}" class="max-w-sm mx-auto">
             @csrf
             <div class="mb-5">

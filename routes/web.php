@@ -34,11 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/rendez-vous', [RendezVousController::class, 'list_vets'])->name('list.vets');
         //Vet profile
     Route::get('/veterinaires/{id}', [RendezVousController::class, 'vet_profile'])->name('vet.profile');
-
-
+        //prendre rendez-vous
     Route::get('/rendez/{id}', [RendezVousController::class, 'index'])->name('rendez-vous.index');
     Route::post('/rendez/{id}', [RendezVousController::class, 'store'])->name('rendez-vous.store');
 
+
+    //Rendez-vous pris
+    Route::get('mes-rendez-vous', [RendezVousController::class, 'list'])->name('rendez-vous.list');
 
 });
 

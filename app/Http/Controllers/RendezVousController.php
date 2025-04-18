@@ -35,9 +35,11 @@ class RendezVousController extends Controller
 
     public function index(Request $request, $id)
     {
-        $rendez_vouss = RendezVous::all();
+
         $vet = Vet::find($id);
-        $animaux = Animal::where('user_id', '=', Auth::id())->get();
+        $rendez_vouss = RendezVous::where('veterinaire_id' , $id)->get();
+
+        $animaux = Animal::where('user_id', Auth::id())->get();
 
         $selectedDate = $request->input('date');
         $slots = [];
@@ -49,6 +51,8 @@ class RendezVousController extends Controller
                 $day->addMinutes(60);
             }
         }
+
+
 
         foreach ($rendez_vouss as $rendez_vous) {
             if (in_array($rendez_vous->dateHeuredebut, $slots)) {
@@ -86,20 +90,21 @@ class RendezVousController extends Controller
         $rendez_vous->etat_id = 1;
         $rendez_vous->user_id = Auth::id();
 
+
         $rendez_vous->save();
         return redirect('/rendez-vous');
 
+    }
 
 
+    public function list(){
+
+        $rendezvous = RendezVous::where('user_id' , Auth::id())->get();
 
 
-
-
-
-
-
-
-
+        return view('animal.mes-rendez-vous' , [
+            'rendezvous' => $rendezvous
+        ]);
 
     }
 
