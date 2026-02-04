@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RendezVousController extends Controller
+class AppointmentController extends Controller
 {
 
     public function list_vets()

@@ -36,11 +36,29 @@
                                 @csrf
 
                                 <label for="espece" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C'est pour qui ? :</label>
-                                <select id="animal_id" name="animal_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <select id="animal_id" name="animal_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+
+                                    <option disabled selected value="">Sélectionnez votre animal</option>
+                                    @if(empty(!$animaux))
+                                        <option class="bg-orange-500">Vous n'avez pas d'animaux !</option>
+                                    @endif
+
+
+
+
                                     @foreach($animaux as $animal)
                                         <option value="{{ $animal->id }}" >{{$animal->nom}}</option>
                                     @endforeach
                                 </select>
+
+                                @if(empty(!$animaux))
+                                    <div class="flex justify-center">
+                                    <a href="{{route('animaux.form')}}" class="m-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                                        Ajouter un animal
+                                    </a>
+                                    </div>
+                                @endif
+
 
                                 <label for="motif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Raison ? :</label>
                                 <input type="text" id="motif" name="motif"

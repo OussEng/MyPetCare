@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\DTOs\RegisterUserDTO;
+use App\DTOs\VeterinarianDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\VeterinarianRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Vet;
+use App\Repositories\UserRepository;
+use App\Repositories\VeterinarianRepository;
+use App\Services\UserService;
+use App\Services\VeterinarianService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,59 +37,24 @@ class RegisteredVetController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'prenom' => ['required', 'string', 'max:255'],
-            'nom' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'numero' => ['required', 'string'],
-            'address' => ['required', 'string'],
+    public function store(
+        RegisterUserRequest $userRequest,
+        VeterinarianRequest $vetRequest,
+        UserService $userService,
+        VeterinarianService $vetService,
+        UserRepository $userRepository,
+        VeterinarianRepository $veterinarianRepository,
+    ) {
+        $userDTO = RegisterUserDTO::fromRequest($userRequest);
+        $vetDTO = VeterinarianDTO::fromRequest($vetRequest);
 
 
-            'numeroLicence' => ['required', 'string'],
-            'nomClinique'=> ['required', 'string'],
-            'NbAnsExperience'=> ['required', 'int'],
-            'dateDeNaissance'=> ['required', 'date'],
-            'certification'=> ['required', 'string'],
-            'licenceExpiration'=> ['required', 'date'],
-            'horaires'=> ['required', 'string'],
-        ]);
+        $user = $userService->register($userDTO, 'veterinarian', $userRepository);
 
-        $user = User::create([
-            'prenom' => $request->prenom,
-            'nom' => $request->nom,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'numero' => $request->numero,
-            'address' => $request->address,
-        ]);
-
-
-        if ($user) {
-
-
-
-            $vet = Vet::create([
-                'numeroLicence' => $request->numeroLicence,
-                'nomClinique' => $request->nomClinique,
-                'NbAnsExperience' => $request->NbAnsExperience,
-                'dateDeNaissance' => $request->dateDeNaissance,
-                'certification' => $request->certification,
-                'licenceExpiration' => $request->licenceExpiration,
-                'horaires' => $request->horaires,
-                'user_id' => $user->id,
-
-            ]);
-            $role = Role::where('role', 'vet')->first();
-            $user->roles()->attach($role);
-        }
-
+        $vetService->createVeterinarian($vetDTO, $user->id,$veterinarianRepository);
 
 
         event(new Registered($user));
-
         Auth::login($user);
 
         return redirect(route('home', absolute: false));

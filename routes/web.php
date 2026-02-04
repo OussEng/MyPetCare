@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,16 +31,16 @@ Route::middleware('auth')->group(function () {
 
     //Rendez-Vous
         //vet list
-    Route::get('/rendez-vous', [RendezVousController::class, 'list_vets'])->name('list.vets');
+    Route::get('/rendez-vous', [AppointmentController::class, 'list_vets'])->name('list.vets');
         //Vet profile
-    Route::get('/veterinaires/{id}', [RendezVousController::class, 'vet_profile'])->name('vet.profile');
+    Route::get('/veterinaires/{id}', [AppointmentController::class, 'vet_profile'])->name('vet.profile');
         //prendre rendez-vous
-    Route::get('/rendez/{id}', [RendezVousController::class, 'index'])->name('rendez-vous.index');
-    Route::post('/rendez/{id}', [RendezVousController::class, 'store'])->name('rendez-vous.store');
+    Route::get('/rendez/{id}', [AppointmentController::class, 'index'])->name('rendez-vous.index');
+    Route::post('/rendez/{id}', [AppointmentController::class, 'store'])->name('rendez-vous.store');
 
 
     //Rendez-vous pris
-    Route::get('mes-rendez-vous', [RendezVousController::class, 'list'])->name('rendez-vous.list');
+    Route::get('mes-rendez-vous', [AppointmentController::class, 'list'])->name('rendez-vous.list');
 
 });
 

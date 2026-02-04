@@ -61,12 +61,12 @@
                     <x-input-error :messages="$errors->get('numero')" class="mt-2"/>
                 </div>
 
-                <!-- Address -->
+                <!-- adresse -->
                 <div>
-                    <x-input-label for="address" :value="__('address')"/>
-                    <x-text-input id="address" class="block mt-1 w-full" type="text" name="address"
-                                  :value="old('address')" required autofocus autocomplete="address"/>
-                    <x-input-error :messages="$errors->get('address')" class="mt-2"/>
+                    <x-input-label for="adresse" :value="__('adresse')"/>
+                    <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse"
+                                  :value="old('adresse')" required autofocus autocomplete="adresse"/>
+                    <x-input-error :messages="$errors->get('adresse')" class="mt-2"/>
                 </div>
 
 
