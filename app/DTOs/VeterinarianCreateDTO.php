@@ -4,7 +4,7 @@ namespace App\DTOs;
 
 use Illuminate\Http\Request;
 
-class VeterinarianDTO
+class VeterinarianCreateDTO
 {
     public function __construct(
         public string $numeroLicence,

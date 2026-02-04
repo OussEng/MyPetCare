@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\DTOs\RegisterUserDTO;
-use App\DTOs\VeterinarianDTO;
+use App\DTOs\VeterinarianCreateDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VeterinarianRequest;
@@ -46,7 +46,7 @@ class RegisteredVetController extends Controller
         VeterinarianRepository $veterinarianRepository,
     ) {
         $userDTO = RegisterUserDTO::fromRequest($userRequest);
-        $vetDTO = VeterinarianDTO::fromRequest($vetRequest);
+        $vetDTO = VeterinarianCreateDTO::fromRequest($vetRequest);
 
 
         $user = $userService->register($userDTO, 'veterinarian', $userRepository);

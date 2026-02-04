@@ -13,26 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class AppointmentController extends Controller
 {
 
-    public function list_vets()
-    {
-        $vets = Vet::all();
-
-        return view('vet.vet-list' , [
-            'vets' => $vets]);
-    }
-
-    public function vet_profile($id)
-    {
-        $vet = Vet::find($id);
-
-        return view('vet.vet-profile' , [
-            'vet' => $vet
-        ]);
-
-    }
-
-
-
     public function index(Request $request, $id)
     {
 

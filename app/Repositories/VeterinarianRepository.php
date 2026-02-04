@@ -10,4 +10,14 @@ class VeterinarianRepository
         return Vet::create($data);
     }
 
+
+    public function findAllVets()
+    {
+        return Vet::all();
+    }
+
+    public function findVet($id){
+        return Vet::find($id);
+    }
+
 }

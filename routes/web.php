@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\VeterinarianController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,17 +30,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');
 
 
-    //Rendez-Vous
+    //Vet
         //vet list
-    Route::get('/rendez-vous', [AppointmentController::class, 'list_vets'])->name('list.vets');
+    Route::get('/rendez-vous', [VeterinarianController::class, 'list_vets'])->name('list.vets');
         //Vet profile
-    Route::get('/veterinaires/{id}', [AppointmentController::class, 'vet_profile'])->name('vet.profile');
+    Route::get('/veterinaires/{id}', [VeterinarianController::class, 'vet_profile'])->name('vet.profile');
+
+    //Appointment
         //prendre rendez-vous
     Route::get('/rendez/{id}', [AppointmentController::class, 'index'])->name('rendez-vous.index');
     Route::post('/rendez/{id}', [AppointmentController::class, 'store'])->name('rendez-vous.store');
 
 
-    //Rendez-vous pris
+        //Rendez-vous pris
     Route::get('mes-rendez-vous', [AppointmentController::class, 'list'])->name('rendez-vous.list');
 
 });
