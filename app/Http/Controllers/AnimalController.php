@@ -2,19 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Animal;
-use App\Models\Espece;
-use App\Models\Sexe;
-use App\Models\Vaccination;
+use App\Http\Requests\AnimalRequest;
+use App\Services\AnimalService;
+use App\Services\EspeceService;
+use App\Services\SexeServices;
+use App\Services\VaccinationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AnimalController extends Controller
 {
+
+
+    private AnimalService $animalService;
+    private EspeceService $especeService;
+    private SexeServices $sexeService;
+    private VaccinationService $vaccinationService;
+
+    public function __construct(AnimalService $animalService, EspeceService $especeService, SexeServices $sexeService, VaccinationService $vaccinationService)
+    {
+        $this->animalService = $animalService;
+        $this->especeService = $especeService;
+        $this->sexeService = $sexeService;
+        $this->vaccinationService = $vaccinationService;
+
+    }
+
     //list des animeux
     public function list()
     {
-        $animals = Animal::where('user_id', Auth::id())->get();
+        $animals = $this->animalService->getAllanimalsByUser(Auth::id());
 
         return view('animal.list-animeux' ,[
             'animals' => $animals,
@@ -24,80 +41,49 @@ class AnimalController extends Controller
     //form pour creer un animal domistique
     public function form(){
 
-        $especes = Espece::all();
-        $sexes = Sexe::all();
-        $vaccinations = Vaccination::all();
-
-
+        $especes = $this->especeService->getEspeces();
+        $sexes = $this->sexeService->getSexes();
 
         return view('animal.creer-animal',[
             'especes' => $especes,
             'sexes' => $sexes,
-            'vaccinations' => $vaccinations
         ]);
     }
 
     //sauvgarder l'animal domistique
-    public function save(Request $request){
+    public function save(AnimalRequest $request){
 
-        $validated = $request->validate([
-            'nom' => 'required',
-            'espece' => 'required',
-            'sexe' => 'required',
-            'race' => 'max:255',
-            'dateNaissance' => 'required',
-            'poids' => 'required',
-        ]);
-
-        $animal = new Animal();
-        $animal->nom = $request->input("nom");
-        $animal->espece_id = $request->input("espece");
-        $animal->race  = $request->input("race");
-        $animal->dateNaissance = $request->input("dateNaissance");
-        $animal->poids = $request->input("poids");
-        $animal-> sexe_id = $request->input("sexe");
-        $animal->user_id = Auth::id();
-
-
-
-        $animal->save();
+        $this->animalService->create($request);
 
         return redirect()->route('animaux');
 
     }
 
-    public function list_vaccinations($id){
+    public function listAnimalVaccinations($id){
 
-        $chat_vaccinations = Espece::where('libelle', 'chat')->first()->vaccinations;
-        $chien_vaccination = Espece::where('libelle', 'chien')->first()->vaccinations;
-
-        $animal = Animal::find($id);
-        $vaccinations = $animal->vaccinations;
-
+        $vaccinations = $this->vaccinationService->getVaccinationsBySpecies($id);
+        $animal = $this->animalService->getAnimalById($id);
 
         return view('animal.list-vaccinations',[
             'vaccinations' => $vaccinations,
             'animal' => $animal,
-            'chat_vaccinations' => $chat_vaccinations,
-            'chien_vaccination' => $chien_vaccination
         ]);
 
     }
 
 
-    public function ajouter_vaccinations($id, Request $request){
 
-        $animal = Animal::find($id);
-        $vaccinations = $request->input("vaccinations" , []);
-        $animal->vaccinations()->syncWithoutDetaching($vaccinations);
+    public function ajouter_vaccinations(int $id, Request $request){
+
+        $this->vaccinationService->addVaccination($id, $request);
+
         return redirect()->route('vaccinations' , $id);
     }
 
-    public function supprimer_vaccination($animal_id,$vaccination_id, Request $request){
+    public function supprimer_vaccination(int $animal_id, int $vaccination_id){
 
-        $animal = Animal::find($animal_id);
-        $vaccination = Vaccination::find($vaccination_id);
-        $animal->vaccinations()->detach($vaccination);
+        $this->vaccinationService->removeVaccination($animal_id, $vaccination_id);
+
         return redirect()->route('vaccinations' , $animal_id);
     }
 

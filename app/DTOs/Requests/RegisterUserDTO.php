@@ -1,30 +1,34 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class UserDTO
+
+class RegisterUserDTO
 {
     public function __construct(
-        public int $id,
         public string $prenom,
         public string $nom,
         public string $email,
-        public string $numero,
+        public string $password,
+        public int $numero,
         public string $adresse,
     ) {}
 
     public static function fromArray(array $data): self
     {
+
         return new self(
-            $data['id'],
             $data['prenom'],
             $data['nom'],
             $data['email'],
+            $data['password'],
             $data['numero'],
             $data['adresse'],
         );
+
     }
 
     public static function fromRequest(Request $request): self
@@ -35,14 +39,17 @@ class UserDTO
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'prenom' => $this->prenom,
             'nom' => $this->nom,
             'email' => $this->email,
+            'password' =>$this->password,
             'numero' => $this->numero,
             'adresse' => $this->adresse,
         ];
     }
 
 
+
 }
+
+

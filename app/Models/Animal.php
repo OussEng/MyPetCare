@@ -15,8 +15,9 @@ class Animal extends Model
 
     protected $table = 'animals';
     protected $fillable = [
-        'nom','espece','sexe','race','dateNaissance','poids','vaccination','user_id'
+        'nom','espece_id','sexe_id','race','dateNaissance','poids','vaccination','user_id'
     ];
+
 
 
 
@@ -35,7 +36,7 @@ class Animal extends Model
         return $this->belongsToMany(Vaccination::class);
     }
 
-    public function owner(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -14,18 +14,20 @@
 
 
                 <label for="espece" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espece :</label>
-                <select id="espece" name="espece" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="espece" name="espece_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @foreach($especes as $espece)
                         <option value="{{ $espece->id }}" >{{$espece->libelle}}</option>
                         @endforeach
                 </select>
 
                 <label for="sexe" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexe :</label>
-                <select id="sexe" name="sexe" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="sexe" name="sexe_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @foreach($sexes as $sexe)
                         <option value="{{ $sexe->id }}" >{{$sexe->libelle}}</option>
                     @endforeach
                 </select>
+
+                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
 
                 <label for="race" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Race :</label>

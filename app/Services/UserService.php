@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
-use App\DTOs\RegisterUserDTO;
-use App\Models\Role;
+use App\DTOs\Requests\RegisterUserDTO;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 

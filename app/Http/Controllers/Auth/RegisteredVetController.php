@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\DTOs\RegisterUserDTO;
-use App\DTOs\VeterinarianCreateDTO;
+use App\DTOs\Requests\RegisterUserDTO;
+use App\DTOs\Requests\VeterinarianCreateDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VeterinarianRequest;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Vet;
 use App\Repositories\UserRepository;
 use App\Repositories\VeterinarianRepository;
 use App\Services\UserService;
 use App\Services\VeterinarianService;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class RegisteredVetController extends Controller

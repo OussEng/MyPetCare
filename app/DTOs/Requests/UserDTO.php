@@ -1,33 +1,30 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Requests;
 
 use Illuminate\Http\Request;
 
-
-class RegisterUserDTO
+class UserDTO
 {
     public function __construct(
+        public int $id,
         public string $prenom,
         public string $nom,
         public string $email,
-        public string $password,
-        public int $numero,
+        public string $numero,
         public string $adresse,
     ) {}
 
     public static function fromArray(array $data): self
     {
-
         return new self(
+            $data['id'],
             $data['prenom'],
             $data['nom'],
             $data['email'],
-            $data['password'],
             $data['numero'],
             $data['adresse'],
         );
-
     }
 
     public static function fromRequest(Request $request): self
@@ -35,20 +32,29 @@ class RegisterUserDTO
         return self::fromArray($request->validated());
     }
 
+    public static function fromModel(mixed $user): UserDTO
+    {
+        return new self(
+            $user->id,
+            $user->prenom,
+            $user->nom,
+            $user->email,
+            $user->numero,
+            $user->adresse,
+        );
+    }
+
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'prenom' => $this->prenom,
             'nom' => $this->nom,
             'email' => $this->email,
-            'password' =>$this->password,
             'numero' => $this->numero,
             'adresse' => $this->adresse,
         ];
     }
 
 
-
 }
-
-
