@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nom');
             $table->string('race')->nullable();
-            $table->date('dateNaissance');
-            $table->double('poids');
+            $table->date('dateNaissance')->nullable();
+            $table->double('poids')->nullable();
             $table->foreignId('sexe_id')->constrained('sexe');
             $table->foreignId('espece_id')->constrained('espece');
             $table->foreignId('user_id')->constrained('users');

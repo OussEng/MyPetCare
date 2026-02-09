@@ -38,7 +38,7 @@
                                     </a>
                                 </div>
                             </th>
-                            <th>
+                            <th scope="col" class="px-6 py-3" >
                                 <div class="flex items-center">
                                     Race
                                     <a href="#">
@@ -114,16 +114,27 @@
                                     </td>
 
                                 @else
-                                    <td>Inconnue</td>
+                                    <td class="px-6 py-4">Inconnue</td>
+
                                 @endif
 
+                                @if($animal->dateNaissance)
+                                    <td class="px-6 py-4">
+                                        {{ $animal->dateNaissance }}
+                                    </td>
+                                @else
+                                    <td class="px-6 py-4" >Inconnue</td>
+                                @endif
 
+                                @if($animal->poids)
+                                    <td class="px-6 py-4">
+                                        {{ $animal->poids }} Kg
+                                    </td>
+                                @endif
                                 <td class="px-6 py-4">
-                                    {{ $animal->dateNaissance }}
+                                    Inconnue
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ $animal->poids }} Kg
-                                </td>
+
                                 <td class="px-6 py-4">
                                     <p class="text-gray-500 dark:text-gray-400"><a href="{{route('vaccinations', $animal->id)}}"
                                                                                    class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
