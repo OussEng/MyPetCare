@@ -15,7 +15,7 @@
 
 @yield('content')
 
-{{--@include('layouts._footer')--}}
+@include('layouts._footer')
 
 </body>
 
