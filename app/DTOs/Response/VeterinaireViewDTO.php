@@ -5,7 +5,7 @@ namespace App\DTOs\Response;
 use App\DTOs\Requests\UserDTO;
 use App\Models\Vet;
 
-class VeterinarianViewDTO
+class VeterinaireViewDTO
 {
     public function __construct(
         public int $id,
@@ -24,7 +24,7 @@ class VeterinarianViewDTO
 
 
 
-    public static function fromModel(Vet $vet): VeterinarianViewDTO
+    public static function fromModel(Vet $vet): VeterinaireViewDTO
     {
         return new self(
             $vet->id,

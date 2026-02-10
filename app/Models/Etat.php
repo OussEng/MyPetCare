@@ -11,6 +11,8 @@ class Etat extends Model
     use HasFactory;
     protected $table = 'etat';
 
+    protected $fillable = ['libelle'];
+
 
 
     public function rendezvous() : HasMany

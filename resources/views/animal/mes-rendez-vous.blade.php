@@ -25,7 +25,7 @@
                                     Rendez-vous pour {{ $rdv->animal->nom }}
                                 </h2>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    Avec Dr. {{ $rdv->veterinaire->user->nom }} | Le {{ \Carbon\Carbon::parse($rdv->dateHeuredebut)->format('d/m/Y H:i') }}
+                                    Avec Dr. {{ $rdv->veterinaire->user->nom }} | Le {{ \Carbon\Carbon::parse($rdv->dateHeureDebut)->format('d/m/Y H:i') }}
                                 </p>
                             </div>
                         </div>

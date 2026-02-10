@@ -4,17 +4,17 @@
 
     <div class="flex justify-center mt-14">
         <div class="w-1/2">
-            <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Prendre un rendez-vous avec <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">{{$vet->user->nom}} {{$vet->user->prenom}}</span></h1>
+            <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Prendre un rendez-vous avec <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">{{$data['vet']->user->nom}} {{$data['vet']->user->prenom}}</span></h1>
 
 
-                    <form method="GET" action="{{ route('rendez-vous.index', ['id' => $id]) }}">
+                    <form method="GET" action="{{ route('rendez-vous.index', ['id' => $data['vet']->id]) }}">
                         <div>
                             <label for="date" class="block text-sm font-medium text-gray-700">Choisissez une date :</label>
                             <input
                                 type="date"
                                 name="date"
                                 id="date"
-                                value="{{ $selectedDate ?? '' }}"
+                                value="{{ $data['selectedDate'] ?? '' }}"
                                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm mb-5"
                             >
                         </div>
@@ -29,29 +29,24 @@
                         </div>
                     </form>
 
-
-                    @isset($selectedDate)
+                    @isset($data['selectedDate'])
                         <div class="border-gray-600 rounded border-solid border-2 p-5 mb-10">
-                            <form method="POST" action="{{ route('rendez-vous.store', ['id' => $id]) }}">
+                            <form method="POST" action="{{ route('rendez-vous.store', ['id' => $data['vet']->id]) }}">
                                 @csrf
-
                                 <label for="espece" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">C'est pour qui ? :</label>
                                 <select id="animal_id" name="animal_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
 
                                     <option disabled selected value="">Sélectionnez votre animal</option>
-                                    @if(empty(!$animaux))
+                                    @if(empty(!$data['animaux']))
                                         <option class="bg-orange-500">Vous n'avez pas d'animaux !</option>
                                     @endif
 
-
-
-
-                                    @foreach($animaux as $animal)
+                                    @foreach($data['animaux'] as $animal)
                                         <option value="{{ $animal->id }}" >{{$animal->nom}}</option>
                                     @endforeach
                                 </select>
 
-                                @if(empty(!$animaux))
+                                @if(empty(!$data['animaux']))
                                     <div class="flex justify-center">
                                     <a href="{{route('animaux.form')}}" class="m-8 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                                         Ajouter un animal
@@ -65,9 +60,9 @@
                                        class="bg-gray-50 border border-gray-300 text-gray-900 mb-5 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="Motif de rendez-vous..." required/>
                                 <ul class="grid w-full gap-6 md:grid-cols-2">
-                                @forelse($slots as $slot)
+                                @forelse($data['slots'] as $slot)
                                         <li>
-                                            <input type="radio" id="slot-{{ $loop->index }}" name="slot" value="{{ $slot }}" class="hidden peer" required />
+                                            <input type="radio" id="slot-{{ $loop->index }}" name="dateHeureDebut" value="{{ $slot }}" class="hidden peer" required />
                                             <label for="slot-{{ $loop->index }}" class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                                 <div class="block">
                                                     <div class="w-full text-lg font-semibold">{{ \Carbon\Carbon::parse($slot)->format('H:i') }}</div>

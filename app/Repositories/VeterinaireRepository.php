@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Vet;
 
-class VeterinarianRepository
+class VeterinaireRepository
 {
     public function create($data){
         return Vet::create($data);

@@ -8,6 +8,9 @@
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                 @foreach($vets as $vet)
+                                    @if(auth()->user()->id == $vet->user->id)
+                                        {{-- hide the profile of the veterinarian connected --}}
+                                    @else
                                     <div class="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                                         <div class="flex flex-col items-center pb-10 pt-10">
                                             <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ asset('imgs/pfp.PNG') }}" alt="Vet image"/>
@@ -29,6 +32,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 @endforeach
                             </div>
                     </div>

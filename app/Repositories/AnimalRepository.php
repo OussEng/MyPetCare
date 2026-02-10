@@ -18,9 +18,9 @@ class AnimalRepository
         return Animal::find($id);
     }
 
-    public function create(array $date)
+    public function create(array $data)
     {
-        return Animal::create($date);
+        return Animal::create($data);
     }
 
 }

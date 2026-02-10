@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vet;
-use App\Services\VeterinarianService;
+use App\Services\VeterinaireService;
 use Illuminate\Http\Request;
 
-class VeterinarianController extends Controller
+class VeterinaireController extends Controller
 {
 
-    private VeterinarianService $veterinarianService;
+    private VeterinaireService $veterinarianService;
 
     /**
-     * @param VeterinarianService $veterinarianService
+     * @param VeterinaireService $veterinarianService
      */
-    public function __construct(VeterinarianService $veterinarianService)
+    public function __construct(VeterinaireService $veterinarianService)
     {
         $this->veterinarianService = $veterinarianService;
     }
