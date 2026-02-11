@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-52">
         <div class="w-1/2 mt-20">
         <form method="POST" action="{{route('animaux.save')}}" class="max-w-sm mx-auto">
             @csrf
@@ -15,6 +15,7 @@
 
                 <label for="espece" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espece :</label>
                 <select id="espece" name="espece_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option class="opacity-30" selected disabled  > Sélectionnez l'espece de votre animal... </option>
                         @foreach($especes as $espece)
                         <option value="{{ $espece->id }}" >{{$espece->libelle}}</option>
                         @endforeach
@@ -22,6 +23,7 @@
 
                 <label for="sexe" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexe :</label>
                 <select id="sexe" name="sexe_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option class="opacity-30" selected disabled  > Sélectionnez le sexe de votre animal... </option>
                     @foreach($sexes as $sexe)
                         <option value="{{ $sexe->id }}" >{{$sexe->libelle}}</option>
                     @endforeach
@@ -33,7 +35,7 @@
                 <label for="race" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Race :</label>
                 <input type="text" id="race" name="race"
                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       placeholder="Race...(facultatif)"/>
+                       placeholder="Chat européen..."/>
 
                 <label for="dateNaissance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de naissance :</label>
                 <input type="date" id="dateNaissance" name="dateNaissance"
@@ -52,19 +54,6 @@
                 </div>
 
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </form>
     </div>

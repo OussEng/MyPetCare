@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="flex justify-center mt-14">
+    <div class="flex justify-center mt-14 mb-96">
         <div class="w-1/2">
             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                 Mes animeux</h1>
@@ -178,5 +178,5 @@
             </div>
 
         </div>
-
+    </div>
 @endsection

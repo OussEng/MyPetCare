@@ -9,14 +9,13 @@
     <title>My little Pet</title>
 </head>
 
-<body>
+<header>@include('layouts._navbar')</header>
 
-@include('layouts._navbar')
+<body>
 
 @yield('content')
 
-@include('layouts._footer')
-
 </body>
+<footer class="border-t border-black">@include('layouts._footer')</footer>
 
 </html>

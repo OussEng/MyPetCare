@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="flex justify-center mt-14">
+    <div class="flex justify-center mt-14 mb-96">
         <div class="w-1/2">
             <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">Prendre un rendez-vous avec <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">{{$data['vet']->user->nom}} {{$data['vet']->user->prenom}}</span></h1>
 
