@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Etat extends Model
 {
     use HasFactory;
-    protected $table = 'etat';
+    protected $table = 'etats';
 
     protected $fillable = ['libelle'];
 
