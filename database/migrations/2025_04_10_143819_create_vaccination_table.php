@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nom_vaccine');
             $table->text('info');
-            $table->foreignId('espece_id')->constrained('espece');
+            $table->foreignId('espece_id')->constrained('especes');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vaccination');
+        Schema::dropIfExists('vaccinations');
     }
 };

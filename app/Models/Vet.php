@@ -12,6 +12,8 @@ class Vet extends Model
 {
     use HasFactory;
 
+    protected $table = 'veterinaires';
+
     protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','horaires', 'user_id'];
 
 

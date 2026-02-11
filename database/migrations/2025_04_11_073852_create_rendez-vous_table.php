@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->dateTime('dateHeureDebut');
             $table->text('motif');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('etat_id')->constrained();
-            $table->foreignId('veterinaire_id')->constrained();
-            $table->foreignId('animal_id')->constrained();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('etat_id')->constrained('etats');
+            $table->foreignId('veterinaire_id')->constrained('veterinaires');
+            $table->foreignId('animal_id')->constrained('animals');
 
             $table->timestamps();
 

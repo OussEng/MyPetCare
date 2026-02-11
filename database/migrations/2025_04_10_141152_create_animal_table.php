@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('race')->nullable();
             $table->date('dateNaissance')->nullable();
             $table->double('poids')->nullable();
-            $table->foreignId('sexe_id')->constrained('sexe');
-            $table->foreignId('espece_id')->constrained('espece');
+            $table->foreignId('sexe_id')->constrained('sexes');
+            $table->foreignId('espece_id')->constrained('especes');
             $table->foreignId('user_id')->constrained('users');
         });
     }

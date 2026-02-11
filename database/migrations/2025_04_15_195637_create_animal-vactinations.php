@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('animal_vaccination', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('animal_id')->constrained();
-            $table->foreignId('vaccination_id')->constrained();
+            $table->foreignId('animal_id')->constrained('animals');
+            $table->foreignId('vaccination_id')->constrained('vaccinations');
             $table->timestamps();
         });
     }
