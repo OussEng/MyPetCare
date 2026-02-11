@@ -12,7 +12,9 @@ class Vaccination extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom_vaccine', 'info'];
+    protected $table = "vaccinations";
+
+    protected $fillable = ['nom_vaccine', 'info','espece_id'];
 
 
 
@@ -24,7 +26,11 @@ class Vaccination extends Model
 
     public function espece() : BelongsTo
     {
-        return $this->belongsTo(Espece::class);
+        return $this->belongsTo(
+            Espece::class,
+            'espece_id',
+            'id'
+        );
     }
 
 }

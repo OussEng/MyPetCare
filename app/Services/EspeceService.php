@@ -27,12 +27,4 @@ class EspeceService
     }
 
 
-
-    public function getEspeceByname(string $name) : EspeceResponseDTO
-    {
-        $espece = $this->especeRepository->findByname($name);
-
-        return EspeceResponseDTO::fromModel($espece);
-    }
-
 }

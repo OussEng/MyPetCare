@@ -14,9 +14,5 @@ class EspeceRepository
 
     }
 
-    public function findByname(string $name) : Espece
-    {
-        return Espece::where('libelle', $name)->first();
-    }
 
 }

@@ -39,9 +39,7 @@ class VaccinationService
     {
         $animal = $this->animalService->getAnimalById($id);
 
-        $espeseDTO = $this->especeService->getEspeceByname($animal->espece->libelle);
-
-        return $espeseDTO->vaccinations;
+        return $animal->espece->vaccinations;
     }
 
     public function addVaccination(int $id, Request $request) : Void

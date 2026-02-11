@@ -10,6 +10,8 @@ class Espece extends Model
 {
     use HasFactory;
 
+    protected $table = 'especes';
+
     protected $fillable = ['libelle'];
 
 
@@ -21,7 +23,11 @@ class Espece extends Model
 
     public function vaccinations(): HasMany
     {
-        return $this->hasMany(Vaccination::class);
+        return $this->hasMany(
+            Vaccination::class,
+            'espece_id',
+            'id'
+        );
     }
 
 }
