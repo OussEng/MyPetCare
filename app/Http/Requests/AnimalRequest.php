@@ -14,6 +14,15 @@ class AnimalRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => $this->user()->id,
+        ]);
+
+    }
+
+
     /**
      * Get the validation rules that apply to the request.
      *
