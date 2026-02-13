@@ -48,5 +48,10 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::middleware(['auth', 'veterinaire'])->group(function () {
+    Route::get('/vet/backoffice', [VeterinaireController::class, 'backoffice']);
+});
+
+
 
 require __DIR__.'/auth.php';

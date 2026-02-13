@@ -96,6 +96,33 @@ class RendezVousService
 
     }
 
+    public function getTodaysApointement()
+    {
+        $today = [];
+
+        $appointement = $this->getAllApointementsByVet(auth()->user()->vet->id);
+
+
+
+
+        foreach ($appointement as $app) {
+
+            $date = $app->dateHeureDebut->format('Y-m-d');
+
+            if ($date = now()->format('Y-m-d')) {
+
+                array_push($today, $date);
+
+            }
+
+        }
+
+
+
+        return $today;
+
+    }
+
 
 
 }

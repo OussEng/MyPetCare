@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vet;
+use App\Services\RendezVousService;
 use App\Services\VeterinaireService;
 use Illuminate\Http\Request;
 
@@ -10,13 +11,15 @@ class VeterinaireController extends Controller
 {
 
     private VeterinaireService $veterinarianService;
+    private RendezVousService $rendezVousService;
 
     /**
      * @param VeterinaireService $veterinarianService
      */
-    public function __construct(VeterinaireService $veterinarianService)
+    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService)
     {
         $this->veterinarianService = $veterinarianService;
+        $this->rendezVousService = $rendezVousService;
     }
 
 
@@ -37,4 +40,22 @@ class VeterinaireController extends Controller
         ]);
 
     }
+
+
+
+
+    //veterinarian back office index
+    public function backoffice()
+    {
+        $rendez_vous = $this->rendezVousService->getTodaysApointement();
+
+
+        return view('vet.Back Office.veretinarian-backoffice',[
+            'rendez_vous' => $rendez_vous
+        ]);
+
+    }
+
+
+
 }
