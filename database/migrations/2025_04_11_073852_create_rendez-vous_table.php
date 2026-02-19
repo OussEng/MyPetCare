@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('motif');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('etat_id')->constrained('etats');
-            $table->foreignId('veterinaire_id')->constrained('veterinaires');
-            $table->foreignId('animal_id')->constrained('animals');
+            $table->foreignId('veterinaire_id')->constrained('veterinaires')->cascadeOnDelete();
+            $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
 
             $table->timestamps();
 

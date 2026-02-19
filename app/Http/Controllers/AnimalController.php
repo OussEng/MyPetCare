@@ -55,6 +55,10 @@ class AnimalController extends Controller
 
         $this->animalService->create($request);
 
+        if (Auth::user()->isVet()){
+            return redirect()->route('veterinaire.client', ['client' => $request->user_id]);
+        }
+
         return redirect()->route('animaux');
 
     }
@@ -64,11 +68,36 @@ class AnimalController extends Controller
         $vaccinations = $this->vaccinationService->getVaccinationsBySpecies($id);
         $animal = $this->animalService->getAnimalById($id);
 
+        if (Auth::user()->isVet()){
+            return view('vet.Back Office.Clients.client-animal-vaccination',[
+                'animal' => $animal,
+                'vaccinations' => $vaccinations,
+            ]);
+        }
+
+        if (!Auth::user()->isVet() && Auth::user()->id != $animal->user->id ){
+            abort(404);
+        }
+
         return view('animal.list-vaccinations',[
             'vaccinations' => $vaccinations,
             'animal' => $animal,
         ]);
 
+    }
+
+
+    public function delete(int $id)
+    {
+        $client = $this->animalService->getAnimalById($id)->user->id;
+        $this->animalService->deleteAnimal($id);
+
+
+        if (Auth::user()->isVet()){
+            return redirect()->route('veterinaire.client', ['client' =>  $client]);
+        }
+
+        return redirect()->route('animaux');
     }
 
 

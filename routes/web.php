@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     //Creation des animaux
     Route::get('/creer-animal', [AnimalController::class, 'form'])->name('animaux.form');
     Route::post('/creer-animal', [AnimalController::class, 'save'])->name('animaux.save');
+    Route::delete('animals/{animal}/delete', [AnimalController::class, 'delete'])->name('animaux.delete');
 
     //Vaccination
     Route::get('/vaccinations/{id}', [AnimalController::class, 'listAnimalVaccinations'])->name('vaccinations');
@@ -49,7 +50,18 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'veterinaire'])->group(function () {
-    Route::get('/vet/backoffice', [VeterinaireController::class, 'backoffice']);
+
+    Route::get('/vet/backoffice', [VeterinaireController::class, 'backoffice'])->name('veterinaire.backoffice');
+
+    //clients list
+    Route::get('vet/backoffice/clients', [VeterinaireController::class, 'list_clients'])->name('veterinaire.clients');
+
+    //consulter un client
+    Route::get('vet/backoffice/client/{client}', [VeterinaireController::class, 'client_profile'])->name('veterinaire.client');
+
+    //veterinaire rendez vous list
+    Route::get('vet/backoffice/mes-rendez-vous', [VeterinaireController::class, 'list'])->name('vet.rendez-vous.list');
+
 });
 
 

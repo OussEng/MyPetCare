@@ -1,5 +1,6 @@
 @extends('layouts.backoffice')
 @section('content')
+    <div class="ml-64">
     <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl p-6">
     <span class="block">
         Bienvenue Dr.
@@ -26,11 +27,12 @@
                 <h1 class="text-gray-900 text-xl font-semibold pl-6 pb-3">Rendez Vous En attente:</h1>
 
                 <div class="text-gray-900 bg-white pb-3 pt-6 space-y-1 text-sm flex justify-center">
-                    <span class="text-5xl text-yellow-500 font-bold"> 1 </span>
+                   <span class="text-5xl text-yellow-500 font-bold"> 1 (TODO) </span> {{-- <--------state handling has not been set up yet--}}
                 </div>
             </div>
             <button type="button" class="text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all w-full h-10 mt-5 rounded-md">Voir</button>
         </div>
+    </div>
     </div>
 
 

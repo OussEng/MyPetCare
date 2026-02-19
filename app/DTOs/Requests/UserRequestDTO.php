@@ -4,7 +4,7 @@ namespace App\DTOs\Requests;
 
 use Illuminate\Http\Request;
 
-class UserDTO
+class UserRequestDTO
 {
     public function __construct(
         public int $id,
@@ -32,7 +32,7 @@ class UserDTO
         return self::fromArray($request->validated());
     }
 
-    public static function fromModel(mixed $user): UserDTO
+    public static function fromModel(mixed $user): UserRequestDTO
     {
         return new self(
             $user->id,

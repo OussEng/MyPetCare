@@ -23,4 +23,9 @@ class AnimalRepository
         return Animal::create($data);
     }
 
+    public function delete(int $id)
+    {
+        Animal::destroy($id);
+    }
+
 }

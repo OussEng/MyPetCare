@@ -17,7 +17,7 @@ class AnimalRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->user()->id,
+            'user_id' => $this->input('user_id') ?? $this->user()->id,
         ]);
 
     }

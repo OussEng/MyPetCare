@@ -56,10 +56,10 @@ class AnimalService
 
     }
 
-
-
-
-
+    public function deleteAnimal(int $id)
+    {
+        $this->repository->delete($id);
+    }
 
 
 }

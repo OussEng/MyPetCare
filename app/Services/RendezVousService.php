@@ -30,11 +30,19 @@ class RendezVousService
 
 
 
-    public function getAllApointementsByVet(int $id) : Collection
+    public function getAllApointementsByVet()
     {
-        $rendezVouss = $this->rendezVousRepository->findAllByVet($id);
+        $paginatedRvs = $this->rendezVousRepository
+            ->findAllByVet(auth()->user()->vet->id)
+            ->paginate(10)
+            ->withQueryString();
 
-        return $rendezVouss->map(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
+        $paginatedRvs->getCollection()->transform(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
+
+
+
+       return $paginatedRvs;
+
     }
 
 
@@ -55,7 +63,7 @@ class RendezVousService
 
     }
 
-    public function calculateAvailableSlots(mixed $date, Collection $rendez_vouss) : array
+    public function calculateAvailableSlots(mixed $date, mixed $rendez_vouss) : array
     {
         $slots = [];
 
@@ -69,7 +77,7 @@ class RendezVousService
 
 
         $slots = array_filter($slots, fn($slot) =>
-        !$rendez_vouss->pluck('dateHeuredebut')->contains($slot)
+        !$rendez_vouss->pluck('dateHeureDebut')->contains($slot)
         );
 
         return $slots;
@@ -96,33 +104,30 @@ class RendezVousService
 
     }
 
-    public function getTodaysApointement()
+    public function getTodaysApointement(): array
     {
         $today = [];
-
-        $appointement = $this->getAllApointementsByVet(auth()->user()->vet->id);
-
-
+        $appointement = $this->getAllApointementsByVet();
 
 
         foreach ($appointement as $app) {
 
-            $date = $app->dateHeureDebut->format('Y-m-d');
+            $appDate = $app->dateHeureDebut->format('Y-m-d');
 
-            if ($date = now()->format('Y-m-d')) {
-
-                array_push($today, $date);
-
+            if ($appDate == now()->format('Y-m-d')) {
+                $today[] = $app;
             }
 
         }
-
-
 
         return $today;
 
     }
 
+    public function getRendezVousByVet()
+    {
+        $this->rendezVousRepository->findAllByVet(auth()->user()->vet->id);
+    }
 
 
 }

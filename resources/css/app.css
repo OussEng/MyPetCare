@@ -7,3 +7,7 @@
     -webkit-text-stroke: 1px #A8E6CF;
     color: transparent;
 }
+
+[x-cloak] {
+    display: none !important;
+}

@@ -3,14 +3,25 @@
 namespace App\Repositories;
 
 use App\Models\RendezVous;
+use Carbon\CarbonImmutable;
+
 use Illuminate\Support\Collection;
 
 class RendezVousRepository
 {
 
-    public function findAllByVet(int $id) : Collection
+    public function findAllByVet(int $id)
     {
-        return RendezVous::where('veterinaire_id' , $id)->get();
+        $today = CarbonImmutable::today();
+
+        return RendezVous::where('veterinaire_id', $id)
+            ->orderByRaw("
+            CASE
+                WHEN DATE(\"dateHeureDebut\") = ? THEN 1
+                WHEN \"dateHeureDebut\" > ? THEN 2
+                ELSE 3
+            END ASC, \"dateHeureDebut\" ASC
+        ", [$today, $today]);
     }
 
     public function findAllByUser(int $id) : Collection

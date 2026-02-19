@@ -28,6 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (Auth::user()->isVet()){
+            return redirect()->intended(route('veterinaire.backoffice', absolute: false));
+        }
+
         return redirect()->intended(route('home', absolute: false));
     }
 

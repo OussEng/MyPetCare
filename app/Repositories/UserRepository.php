@@ -18,4 +18,14 @@ class UserRepository
     $user -> roles() ->attach($role);
     }
 
+    public function findAllClients()
+    {
+        return User::doesntHave('vet');
+    }
+
+    public function findClient(int $id)
+    {
+        return User::find($id);
+    }
+
 }

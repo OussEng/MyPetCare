@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\UserDTO;
+use App\DTOs\Requests\UserRequestDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
 use App\DTOs\Response\VeterinaireViewDTO;
 use App\Models\Vet;
@@ -45,4 +45,6 @@ class VeterinaireService
 
         return VeterinaireViewDTO::fromModel($vet);
     }
+
+
 }

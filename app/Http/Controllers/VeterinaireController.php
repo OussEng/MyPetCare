@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vet;
+use App\Services\AnimalService;
+use App\Services\EspeceService;
 use App\Services\RendezVousService;
+use App\Services\SexeServices;
+use App\Services\UserService;
 use App\Services\VeterinaireService;
 use Illuminate\Http\Request;
 
@@ -13,13 +17,22 @@ class VeterinaireController extends Controller
     private VeterinaireService $veterinarianService;
     private RendezVousService $rendezVousService;
 
+    private UserService $userService;
+    private EspeceService $especeService;
+    private SexeServices $sexeService;
+    private AnimalService $animalService;
+
     /**
      * @param VeterinaireService $veterinarianService
      */
-    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService)
+    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, UserService $userService, EspeceService $especeService, SexeServices $sexeService, AnimalService $animalService)
     {
         $this->veterinarianService = $veterinarianService;
         $this->rendezVousService = $rendezVousService;
+        $this->userService = $userService;
+        $this->especeService = $especeService;
+        $this->sexeService = $sexeService;
+        $this->animalService = $animalService;
     }
 
 
@@ -56,6 +69,44 @@ class VeterinaireController extends Controller
 
     }
 
+    public function list_clients(Request $request)
+    {
+
+
+
+        $clients = $this->userService->getAllClients($request->input('search'));
+
+
+
+        return view('vet.Back Office.Clients.clients-list' , [
+            'clients' => $clients
+        ]);
+
+    }
+
+    public function client_profile(int $id)
+    {
+        $client = $this->userService->getClient($id);
+        $especes = $this->especeService->getEspeces();
+        $sexes = $this->sexeService->getSexes();
+
+        return view('vet.Back Office.Clients.client-profile' , [
+            'client' => $client,
+            'especes' => $especes,
+            'sexes' => $sexes,
+        ]);
+
+    }
+
+    public function list()
+    {
+        $rendezVous = $this->rendezVousService->getAllApointementsByVet();
+
+        return view('vet.Back Office.veterinaire-rendez_vous-list' , [
+            'rendezVous' => $rendezVous
+        ]);
+
+    }
 
 
 }
