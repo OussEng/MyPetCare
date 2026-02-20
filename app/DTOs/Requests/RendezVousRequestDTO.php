@@ -13,7 +13,6 @@ class RendezVousRequestDTO
         public DateTimeImmutable $dateHeureDebut,
         public string $motif,
         public int $user_id,
-        public int $etat_id,
         public int $veterinaire_id,
         public int $animal_id,
     )
@@ -28,7 +27,6 @@ class RendezVousRequestDTO
             new DateTimeImmutable($data['dateHeureDebut']),
             $data['motif'],
             $data['user_id'],
-            $data['etat_id'],
             $data['veterinaire_id'],
             $data['animal_id'],
         );
@@ -46,7 +44,6 @@ class RendezVousRequestDTO
             'dateHeureDebut' => $this->dateHeureDebut->format('Y-m-d H:i:s'),
             'motif' => $this->motif,
             'user_id' => $this->user_id,
-            'etat_id' => $this->etat_id,
             'veterinaire_id' => $this->veterinaire_id,
             'animal_id' => $this->animal_id,
         ];

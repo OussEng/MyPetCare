@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Etat;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->dateTime('dateHeureDebut');
             $table->text('motif');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('etat_id')->constrained('etats');
+            $table->string('etat')->default(Etat::EN_ATTENT->value);
             $table->foreignId('veterinaire_id')->constrained('veterinaires')->cascadeOnDelete();
             $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
 

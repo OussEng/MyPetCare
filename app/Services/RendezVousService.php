@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\DTOs\Requests\RendezVousRequestDTO;
 use App\DTOs\Response\RendezVousResponseDTO;
+use App\Enums\Etat;
 use App\Http\Requests\RendezVousRequest;
 use App\Models\RendezVous;
 use App\Repositories\RendezVousRepository;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -30,16 +32,29 @@ class RendezVousService
 
 
 
-    public function getAllApointementsByVet()
+    public function getAllApointementsByVet(?string $etat = null,?string $jour = null)
     {
-        $paginatedRvs = $this->rendezVousRepository
-            ->findAllByVet(auth()->user()->vet->id)
+
+        $etat = $etat ? Etat::tryFrom($etat) : null;
+        $today = CarbonImmutable::now();
+
+        $query = $this->rendezVousRepository
+            ->findAllByVet(auth()->user()->vet->id);
+
+        if($etat){
+            $query->where('etat', $etat->value);
+        }
+
+        if($jour){
+            $query->where('dateHeureDebut', 'like', "%{$today->format('Y-m-d')}%")
+            ->whereIn('etat',[Etat::CONFIRMER, Etat::EN_ATTENT]);
+        }
+
+        $paginatedRvs = $query
             ->paginate(10)
             ->withQueryString();
 
         $paginatedRvs->getCollection()->transform(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
-
-
 
        return $paginatedRvs;
 
@@ -89,6 +104,7 @@ class RendezVousService
 
         $rendezVouss =  $this->rendezVousRepository->findAllByUser($userId);
 
+
         return $rendezVouss->map(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
 
     }
@@ -104,23 +120,10 @@ class RendezVousService
 
     }
 
-    public function getTodaysApointement(): array
+    public function getTodaysApointement(): Collection
     {
-        $today = [];
-        $appointement = $this->getAllApointementsByVet();
 
-
-        foreach ($appointement as $app) {
-
-            $appDate = $app->dateHeureDebut->format('Y-m-d');
-
-            if ($appDate == now()->format('Y-m-d')) {
-                $today[] = $app;
-            }
-
-        }
-
-        return $today;
+        return $this->rendezVousRepository->findTodayApointement();
 
     }
 
@@ -128,6 +131,18 @@ class RendezVousService
     {
         $this->rendezVousRepository->findAllByVet(auth()->user()->vet->id);
     }
+
+
+    public function getPendingAponintements()
+    {
+
+        $rendezVouss = $this->rendezVousRepository->findPending();
+
+        return $rendezVouss->map(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
+
+    }
+
+
 
 
 }

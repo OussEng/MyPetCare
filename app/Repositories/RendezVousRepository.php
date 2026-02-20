@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\Etat;
 use App\Models\RendezVous;
 use Carbon\CarbonImmutable;
 
@@ -35,8 +36,17 @@ class RendezVousRepository
 
     }
 
+    public function findPending()
+    {
+        return RendezVous::where('etat', Etat::EN_ATTENT)->get();
+    }
 
+    public function findTodayApointement() : Collection
+    {
+        return RendezVous::whereIn('etat',[Etat::CONFIRMER,Etat::EN_ATTENT ] )
+            ->whereDate('dateHeureDebut', '=', CarbonImmutable::today())->get();
 
+    }
 
 
 }

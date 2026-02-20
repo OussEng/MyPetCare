@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Etat;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 
 class RendezVousRequest extends FormRequest
@@ -20,7 +22,7 @@ class RendezVousRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'etat_id' => 1 ,
+            'etat' => Etat::EN_ATTENT->value,
             'veterinaire_id' => $this->route('id'),
             'user_id' => $this->user()->id,
         ]);
@@ -40,7 +42,7 @@ class RendezVousRequest extends FormRequest
             'veterinaire_id' => 'integer|required',
             'animal_id' => 'integer|required',
             'user_id' => 'integer|required',
-            'etat_id' => 'integer|required',
+            'etat' => ['required', new Enum(Etat::class)],
         ];
     }
 }

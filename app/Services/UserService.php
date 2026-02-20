@@ -42,19 +42,7 @@ class UserService
     public function getAllClients(string $search=null)
     {
 
-        $query = $this->userRepository->findAllClients();
-
-
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('nom', 'like', "%{$search}%")
-                    ->orWhere('prenom', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            });
-        }
-
-
-        $clientsPaginated = $query->paginate(10);
+        $clientsPaginated = $this->userRepository->findAllClients($search);
 
 
         return $clientsPaginated->through(fn($client) => UserResponseDTO::fromModel($client));

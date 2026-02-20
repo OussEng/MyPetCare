@@ -61,10 +61,12 @@ class VeterinaireController extends Controller
     public function backoffice()
     {
         $rendez_vous = $this->rendezVousService->getTodaysApointement();
+        $pending = $this->rendezVousService->getPendingAponintements();
 
 
         return view('vet.Back Office.veretinarian-backoffice',[
-            'rendez_vous' => $rendez_vous
+            'rendez_vous' => $rendez_vous,
+            'pending' => $pending
         ]);
 
     }
@@ -98,9 +100,9 @@ class VeterinaireController extends Controller
 
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $rendezVous = $this->rendezVousService->getAllApointementsByVet();
+        $rendezVous = $this->rendezVousService->getAllApointementsByVet($request->get('etat'),$request->get('jour'));
 
         return view('vet.Back Office.veterinaire-rendez_vous-list' , [
             'rendezVous' => $rendezVous

@@ -6,6 +6,42 @@
                 class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600 ">Rendez vous</span>
         </h1>
 
+        <div class="flex justify-between space-x-2 mb-10" >
+            <a href="{{ route('vet.rendez-vous.list') }}"
+               class="flex-1 text-center text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                Tous
+            </a>
+
+            <a href="{{ route('vet.rendez-vous.list', ['etat' => 'en attente']) }}"
+               class="flex-1 text-center text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                En attente
+            </a>
+
+            <a href="{{ route('vet.rendez-vous.list', ['etat' => 'confirmé']) }}"
+               class="flex-1 text-center text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                Confirmés
+            </a>
+
+            <a href="{{ route('vet.rendez-vous.list', ['etat' => 'terminé']) }}"
+               class="flex-1 text-center text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                Terminés
+            </a>
+
+            <a href="{{ route('vet.rendez-vous.list', ['etat' => 'annulé']) }}"
+               class="flex-1 text-center text-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                Annulés
+            </a>
+        </div>
+
+        <div class="flex justify-center">
+
+        <div class="w-1/5">
+            <a href="{{ route('vet.rendez-vous.list', ['jour' => "aujourd'hui"]) }}"
+               class="flex-1 text-center text-sm text-white bg-green-600 hover:bg-green-700 active:scale-95 transition-all h-10 rounded-md flex items-center justify-center">
+                Aujourd'hui
+            </a>
+        </div>
+    </div>
 
         <div class="space-y-6">
             <div x-data="{show : false, selectedItem: {} }">
@@ -17,8 +53,21 @@
 
 
                             <div class=" flex items-center md:mr-5 w-32 h-20 text-center tracking-tight text-heading">
-                                (TODO)
-                                <div class="w-auto p-2 border rounded-full bg-green-400 align-middle">Confirmé</div>
+
+                                @if($rv->etat->isPending())
+                                    <div class="w-auto p-2 border rounded-full bg-yellow-200 align-middle">{{$rv->etat}}</div>
+                                @elseif($rv->etat->isConfirmed())
+                                    <div class="w-auto p-2 border rounded-full bg-green-200 align-middle">{{$rv->etat}}</div>
+
+                                @elseif($rv->etat->isFinished())
+                                    <div class="w-auto p-2 border rounded-full bg-blue-200 align-middle">{{$rv->etat}}</div>
+
+                                @elseif($rv->etat->isCancelled())
+                                    <div class="w-auto p-2 border rounded-full bg-red-200 align-middle">{{$rv->etat}}</div>
+
+                                @endif
+
+
                             </div>
 
 

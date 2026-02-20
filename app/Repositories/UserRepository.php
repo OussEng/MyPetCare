@@ -18,9 +18,20 @@ class UserRepository
     $user -> roles() ->attach($role);
     }
 
-    public function findAllClients()
+    public function findAllClients(string $search=null)
     {
-        return User::doesntHave('vet');
+        $query = User::doesntHave('vet');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nom', 'like', "%{$search}%")
+                    ->orWhere('prenom', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+
+        return $query->paginate(10);
     }
 
     public function findClient(int $id)

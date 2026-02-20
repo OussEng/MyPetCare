@@ -53,6 +53,7 @@ class RendezVousController extends Controller
 
         $rendezvous = $this->rendezVousService->getRendezVousByUser(Auth::id());
 
+
         return view('animal.mes-rendez-vous' , [
             'rendezvous' => $rendezvous
         ]);
