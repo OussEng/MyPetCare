@@ -75,10 +75,6 @@ class AnimalController extends Controller
             ]);
         }
 
-        if (!Auth::user()->isVet() && Auth::user()->id != $animal->user->id ){
-            abort(404);
-        }
-
         return view('animal.list-vaccinations',[
             'vaccinations' => $vaccinations,
             'animal' => $animal,

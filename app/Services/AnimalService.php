@@ -9,6 +9,7 @@ use App\Models\Animal;
 use App\Repositories\AnimalRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 
 
 class AnimalService
@@ -50,14 +51,19 @@ class AnimalService
 
     public function getAnimalById(int $id) : AnimalResponseDTO
     {
-        $animal = $this->repository->findById($id);
 
+        $animal = $this->repository->findById($id);
+        Gate::authorize('view', $animal );
         return AnimalResponseDTO::fromModel($animal);
 
     }
 
     public function deleteAnimal(int $id)
     {
+        $animal = $this->repository->findById($id);
+
+        Gate::authorize('delete', $animal);
+
         $this->repository->delete($id);
     }
 
