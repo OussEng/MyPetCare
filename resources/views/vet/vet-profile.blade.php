@@ -12,7 +12,7 @@
 
         <div class="relative z-10 flex justify-center pt-20 pb-32 px-4">
             <div class="w-full lg:w-2/3">
-                <h2 class="text-4xl font-extrabold text-white text-center mb-10">
+                <h2 class="text-4xl font-extrabold text-white text-center mb-40 xl:mb-5">
                     {{$vet->user->nom}} {{$vet->user->prenom}} :
                 </h2>
 
@@ -63,11 +63,13 @@
 
 
                             <h5 class="text-xl font-bold dark:text-white">Contact</h5>
+                            <div class="flex justify-center md:flex lg:block">
                             <div class="border-green-700 border-2 w-52 rounded">
                                 <ul>
                                     <li>Tel :  {{$vet->user->numero}}</li>
                                     <li>Email : {{$vet->user->email}}</li>
                                 </ul>
+                            </div>
                             </div>
                             <div class="pt-12 pb-8">
                                 <a href="{{route('rendez-vous.index' , $vet->id)}}" class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">

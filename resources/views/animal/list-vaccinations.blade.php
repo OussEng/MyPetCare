@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="mb-96">
-        <div class="ml-32 mt-10">
+        <div class="ml-2 xl:ml-32 mt-10">
         <a href="{{route('animaux')}}"
            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
@@ -38,7 +38,7 @@
 
             @else
 
-                <div class="w-2/3 mx-auto my-auto mb-28 mt-10">
+                <div class="w-11/12 xl:w-2/3 mx-auto my-auto mb-28 mt-10">
 
                     <div>
                         <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white inline-flex items-center">
@@ -104,8 +104,8 @@
                             @endforelse
                         </div>
                 </div>
-                <div class="w-1/2 mx-auto my-auto">
-                    <h2 class="text-4xl font-extrabold dark:text-white mb-10">Ajouter des vaccins :</h2>
+                <div class="w-11/12 xl:w-1/2 mx-auto my-auto">
+                    <h2 class="text-3xl xl:text-4xl font-extrabold dark:text-white mb-10">Ajouter des vaccins :</h2>
 
                     <div>
 

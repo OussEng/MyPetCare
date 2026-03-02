@@ -3,7 +3,9 @@
 @section('content')
 
     <div class="flex justify-center mb-52">
-        <div class="w-1/2 mt-20">
+
+        <div class=" xl:w-1/2 mt-20">
+            <h1 class="xl:ml-40 mb-10 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Ajouter un Animal</h1>
         <form method="POST" action="{{route('animaux.save')}}" class="max-w-sm mx-auto">
             @csrf
             <div class="mb-5">

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex justify-center mt-14 mb-96">
-        <div class="w-1/2">
+        <div class="w-11/12 lg:w-2/3">
             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                 Mes animeux</h1>
 
@@ -172,7 +172,7 @@
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                     <span
                         class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
-                        Ajouter un Animal domestique
+                        Ajouter
                     </span>
                 </a>
             </div>
