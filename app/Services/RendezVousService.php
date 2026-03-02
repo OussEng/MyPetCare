@@ -11,6 +11,7 @@ use App\Repositories\RendezVousRepository;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -99,13 +100,13 @@ class RendezVousService
     }
 
 
-    public function getRendezVousByUser(int $userId) : Collection
+    public function getRendezVousByUser(int $userId)
     {
 
-        $rendezVouss =  $this->rendezVousRepository->findAllByUser($userId);
+        $paginatedRvs =  $this->rendezVousRepository->findAllByUser($userId);
 
 
-        return $rendezVouss->map(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
+        return $paginatedRvs->through(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
 
     }
 

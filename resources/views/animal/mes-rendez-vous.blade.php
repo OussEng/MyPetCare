@@ -49,4 +49,8 @@
         @endforelse
     </div>
     </div>
+
+    <div class="mt-10 ml-24">
+        {{ $rendezvous->withQueryString()->links('pagination.custom') }}
+    </div>
 @endsection

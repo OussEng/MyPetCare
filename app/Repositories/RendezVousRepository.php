@@ -25,9 +25,11 @@ class RendezVousRepository
         ", [$today, $today]);
     }
 
-    public function findAllByUser(int $id) : Collection
+    public function findAllByUser(int $id)
     {
-        return RendezVous::where('user_id' , $id)->get();
+        $query = RendezVous::where('user_id' , $id);
+
+        return $query->paginate(10);
     }
 
     public function create(array $data) : RendezVous
