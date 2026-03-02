@@ -16,7 +16,7 @@ class VaccinationRepository
 
     public function findById(int $id) : Vaccination
     {
-        return Vaccination::find($id);
+        return Vaccination::findOrFail($id);
     }
 
 }

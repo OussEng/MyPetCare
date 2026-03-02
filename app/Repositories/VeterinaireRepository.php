@@ -17,7 +17,7 @@ class VeterinaireRepository
     }
 
     public function findVet($id){
-        return Vet::find($id);
+        return Vet::findOrFail($id);
     }
 
 }

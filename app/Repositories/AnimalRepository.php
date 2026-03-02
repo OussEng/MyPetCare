@@ -15,7 +15,7 @@ class AnimalRepository
 
     public function findById(int $id) : Animal
     {
-        return Animal::find($id);
+        return Animal::findOrFail($id);
     }
 
     public function create(array $data)

@@ -36,7 +36,7 @@ class UserRepository
 
     public function findClient(int $id)
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
 }
