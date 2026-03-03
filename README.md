@@ -88,11 +88,11 @@ L'application est disponible sur **http://localhost**.
 
 ## Comptes par défaut
 
-| Rôle    | Email            | Mot de passe |
-|---------|------------------|--------------|
-| Admin   | admin@mypet.com  | Pa$$w0rd     |
-| Véto    | vet@mypet.com    | Pa$$w0rd     |
-| Client  | client@mypet.com | Pa$$w0rd     |
+|             | Email            | Mot de passe |
+|-------------|------------------|--------------|
+| Admin       | admin@mypet.com  | Pa$$w0rd     |
+| Vétérinaire | vet@mypet.com    | Pa$$w0rd     |
+| Client      | client@mypet.com | Pa$$w0rd     |
 
 ---
 
