@@ -18,9 +18,11 @@ class UserRepository
     $user -> roles() ->attach($role);
     }
 
-    public function findAllClients(string $search=null)
+    public function findAllClients(string $search = null)
     {
-        $query = User::doesntHave('vet');
+        $query = User::whereDoesntHave('roles', function ($q) {
+            $q->whereIn('role', ['veterinarian', 'admin']);
+        });
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -29,7 +31,6 @@ class UserRepository
                     ->orWhere('email', 'like', "%{$search}%");
             });
         }
-
 
         return $query->paginate(10);
     }

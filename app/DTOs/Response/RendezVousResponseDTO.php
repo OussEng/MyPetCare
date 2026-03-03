@@ -12,13 +12,13 @@ class RendezVousResponseDTO
 
 
     public function __construct(
-        public int                $id,
-        public DateTimeImmutable  $dateHeureDebut,
-        public string             $motif,
-        public UserRequestDTO     $user,
-        public VeterinaireViewDTO $veterinaire,
-        public AnimalResponseDTO  $animal,
-        public Etat $etat,
+        public int                    $id,
+        public DateTimeImmutable      $dateHeureDebut,
+        public string                 $motif,
+        public UserRequestDTO         $user,
+        public VeterinaireResponseDTO $veterinaire,
+        public AnimalResponseDTO      $animal,
+        public Etat                   $etat,
     )
     {
     }
@@ -33,7 +33,7 @@ class RendezVousResponseDTO
         new DateTimeImmutable($rendezVous->dateHeureDebut),
         $rendezVous->motif,
         UserRequestDTO::fromModel($rendezVous->user),
-        VeterinaireViewDTO::fromModel($rendezVous->veterinaire),
+        VeterinaireResponseDTO::fromModel($rendezVous->veterinaire),
         AnimalResponseDTO::fromModel($rendezVous->animal),
         $rendezVous->etat,
         );

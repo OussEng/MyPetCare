@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTOs\Requests\UserRequestDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
-use App\DTOs\Response\VeterinaireViewDTO;
+use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
 use Illuminate\Support\Collection;
@@ -35,15 +35,15 @@ class VeterinaireService
          $vets = $this->repository->findAllVets();
 
 
-        return $vets->map(fn($vet) => VeterinaireViewDTO::fromModel($vet) );
+        return $vets->map(fn($vet) => VeterinaireResponseDTO::fromModel($vet) );
     }
 
 
-    public function getVet(int $id) : VeterinaireViewDTO
+    public function getVet(int $id) : VeterinaireResponseDTO
     {
         $vet = $this->repository->findVet($id);
 
-        return VeterinaireViewDTO::fromModel($vet);
+        return VeterinaireResponseDTO::fromModel($vet);
     }
 
 
