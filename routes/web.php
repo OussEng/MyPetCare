@@ -27,9 +27,6 @@ Route::middleware('auth')->group(function () {
 
     //Vaccination
     Route::get('/vaccinations/{id}', [AnimalController::class, 'listAnimalVaccinations'])->name('vaccinations');
-    Route::post('/vaccinations/{id}', [AnimalController::class, 'ajouter_vaccinations'])->name('vaccinations.add');
-    Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');
-
 
     //Vet
         //vet list
@@ -65,6 +62,11 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
     Route::get('vet/backoffice/profile' , [VeterinaireController::class, 'profile'])->name('veterinaire.profile');
 
     Route::post('vet/backoffice/profile',[VeterinaireController::class, 'editLangues'])->name('veterinaire.add-langues');
+
+    Route::post('/vaccinations/{id}', [AnimalController::class, 'ajouter_vaccinations'])->name('vaccinations.add');
+    Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');
+
+
 
 });
 
