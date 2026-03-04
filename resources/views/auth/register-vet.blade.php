@@ -105,7 +105,7 @@
                         <x-text-input id="dateDeNaissance" class="block mt-1 w-full" type="date" name="dateDeNaissance"
                                       :value="old('dateDeNaissance')" required autofocus
                                       autocomplete="dateDeNaissance"/>
-                        <x-input-error :messages="$errors->get('certification')" class="mt-2"/>
+                        <x-input-error :messages="$errors->get('dateDeNaissance')" class="mt-2"/>
                     </div>
 
                     <div>
@@ -113,14 +113,14 @@
                         <x-text-input id="licenceExpiration" class="block mt-1 w-full" type="date"
                                       name="licenceExpiration" :value="old('licenceExpiration')" required autofocus
                                       autocomplete="licenceExpiration"/>
-                        <x-input-error :messages="$errors->get('certification')" class="mt-2"/>
+                        <x-input-error :messages="$errors->get('licenceExpiration')" class="mt-2"/>
                     </div>
 
                     <div>
-                        <x-input-label for="horaires" :value="__('Horaires')"/>
-                        <x-text-input id="horaires" class="block mt-1 w-full" type="text" name="horaires"
-                                      :value="old('horaires')" required autofocus autocomplete="horaires"/>
-                        <x-input-error :messages="$errors->get('certification')" class="mt-2"/>
+                        <x-input-label for="adresseClinique" :value="__('Adresse de clinique')"/>
+                        <x-text-input id="adresseClinique" class="block mt-1 w-full" type="text" name="adresseClinique"
+                                      :value="old('adresseClinique')" required autofocus autocomplete="adresseClinique"/>
+                        <x-input-error :messages="$errors->get('adresseClinique')" class="mt-2"/>
                     </div>
 
                 </div>

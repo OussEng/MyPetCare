@@ -23,7 +23,7 @@ class VeterinaireRequest extends FormRequest
     {
         return [
             'dateDeNaissance' => 'required|date|date_format:Y-m-d',
-            'horaires' => 'nullable|string',
+            'adresseClinique' => 'nullable|string',
             'numeroLicence' => 'required|string|max:50',
             'nomClinique' => 'required|string|max:255',
             'NbAnsExperience' => 'required|integer|min:0',

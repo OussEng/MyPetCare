@@ -14,7 +14,7 @@ class Vet extends Model
 
     protected $table = 'veterinaires';
 
-    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','horaires', 'user_id'];
+    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','adresseClinique', 'user_id'];
 
 
 

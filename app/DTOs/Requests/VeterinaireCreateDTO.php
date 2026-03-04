@@ -9,10 +9,10 @@ class VeterinaireCreateDTO
     public function __construct(
         public string $numeroLicence,
         public string $nomClinique,
+        public string $adresseClinique,
         public int $NbAnsExperience,
         public string $dateDeNaissance,
         public string $licenceExpiration,
-        public ?string $horaires = null,
         public ?string $certification,
     ) {}
 
@@ -21,10 +21,10 @@ class VeterinaireCreateDTO
         return new self(
             numeroLicence: $data['numeroLicence'],
             nomClinique: $data['nomClinique'],
+            adresseClinique: $data['adresseClinique'],
             NbAnsExperience: $data['NbAnsExperience'],
             dateDeNaissance: $data['dateDeNaissance'],
             licenceExpiration: $data['licenceExpiration'],
-            horaires: $data['horaires'] ?? null,
             certification: $data['certification'],
         );
     }
@@ -42,8 +42,8 @@ class VeterinaireCreateDTO
             'NbAnsExperience' => $this->NbAnsExperience,
             'dateDeNaissance' => $this->dateDeNaissance,
             'licenceExpiration' => $this->licenceExpiration,
-            'horaires' => $this->horaires,
             'certification' => $this->certification,
+            'adresseClinique' => $this->adresseClinique,
         ];
     }
 }

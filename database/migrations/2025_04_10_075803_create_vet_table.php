@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('certification');
             $table->date('dateDeNaissance');
             $table->date('licenceExpiration');
-            $table->string('horaires');
+            $table->string('adresseClinique');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

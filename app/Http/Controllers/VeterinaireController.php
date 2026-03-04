@@ -10,6 +10,7 @@ use App\Services\SexeServices;
 use App\Services\UserService;
 use App\Services\VeterinaireService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VeterinaireController extends Controller
 {
@@ -107,6 +108,19 @@ class VeterinaireController extends Controller
         return view('vet.Back Office.veterinaire-rendez_vous-list' , [
             'rendezVous' => $rendezVous
         ]);
+
+    }
+
+
+    public function profile()
+    {
+        $vet = $this->veterinarianService->getVet(Auth::id());
+        dd($vet);
+
+        return view('vet.Back Office.veterinaire-profile', [
+            'vet' => $vet
+        ]);
+
 
     }
 

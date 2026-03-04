@@ -44,7 +44,7 @@
                                 <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 20 20">
                                     <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82z" />
-                                </svg> clinique address (TODO)
+                                </svg> {{$vet->adresseClinique}}
                             </p>
 
                             <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
@@ -52,13 +52,6 @@
                                      viewBox="0 0 20 20">
                                     <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82z" />
                                 </svg> {{$vet->NbAnsExperience}} Ans d'experience
-                            </p>
-
-                            <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
-                                <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 20 20">
-                                    <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82z" />
-                                </svg> {{$vet->horaires}}
                             </p>
 
 

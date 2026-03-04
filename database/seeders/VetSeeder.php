@@ -29,7 +29,7 @@ class VetSeeder extends Seeder
             'certification' => 'DESC Chirurgie',
             'dateDeNaissance' => '1990-01-01',
             'licenceExpiration' => '2030-01-01',
-            'horaires' => '09:00 - 17:00',
+            'adresseClinique' => '1 rue du france',
             'created_at' => now(),
             'user_id' => $userId,
         ]);

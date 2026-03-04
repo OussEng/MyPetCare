@@ -62,6 +62,8 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
     //veterinaire rendez vous list
     Route::get('vet/backoffice/mes-rendez-vous', [VeterinaireController::class, 'list'])->name('vet.rendez-vous.list');
 
+    Route::get('vet/backoffice/profile' , [VeterinaireController::class, 'profile'])->name('veterinaire.profile');
+
 });
 
 

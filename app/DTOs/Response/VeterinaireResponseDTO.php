@@ -12,10 +12,10 @@ class VeterinaireResponseDTO
         public UserRequestDTO $user,
         public string         $numeroLicence,
         public string         $nomClinique,
+        public string         $adresseClinique,
         public int            $NbAnsExperience,
         public string         $dateDeNaissance,
         public string         $licenceExpiration,
-        public string         $horaires,
         public string         $certification,
         public int            $user_id,
     ) {}
@@ -29,10 +29,10 @@ class VeterinaireResponseDTO
             UserRequestDTO::fromModel($vet->user),
             $vet->numeroLicence,
             $vet->nomClinique,
+            $vet->adresseClinique,
             $vet->NbAnsExperience,
             $vet->dateDeNaissance,
             $vet->licenceExpiration,
-            $vet->horaires,
             $vet->certification,
             $vet->user_id,
         );
