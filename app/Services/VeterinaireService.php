@@ -7,6 +7,7 @@ use App\DTOs\Requests\VeterinaireCreateDTO;
 use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class VeterinaireService
@@ -42,8 +43,17 @@ class VeterinaireService
     public function getVet(int $id) : VeterinaireResponseDTO
     {
         $vet = $this->repository->findVet($id);
-
         return VeterinaireResponseDTO::fromModel($vet);
+    }
+
+    public function editLangues(Request $request): void
+    {
+
+        $vet = $this->repository->findVet(auth()->user()->vet->id);
+        $langues = $request->input("langues" , []);
+
+        $vet->langues()->sync($langues);
+
     }
 
 

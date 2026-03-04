@@ -4,6 +4,7 @@ namespace App\DTOs\Response;
 
 use App\DTOs\Requests\UserRequestDTO;
 use App\Models\Vet;
+use Illuminate\Support\Collection;
 
 class VeterinaireResponseDTO
 {
@@ -17,6 +18,7 @@ class VeterinaireResponseDTO
         public string         $dateDeNaissance,
         public string         $licenceExpiration,
         public string         $certification,
+        public Collection $langues,
         public int            $user_id,
     ) {}
 
@@ -34,6 +36,7 @@ class VeterinaireResponseDTO
             $vet->dateDeNaissance,
             $vet->licenceExpiration,
             $vet->certification,
+            $vet->langues->map(fn($langue) => LangueResponseDTO::fromModel($langue)),
             $vet->user_id,
         );
     }

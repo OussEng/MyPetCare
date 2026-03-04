@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('language_vet', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vet_id')->constrained('veterinaires')->onDelete('cascade');
-            $table->foreignId('language_id')->constrained('langues')->onDelete('cascade');
+            $table->foreignId('langue_id')->constrained('langues')->onDelete('cascade');
             $table->timestamps();
         });
 

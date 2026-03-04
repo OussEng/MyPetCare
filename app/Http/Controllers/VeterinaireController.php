@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vet;
 use App\Services\AnimalService;
 use App\Services\EspeceService;
+use App\Services\LangueService;
 use App\Services\RendezVousService;
 use App\Services\SexeServices;
 use App\Services\UserService;
@@ -22,11 +23,12 @@ class VeterinaireController extends Controller
     private EspeceService $especeService;
     private SexeServices $sexeService;
     private AnimalService $animalService;
+    private LangueService $langueService;
 
     /**
      * @param VeterinaireService $veterinarianService
      */
-    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, UserService $userService, EspeceService $especeService, SexeServices $sexeService, AnimalService $animalService)
+    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, UserService $userService, EspeceService $especeService, SexeServices $sexeService, AnimalService $animalService, LangueService $langueService)
     {
         $this->veterinarianService = $veterinarianService;
         $this->rendezVousService = $rendezVousService;
@@ -34,6 +36,7 @@ class VeterinaireController extends Controller
         $this->especeService = $especeService;
         $this->sexeService = $sexeService;
         $this->animalService = $animalService;
+        $this->langueService = $langueService;
     }
 
 
@@ -45,6 +48,7 @@ class VeterinaireController extends Controller
             'vets' => $vets]);
     }
 
+    //profile that clients see
     public function vet_profile($id)
     {
         $vet = $this->veterinarianService->getVet($id);
@@ -114,15 +118,24 @@ class VeterinaireController extends Controller
 
     public function profile()
     {
-        $vet = $this->veterinarianService->getVet(Auth::id());
-        dd($vet);
+        $vet = $this->veterinarianService->getVet(Auth::user()->vet->id);
+        $langues = $this->langueService->getLangues();
+
 
         return view('vet.Back Office.veterinaire-profile', [
-            'vet' => $vet
-        ]);
+            'vet' => $vet,
+            'langues' => $langues
 
+        ]);
 
     }
 
+    public function editLangues(Request $request)
+    {
+
+        $this->veterinarianService->editLangues($request);
+
+        return redirect()->back();
+    }
 
 }

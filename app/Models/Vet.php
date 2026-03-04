@@ -25,7 +25,7 @@ class Vet extends Model
 
     public function langues(): belongsToMany
     {
-        return $this->belongsToMany(Langues::class);
+        return $this->belongsToMany(Langue::class);
     }
 
     public function rendez_vous(): HasMany

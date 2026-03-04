@@ -64,6 +64,8 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
 
     Route::get('vet/backoffice/profile' , [VeterinaireController::class, 'profile'])->name('veterinaire.profile');
 
+    Route::post('vet/backoffice/profile',[VeterinaireController::class, 'editLangues'])->name('veterinaire.add-langues');
+
 });
 
 
