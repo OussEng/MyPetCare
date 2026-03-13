@@ -31,7 +31,7 @@ class AnimalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required|string',
+            'nom' => 'required|string|max:50',
             'espece_id' => 'required|integer',
             'race' => 'nullable|string',
             'dateNaissance' => 'nullable|date',

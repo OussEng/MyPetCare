@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
@@ -68,6 +69,10 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
 
 
 
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/backoffice', [AdminController::class, 'backoffice'])->name('admin.backoffice');
 });
 
 
