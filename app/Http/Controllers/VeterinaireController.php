@@ -133,7 +133,7 @@ class VeterinaireController extends Controller
     public function editLangues(Request $request)
     {
 
-        $this->veterinarianService->editLangues($request);
+        $this->veterinarianService->editLangues($request, auth()->user()->vet->id);
 
         return redirect()->back();
     }

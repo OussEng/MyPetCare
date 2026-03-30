@@ -52,7 +52,7 @@
 
         <div class="flex justify-between align-end self-end w-full h-12 border-r mt-1 mb-1">
             <img src="{{asset('imgs/pfp.png')}}" alt="pfp" class="w-10 h-10 rounded-full mt-1">
-            <span class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group space-y-2 font-medium">{{Auth::user()->vet->user->nom}} {{Auth::user()->vet->user->prenom}}</span>
+            <span class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group space-y-2 font-medium">{{Auth::user()->nom}} {{Auth::user()->prenom}}</span>
 
             <div class="self-center">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">

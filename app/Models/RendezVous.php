@@ -12,6 +12,8 @@ class RendezVous extends Model
 {
     use HasFactory;
 
+    protected $table = 'rendez_vouses';
+
     protected $fillable = ['dateHeureDebut', 'motif','user_id','animal_id','veterinaire_id','etat'];
 
     protected $casts = [

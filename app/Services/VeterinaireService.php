@@ -46,10 +46,10 @@ class VeterinaireService
         return VeterinaireResponseDTO::fromModel($vet);
     }
 
-    public function editLangues(Request $request): void
+    public function editLangues(Request $request,int $id): void
     {
 
-        $vet = $this->repository->findVet(auth()->user()->vet->id);
+        $vet = $this->repository->findVet($id);
         $langues = $request->input("langues" , []);
 
         $vet->langues()->sync($langues);
