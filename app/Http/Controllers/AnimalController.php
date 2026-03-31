@@ -56,10 +56,10 @@ class AnimalController extends Controller
         $this->animalService->create($request);
 
         if (Auth::user()->isVet()){
-            return redirect()->route('veterinaire.client', ['client' => $request->user_id]);
+            return redirect()->route('veterinaire.client', ['client' => $request->user_id])->with('success', 'Animal créé avec succès');
         }
 
-        return redirect()->route('animaux');
+        return redirect()->route('animaux')->with('success', 'Animal créé avec succès');
 
     }
 
@@ -90,10 +90,10 @@ class AnimalController extends Controller
 
 
         if (Auth::user()->isVet()){
-            return redirect()->route('veterinaire.client', ['client' =>  $client]);
+            return redirect()->route('veterinaire.client', ['client' =>  $client])->with('success','Animal supprimé avec succès');
         }
 
-        return redirect()->route('animaux');
+        return redirect()->route('animaux')->with('success', 'Animal supprimé avec succès');
     }
 
 
@@ -102,14 +102,14 @@ class AnimalController extends Controller
 
         $this->vaccinationService->addVaccination($id, $request);
 
-        return redirect()->route('vaccinations' , $id);
+        return redirect()->route('vaccinations' , $id)->with('success', 'Vaccination ajoutée avec succès');
     }
 
     public function supprimer_vaccination(int $animal_id, int $vaccination_id){
 
         $this->vaccinationService->removeVaccination($animal_id, $vaccination_id);
 
-        return redirect()->route('vaccinations' , $animal_id);
+        return redirect()->route('vaccinations' , $animal_id)->with('success', 'Vaccination retirée avec succès');
     }
 
 

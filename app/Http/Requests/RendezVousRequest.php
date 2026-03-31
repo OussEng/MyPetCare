@@ -38,11 +38,22 @@ class RendezVousRequest extends FormRequest
     {
         return [
             'dateHeureDebut' => 'date|required',
-            'motif' => 'string|required',
+            'motif' => 'required',
             'veterinaire_id' => 'integer|required',
             'animal_id' => 'integer|required',
             'user_id' => 'integer|required',
             'etat' => ['required', new Enum(Etat::class)],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'dateHeureDebut.required' => 'Veuillez sélectionner une date et une heure.',
+            'dateHeureDebut.date' => 'La date et l\'heure doivent être valides.',
+            'motif.required' => 'Veuillez indiquer le motif du rendez-vous.',
+            'animal_id.required' => 'Veuillez sélectionner un animal.',
+            'etat.required' => 'L\'état du rendez-vous est requis.',
+        ];
+    }
+
 }

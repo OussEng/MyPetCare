@@ -4,7 +4,7 @@
     <div class="flex justify-center mt-14 mb-96">
         <div class="w-11/12 lg:w-2/3">
             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                Mes animeux</h1>
+                Mes animaux</h1>
 
             <div class="mb-20">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -130,10 +130,11 @@
                                     <td class="px-6 py-4">
                                         {{ $animal->poids }} Kg
                                     </td>
+                                @else
+                                        <td class="px-6 py-4">
+                                            Inconnue
+                                        </td>
                                 @endif
-                                <td class="px-6 py-4">
-                                    Inconnue
-                                </td>
 
                                 <td class="px-6 py-4">
                                     <p class="text-gray-500 dark:text-gray-400"><a href="{{route('vaccinations', $animal->id)}}"

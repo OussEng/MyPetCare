@@ -135,7 +135,7 @@ class VeterinaireController extends Controller
 
         $this->veterinarianService->editLangues($request, auth()->user()->vet->id);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Langues mises à jour avec succès');
     }
 
 }

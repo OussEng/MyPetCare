@@ -40,4 +40,15 @@ class AnimalRequest extends FormRequest
             'user_id' => 'required|integer',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nom.required'      => 'Le nom de l\'animal est requis.',
+            'nom.max'           => 'Le nom ne doit pas dépasser 50 caractères.',
+            'espece_id.required' => 'L\'espèce est requise.',
+            'espece_id.integer' => 'L\'espèce doit être un nombre entier.',
+            'sexe_id.required'  => 'Le sexe est requis.',
+        ];
+    }
 }

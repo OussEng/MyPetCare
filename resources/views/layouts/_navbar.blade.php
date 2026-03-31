@@ -61,11 +61,11 @@
                             @if(Route::is('animaux'))
                                     <a href="{{route('animaux')}}"
                                        class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Mes
-                                        animeux</a>
+                                        animaux</a>
                             @else
                                     <a href="{{route('animaux')}}"
                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Mes
-                                        animeux</a>
+                                        animaux</a>
                             @endif
 
                             @if(Route::is('profile.edit'))
@@ -142,7 +142,7 @@
                     vous</a>
                 <a href="{{route('animaux')}}"
                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Mes
-                    animeux</a>
+                    animaux</a>
                 <a href="{{route('profile.edit')}}"
                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Profile</a>
 

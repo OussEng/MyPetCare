@@ -44,8 +44,7 @@ class RendezVousController extends Controller
 
             $this->rendezVousService->create($request);
 
-        return redirect('/rendez-vous');
-
+    return redirect('/mes-rendez-vous')->with('success', 'Rendez-vous réservé avec succès');
     }
 
 
