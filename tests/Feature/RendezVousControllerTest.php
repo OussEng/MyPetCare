@@ -93,7 +93,7 @@ class RendezVousControllerTest extends TestCase
                 'motif'          => 'Visite',
                 'animal_id'      => $animal->id,
             ])
-            ->assertRedirect('/mes-rondez-vous');
+            ->assertRedirect('/mes-rendez-vous');
 
         $this->assertDatabaseHas('rendez_vouses', [
             'motif'          => 'Visite',
