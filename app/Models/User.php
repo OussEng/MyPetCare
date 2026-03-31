@@ -69,7 +69,15 @@ class User extends Authenticatable
 
     public function isVet()
     {
-        return $this->vet()->exists();
+        return $this->hasRole('veterinarian');
+    }
+
+    public function isPendingVet(){
+        return $this->vet()->exists() && $this->hasRole("user");
+    }
+
+    public function isAdmin(){
+        return $this->hasRole('admin');
     }
 
 
