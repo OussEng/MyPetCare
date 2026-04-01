@@ -175,6 +175,80 @@ class AnimalServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
+    public function test_updateAnimal_authorized_returns_updated_animal(): void
+    {
+        $animal = $this->makeFullAnimal(['id' => 4, 'nom' => 'Rex']);
+
+        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock->shouldReceive('validated')->andReturn([
+            'nom' => 'Max', 'espece_id' => 1, 'race' => null,
+            'dateNaissance' => null, 'poids' => null, 'sexe_id' => 1,
+        ]);
+
+        $this->repoMock->shouldReceive('findById')->with(4)->once()->andReturn($animal);
+        Gate::shouldReceive('authorize')->with('update', $animal)->once()->andReturn(true);
+
+        $updatedAnimal = $this->makeFullAnimal(['id' => 4, 'nom' => 'Max']);
+        $this->repoMock->shouldReceive('update')->with(4, Mockery::any())->once()->andReturn($updatedAnimal);
+
+        $result = $this->service->updateAnimal(4, $requestMock);
+
+        $this->assertInstanceOf(Animal::class, $result);
+        $this->assertSame('Max', $result->nom);
+    }
+
+    public function test_updateAnimal_calls_repository_with_validated_data(): void
+    {
+        $validatedData = [
+            'nom' => 'Buddy', 'espece_id' => 2, 'race' => 'Berger',
+            'dateNaissance' => '2021-05-10', 'poids' => '8', 'sexe_id' => 1,
+        ];
+
+        $animal = $this->makeFullAnimal(['id' => 5]);
+
+        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock->shouldReceive('validated')->once()->andReturn($validatedData);
+
+        $this->repoMock->shouldReceive('findById')->with(5)->once()->andReturn($animal);
+        Gate::shouldReceive('authorize')->with('update', $animal)->once()->andReturn(true);
+        $this->repoMock->shouldReceive('update')->with(5, $validatedData)->once()->andReturn($animal);
+
+        $this->service->updateAnimal(5, $requestMock);
+
+        $this->assertTrue(true);
+    }
+
+    public function test_updateAnimal_unauthorized_throws_AuthorizationException(): void
+    {
+        $this->expectException(AuthorizationException::class);
+
+        $animal = $this->makeFullAnimal(['id' => 6]);
+        $requestMock = Mockery::mock(AnimalRequest::class);
+
+        $this->repoMock->shouldReceive('findById')->with(6)->once()->andReturn($animal);
+        Gate::shouldReceive('authorize')->with('update', $animal)->once()
+            ->andThrow(new AuthorizationException());
+
+        $this->service->updateAnimal(6, $requestMock);
+    }
+
+    public function test_updateAnimal_does_not_call_update_when_unauthorized(): void
+    {
+        $animal = $this->makeFullAnimal(['id' => 6]);
+        $requestMock = Mockery::mock(AnimalRequest::class);
+
+        $this->repoMock->shouldReceive('findById')->with(6)->once()->andReturn($animal);
+        Gate::shouldReceive('authorize')->andThrow(new AuthorizationException());
+        $this->repoMock->shouldReceive('update')->never();
+
+        try {
+            $this->service->updateAnimal(6, $requestMock);
+        } catch (AuthorizationException) {
+        }
+
+        $this->assertTrue(true);
+    }
+
     protected function tearDown(): void
     {
         Mockery::close();

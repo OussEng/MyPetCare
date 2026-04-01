@@ -67,5 +67,15 @@ class AnimalService
         $this->repository->delete($id);
     }
 
+    public function updateAnimal(int $id, AnimalRequest $request): Animal
+    {
+        $animal = $this->repository->findById($id);
+
+        Gate::authorize('update', $animal);
+
+        $data = $request->validated();
+
+        return $this->repository->update($id, $data);
+    }
 
 }

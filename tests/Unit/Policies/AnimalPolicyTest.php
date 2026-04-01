@@ -125,10 +125,35 @@ class AnimalPolicyTest extends TestCase
         $this->assertFalse($this->policy->create($user));
     }
 
-    public function test_update_always_returns_false(): void
+    public function test_update_owner_can_update_own_animal(): void
     {
-        $user   = User::factory()->make();
-        $animal = $this->makeAnimalOwnedBy(1);
+        $user = Mockery::mock(User::class)->makePartial();
+        $user->id = 5;
+        $user->shouldReceive('hasRole')->andReturn(false);
+
+        $animal = $this->makeAnimalOwnedBy(5);
+
+        $this->assertTrue($this->policy->update($user, $animal));
+    }
+
+    public function test_update_veterinarian_can_update_any_animal(): void
+    {
+        $user = Mockery::mock(User::class)->makePartial();
+        $user->id = 99;
+        $user->shouldReceive('hasRole')->with('veterinarian')->andReturn(true);
+
+        $animal = $this->makeAnimalOwnedBy(5);
+
+        $this->assertTrue($this->policy->update($user, $animal));
+    }
+
+    public function test_update_stranger_cannot_update_others_animal(): void
+    {
+        $user = Mockery::mock(User::class)->makePartial();
+        $user->id = 99;
+        $user->shouldReceive('hasRole')->with('veterinarian')->andReturn(false);
+
+        $animal = $this->makeAnimalOwnedBy(5);
 
         $this->assertFalse($this->policy->update($user, $animal));
     }

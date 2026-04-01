@@ -149,7 +149,20 @@
                                         </a></p>
                                 </td>
                                 <td class="px-6 py-4 text-right">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                    <a href="{{ route('animaux.edit', $animal->id) }}"
+                                       class="font-medium text-blue-600 dark:text-blue-500 hover:underline me-3">
+                                        Modifier
+                                    </a>
+
+                                    <form action="{{ route('animaux.delete', $animal->id) }}" method="POST" class="inline"
+                                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer {{ $animal->nom }} ?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                            Supprimer
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
 

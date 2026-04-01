@@ -256,5 +256,133 @@ class AnimalControllerTest extends TestCase
             ]))            ->assertStatus(403);
     }
 
+    // ── edit ────────────────────────────────────────────────────────────────
+
+    public function test_animal_edit_form_not_logged_in(): void
+    {
+        $user   = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $user->id]);
+
+        $this->get(route('animaux.edit', $animal->id))
+            ->assertRedirect('/login');
+    }
+
+    public function test_animal_edit_form_owner_sees_prefilled_form(): void
+    {
+        $user   = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user)
+            ->get(route('animaux.edit', $animal->id))
+            ->assertStatus(200)
+            ->assertViewIs('animal.modifier-animal')
+            ->assertViewHas('animal')
+            ->assertViewHas('especes')
+            ->assertViewHas('sexes');
+    }
+
+    public function test_animal_edit_form_stranger_is_forbidden(): void
+    {
+        $owner  = User::factory()->create();
+        $other  = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $owner->id]);
+
+        $this->actingAs($other)
+            ->get(route('animaux.edit', $animal->id))
+            ->assertStatus(403);
+    }
+
+    public function test_vet_can_access_edit_form_of_any_animal(): void
+    {
+        $vet    = User::factory()->vet()->create();
+        $client = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $client->id]);
+
+        $this->actingAs($vet)
+            ->get(route('animaux.edit', $animal->id))
+            ->assertStatus(200)
+            ->assertViewIs('animal.modifier-animal');
+    }
+
+    // ── update ──────────────────────────────────────────────────────────────
+
+    public function test_owner_can_update_animal(): void
+    {
+        $user   = User::factory()->create();
+        $espece = Espece::factory()->create();
+        $sexe   = Sexe::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user)
+            ->put(route('animaux.update', $animal->id), [
+                'nom'           => 'Nouveau Nom',
+                'espece_id'     => $espece->id,
+                'sexe_id'       => $sexe->id,
+                'race'          => 'Labrador',
+                'dateNaissance' => '2019-03-15',
+                'poids'         => '12',
+            ])
+            ->assertRedirect(route('animaux'));
+
+        $this->assertDatabaseHas('animals', ['id' => $animal->id, 'nom' => 'Nouveau Nom']);
+    }
+
+    public function test_vet_can_update_client_animal(): void
+    {
+        $vet    = User::factory()->vet()->create();
+        $client = User::factory()->create();
+        $espece = Espece::factory()->create();
+        $sexe   = Sexe::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $client->id]);
+
+        $this->actingAs($vet)
+            ->put(route('animaux.update', $animal->id), [
+                'nom'       => 'VetNom',
+                'espece_id' => $espece->id,
+                'sexe_id'   => $sexe->id,
+            ])
+            ->assertRedirect(route('veterinaire.client', ['client' => $client->id]));
+
+        $this->assertDatabaseHas('animals', ['id' => $animal->id, 'nom' => 'VetNom']);
+    }
+
+    public function test_stranger_cannot_update_others_animal(): void
+    {
+        $owner  = User::factory()->create();
+        $other  = User::factory()->create();
+        $espece = Espece::factory()->create();
+        $sexe   = Sexe::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $owner->id]);
+
+        $this->actingAs($other)
+            ->put(route('animaux.update', $animal->id), [
+                'nom'       => 'Hack',
+                'espece_id' => $espece->id,
+                'sexe_id'   => $sexe->id,
+            ])
+            ->assertStatus(403);
+    }
+
+    public function test_update_animal_validation_fails_when_required_fields_missing(): void
+    {
+        $user   = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user)
+            ->put(route('animaux.update', $animal->id), [
+                //
+                'race' => 'Labrador',
+            ])
+            ->assertSessionHasErrors(['nom', 'espece_id', 'sexe_id']);
+    }
+
+    public function test_update_animal_not_logged_in_redirects_to_login(): void
+    {
+        $user   = User::factory()->create();
+        $animal = Animal::factory()->create(['user_id' => $user->id]);
+
+        $this->put(route('animaux.update', $animal->id), ['nom' => 'Test'])
+            ->assertRedirect('/login');
+    }
 
 }

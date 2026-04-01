@@ -96,6 +96,31 @@ class AnimalController extends Controller
         return redirect()->route('animaux')->with('success', 'Animal supprimé avec succès');
     }
 
+    public function edit(int $id)
+    {
+        $animal  = $this->animalService->getAnimalById($id);
+        $especes = $this->especeService->getEspeces();
+        $sexes   = $this->sexeService->getSexes();
+
+        return view('animal.modifier-animal', [
+            'animal'  => $animal,
+            'especes' => $especes,
+            'sexes'   => $sexes,
+        ]);
+    }
+
+    public function update(int $id, AnimalRequest $request)
+    {
+        $this->animalService->updateAnimal($id, $request);
+
+        if (Auth::user()->isVet()) {
+            $client = $this->animalService->getAnimalById($id)->user->id;
+            return redirect()->route('veterinaire.client', ['client' => $client])->with('success', 'Animal modifié avec succès');
+        }
+
+        return redirect()->route('animaux')->with('success', 'Animal modifié avec succès');
+    }
+
 
 
     public function ajouter_vaccinations(int $id, Request $request){

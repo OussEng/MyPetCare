@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/creer-animal', [AnimalController::class, 'form'])->name('animaux.form');
     Route::post('/creer-animal', [AnimalController::class, 'save'])->name('animaux.save');
     Route::delete('animals/{animal}/delete', [AnimalController::class, 'delete'])->name('animaux.delete');
+    Route::get('animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animaux.edit');
+    Route::put('animals/{animal}/update', [AnimalController::class, 'update'])->name('animaux.update');
 
     //Vaccination
     Route::get('/vaccinations/{id}', [AnimalController::class, 'listAnimalVaccinations'])->name('vaccinations');

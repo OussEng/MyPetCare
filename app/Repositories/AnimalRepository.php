@@ -28,4 +28,11 @@ class AnimalRepository
         Animal::destroy($id);
     }
 
+    public function update(int $id, array $data): Animal
+    {
+        $animal = Animal::findOrFail($id);
+        $animal->update($data);
+        return $animal;
+    }
+
 }

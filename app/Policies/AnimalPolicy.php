@@ -37,7 +37,7 @@ class AnimalPolicy
      */
     public function update(User $user, Animal $animal): bool
     {
-        return false;
+        return $animal->user->id === $user->id || $user->hasRole('veterinarian');
     }
 
     /**
