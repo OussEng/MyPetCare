@@ -20,4 +20,20 @@ class VeterinaireRepository
         return Vet::findOrFail($id);
     }
 
+    public function findPendingVets()
+    {
+        $query = Vet::whereHas('user.roles', function ($query) {
+            $query->where('role', 'user')
+                ->where('isReviewed', false);
+        })->with('user');
+
+        return $query->paginate(10);
+    }
+
+    public function review(Vet $vet)
+    {
+        $vet->update(['isReviewed' => true]);
+    }
+
+
 }

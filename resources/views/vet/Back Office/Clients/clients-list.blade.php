@@ -31,8 +31,11 @@
                 <ul role="list" class="divide-y divide-gray-100  h-full ml-5">
                     <li class="flex justify-between gap-x-6 py-5">
                         <div class="flex min-w-0 gap-x-4">
-                            <img src="{{asset('imgs/user-pfp.png')}}" alt=""
-                                 class="size-12 flex-none rounded-full bg-gray-50"/>
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0 mr-6">
+                                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
                             <div class="min-w-0 flex-auto">
                                 <p class="text-sm/6 font-semibold text-gray-900">{{$client->nom}} {{$client->prenom}}</p>
                                 <p class="mt-1 truncate text-xs/5 text-gray-500">{{$client->email}}</p>

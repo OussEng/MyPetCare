@@ -2,8 +2,10 @@
 
 namespace Tests\Integration\Repositories;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Vet;
+use App\Repositories\UserRepository;
 use App\Repositories\VeterinaireRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,11 +16,13 @@ class VeterinaireRepositoryTest extends TestCase
     use RefreshDatabase;
 
     private VeterinaireRepository $repository;
+    private UserRepository $userRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->repository = new VeterinaireRepository();
+        $this->userRepository = new UserRepository();
     }
 
 
@@ -80,5 +84,32 @@ class VeterinaireRepositoryTest extends TestCase
 
         $this->repository->findVet(99999);
     }
-}
+
+    public function test_vet_does_get_reviewed() : void
+    {
+        $user = User::factory()->create();
+        $vet  = Vet::factory()->create(['user_id' => $user->id]);
+        $this->repository->review($vet);
+        $this->assertSame(true, $vet->isReviewed);
+
+    }
+
+    public function test_find_pending_vets(): void
+    {
+
+        $user = User::factory()->create();
+        $vet  = Vet::factory()->create(['user_id' => $user->id]);
+        Role::firstOrCreate(['role' => 'user']);
+        $this->userRepository->switchRole($user, 'user');
+
+        $pendingVets = $this->repository->findPendingVets();
+
+        $this->assertTrue($pendingVets->contains($vet));
+
+    }
+
+
+
+    }
+
 

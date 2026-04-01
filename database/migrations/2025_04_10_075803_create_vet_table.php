@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('dateDeNaissance');
             $table->date('licenceExpiration');
             $table->string('adresseClinique');
+            $table->boolean('isReviewed')->default(false);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class Vet extends Model
 
     protected $table = 'veterinaires';
 
-    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','adresseClinique', 'user_id'];
+    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','adresseClinique','isReviewed', 'user_id'];
 
 
 
@@ -32,5 +32,10 @@ class Vet extends Model
     {
         return $this->hasMany(RendezVous::class);
 
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->isReviewed === true;
     }
 }

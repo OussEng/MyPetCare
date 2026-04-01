@@ -73,6 +73,11 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/backoffice', [AdminController::class, 'backoffice'])->name('admin.backoffice');
+    Route::get("/admin/pending-vets", [AdminController::class, 'pendingVets'])->name('admin.pending-vets');
+    Route::get("/admin/vet/{id}", [AdminController::class, 'vetDetail'])->name('admin.vet.detail');
+
+    Route::post('/admin/vet/accept/{id}', [AdminController::class, 'vetAccept'])->name('admin.vet.accept');
+    Route::post('/admin/vet/reject/{id}', [AdminController::class, 'vetReject'])->name('admin.vet.reject');
 });
 
 

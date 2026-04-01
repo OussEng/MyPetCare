@@ -5,7 +5,11 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
                 <div class="flex items-center gap-4">
-                    <img class="w-20 h-20 rounded-full text-3xl font-bold" alt="" src="{{asset('imgs/user-pfp.png')}}">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0 mr-6">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
 
                     <div>
                         <h1 class="text-2xl font-bold text-gray-800">{{$client->nom}} {{$client->prenom}}</h1>

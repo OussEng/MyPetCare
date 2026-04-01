@@ -144,5 +144,18 @@ class UserRepositoryTest extends TestCase
 
         $this->repository->findClient(99999);
     }
+
+    public function test_switch_user_role(): void
+    {
+        $user = User::factory()->create();
+        Role::firstOrCreate(['role' => 'user']);
+        Role::firstOrCreate(['role' => 'vet']);
+        $this->repository->attachRole($user, 'user');
+        $this->repository->switchRole($user, 'vet');
+        $this->assertSame(true, $user->hasRole('vet'));
+
+    }
+
+
 }
 

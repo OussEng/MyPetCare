@@ -56,5 +56,12 @@ class VeterinaireService
 
     }
 
+    public function getPendingVets()
+    {
+        $vets = $this->repository->findPendingVets();
+
+        return $vets->through(fn($vet) => VeterinaireResponseDTO::fromModel($vet));
+    }
+
 
 }

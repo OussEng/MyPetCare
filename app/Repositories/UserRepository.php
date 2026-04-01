@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Vet;
 
 class UserRepository
 {
@@ -17,6 +18,15 @@ class UserRepository
     $role = Role::where('role', $role)->firstOrFail();
     $user -> roles() ->attach($role);
     }
+
+    public function switchRole(User $user, string $role): void
+    {
+        $role = Role::where('role', $role)->firstOrFail();
+
+        $user->roles()->sync([$role->id]);
+    }
+
+
 
     public function findAllClients(string $search = null)
     {
