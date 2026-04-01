@@ -31,12 +31,12 @@ class VeterinaireService
 
 
 
-    public function getAllVets() : Collection
+    public function getAllVets()
     {
-         $vets = $this->repository->findAllVets();
+         $vets = $this->repository->findActiveVets();
 
 
-        return $vets->map(fn($vet) => VeterinaireResponseDTO::fromModel($vet) );
+        return $vets->through(fn($vet) => VeterinaireResponseDTO::fromModel($vet) );
     }
 
 

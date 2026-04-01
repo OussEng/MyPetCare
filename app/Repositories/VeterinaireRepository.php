@@ -35,5 +35,15 @@ class VeterinaireRepository
         $vet->update(['isReviewed' => true]);
     }
 
+    public function findActiveVets()
+    {
+        $query = Vet::whereHas('user.roles', function ($query) {
+            $query->where('role', 'veterinarian')
+                ->where('isReviewed', true);
+        });
+
+        return $query->paginate(8);
+    }
+
 
 }

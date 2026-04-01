@@ -11,6 +11,7 @@ use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
 use App\Services\VeterinaireService;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use Tests\TestCase;
 
@@ -63,36 +64,69 @@ class VeterinaireServiceTest extends TestCase
     }
 
 
-    public function test_getAllVets_returns_empty_collection_when_none(): void
+    public function test_getAllVets_calls_findActiveVets_on_repository(): void
     {
-        $this->repoMock->shouldReceive('findAllVets')->once()->andReturn(collect());
+        $paginator = new LengthAwarePaginator([], 0, 8);
+        $this->repoMock->shouldReceive('findActiveVets')->once()->andReturn($paginator);
+
+        $this->service->getAllVets();
+
+        $this->assertTrue(true); // Mockery vérifie l'appel au repo
+    }
+
+    public function test_getAllVets_returns_paginator_with_no_items_when_none(): void
+    {
+        $paginator = new LengthAwarePaginator([], 0, 8);
+        $this->repoMock->shouldReceive('findActiveVets')->once()->andReturn($paginator);
 
         $result = $this->service->getAllVets();
 
-        $this->assertCount(0, $result);
+        $this->assertCount(0, $result->items());
     }
 
-    public function test_getAllVets_maps_each_vet_to_VeterinaireResponseDTO(): void
+    public function test_getAllVets_maps_single_vet_to_VeterinaireResponseDTO(): void
     {
-        $vet = $this->makeFullVet();
-        $this->repoMock->shouldReceive('findAllVets')->once()->andReturn(collect([$vet]));
+        $vet       = $this->makeFullVet();
+        $paginator = new LengthAwarePaginator([$vet], 1, 8);
+        $this->repoMock->shouldReceive('findActiveVets')->once()->andReturn($paginator);
 
         $result = $this->service->getAllVets();
+        $items  = $result->items();
 
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(VeterinaireResponseDTO::class, $result->first());
-        $this->assertSame('LIC-001', $result->first()->numeroLicence);
+        $this->assertCount(1, $items);
+        $this->assertInstanceOf(VeterinaireResponseDTO::class, $items[0]);
+        $this->assertSame('LIC-001', $items[0]->numeroLicence);
     }
 
-    public function test_getAllVets_maps_multiple_vets(): void
+    public function test_getAllVets_maps_multiple_vets_to_DTOs(): void
     {
         $vet1 = $this->makeFullVet(['id' => 1, 'numeroLicence' => 'LIC-001']);
         $vet2 = $this->makeFullVet(['id' => 2, 'numeroLicence' => 'LIC-002']);
-        $this->repoMock->shouldReceive('findAllVets')->once()->andReturn(collect([$vet1, $vet2]));
+        $paginator = new LengthAwarePaginator([$vet1, $vet2], 2, 8);
+        $this->repoMock->shouldReceive('findActiveVets')->once()->andReturn($paginator);
+
+        $result = $this->service->getAllVets();
+        $items  = $result->items();
+
+        $this->assertCount(2, $items);
+        $this->assertInstanceOf(VeterinaireResponseDTO::class, $items[0]);
+        $this->assertInstanceOf(VeterinaireResponseDTO::class, $items[1]);
+        $this->assertSame('LIC-001', $items[0]->numeroLicence);
+        $this->assertSame('LIC-002', $items[1]->numeroLicence);
+    }
+
+    public function test_getAllVets_preserves_pagination_metadata(): void
+    {
+        $vets = array_map(fn($i) => $this->makeFullVet(['id' => $i, 'numeroLicence' => "LIC-00$i"]),
+            range(1, 8));
+        $paginator = new LengthAwarePaginator($vets, 20, 8, 1);
+        $this->repoMock->shouldReceive('findActiveVets')->once()->andReturn($paginator);
 
         $result = $this->service->getAllVets();
 
-        $this->assertCount(2, $result);
+        $this->assertSame(20, $result->total());
+        $this->assertSame(8,  $result->perPage());
+        $this->assertCount(8, $result->items());
     }
 
 

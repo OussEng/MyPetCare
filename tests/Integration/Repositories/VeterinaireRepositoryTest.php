@@ -70,7 +70,7 @@ class VeterinaireRepositoryTest extends TestCase
     public function test_findVet_returns_correct_vet(): void
     {
         $user = User::factory()->create();
-        $vet  = Vet::factory()->create(['user_id' => $user->id, 'numeroLicence' => 'LIC-7777']);
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'numeroLicence' => 'LIC-7777']);
 
         $result = $this->repository->findVet($vet->id);
 
@@ -85,10 +85,10 @@ class VeterinaireRepositoryTest extends TestCase
         $this->repository->findVet(99999);
     }
 
-    public function test_vet_does_get_reviewed() : void
+    public function test_vet_does_get_reviewed(): void
     {
         $user = User::factory()->create();
-        $vet  = Vet::factory()->create(['user_id' => $user->id]);
+        $vet = Vet::factory()->create(['user_id' => $user->id]);
         $this->repository->review($vet);
         $this->assertSame(true, $vet->isReviewed);
 
@@ -98,7 +98,7 @@ class VeterinaireRepositoryTest extends TestCase
     {
 
         $user = User::factory()->create();
-        $vet  = Vet::factory()->create(['user_id' => $user->id]);
+        $vet = Vet::factory()->create(['user_id' => $user->id]);
         Role::firstOrCreate(['role' => 'user']);
         $this->userRepository->switchRole($user, 'user');
 
@@ -109,7 +109,80 @@ class VeterinaireRepositoryTest extends TestCase
     }
 
 
+    public function test_findActiveVets_returns_reviewed_veterinarian(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+        $user->roles()->attach($role->id);
 
+        $result = $this->repository->findActiveVets();
+
+        $this->assertTrue($result->contains($vet));
     }
+
+    public function test_findActiveVets_excludes_vet_without_veterinarian_role(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+        $role = Role::firstOrCreate(['role' => 'user']);
+        $user->roles()->attach($role->id);
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertFalse($result->contains($vet));
+    }
+
+    public function test_findActiveVets_excludes_unreviewed_veterinarian(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => false]);
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+        $user->roles()->attach($role->id);
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertFalse($result->contains($vet));
+    }
+
+    public function test_findActiveVets_returns_empty_paginator_when_no_active_vets(): void
+    {
+        $result = $this->repository->findActiveVets();
+
+        $this->assertCount(0, $result);
+    }
+
+    public function test_findActiveVets_paginates_8_per_page(): void
+    {
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+
+        for ($i = 0; $i < 10; $i++) {
+            $user = User::factory()->create();
+            Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+            $user->roles()->attach($role->id);
+        }
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class, $result);
+        $this->assertEquals(8, $result->perPage());
+        $this->assertCount(8, $result->items());
+    }
+
+    public function test_findActiveVets_returns_multiple_active_vets(): void
+    {
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+
+        for ($i = 0; $i < 3; $i++) {
+            $user = User::factory()->create();
+            Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+            $user->roles()->attach($role->id);
+        }
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertCount(3, $result);
+    }
+}
 
 
