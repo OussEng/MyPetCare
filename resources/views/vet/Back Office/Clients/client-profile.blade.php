@@ -286,7 +286,7 @@
                     </div>
                 </div>
 
-                {{-- ── Modal Modifier ───────────────────────────────────────── --}}
+
                 <div
                     x-show="showEditModal"
                     x-transition
@@ -315,6 +315,9 @@
                             <div class="space-y-3">
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Nom :</label>
+                                    @error('nom')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                     <input type="text" name="nom" x-model="editAnimal.nom"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                            placeholder="Nom..."/>
@@ -322,6 +325,9 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Espèce :</label>
+                                    @error('espece_id')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                     <select name="espece_id" x-model="editAnimal.espece_id"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option value="" disabled>Sélectionnez l'espèce...</option>
@@ -333,6 +339,9 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Sexe :</label>
+                                    @error('sexe_id')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                     <select name="sexe_id" x-model="editAnimal.sexe_id"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option value="" disabled>Sélectionnez le sexe...</option>

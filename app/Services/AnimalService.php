@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\Requests\AnimalRequestDTO;
 use App\DTOs\Response\AnimalResponseDTO;
 use App\Http\Requests\AnimalRequest;
+use App\Http\Requests\AnimalUpdateRequest;
 use App\Models\Animal;
 use App\Repositories\AnimalRepository;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class AnimalService
         $this->repository->delete($id);
     }
 
-    public function updateAnimal(int $id, AnimalRequest $request): Animal
+    public function updateAnimal(int $id, AnimalUpdateRequest $request): Animal
     {
         $animal = $this->repository->findById($id);
 

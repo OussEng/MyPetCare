@@ -31,7 +31,7 @@
 
 @if ($errors->any())
     <div class="bg-red-100 text-red-800 border-red-800 px-4 py-3 rounded mb-4 border-2">
-        Vous avez {{ $errors->count() }} erreurs.
+        Vous avez {{ $errors->count() }} erreur(s).
     </div>
 @endif
 </div>

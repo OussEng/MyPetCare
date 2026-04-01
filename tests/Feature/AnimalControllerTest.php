@@ -256,7 +256,7 @@ class AnimalControllerTest extends TestCase
             ]))            ->assertStatus(403);
     }
 
-    // ── edit ────────────────────────────────────────────────────────────────
+
 
     public function test_animal_edit_form_not_logged_in(): void
     {
@@ -304,7 +304,7 @@ class AnimalControllerTest extends TestCase
             ->assertViewIs('animal.modifier-animal');
     }
 
-    // ── update ──────────────────────────────────────────────────────────────
+
 
     public function test_owner_can_update_animal(): void
     {
@@ -337,13 +337,13 @@ class AnimalControllerTest extends TestCase
 
         $this->actingAs($vet)
             ->put(route('animaux.update', $animal->id), [
-                'nom'       => 'VetNom',
+                'nom'       => 'Nom',
                 'espece_id' => $espece->id,
                 'sexe_id'   => $sexe->id,
             ])
             ->assertRedirect(route('veterinaire.client', ['client' => $client->id]));
 
-        $this->assertDatabaseHas('animals', ['id' => $animal->id, 'nom' => 'VetNom']);
+        $this->assertDatabaseHas('animals', ['id' => $animal->id, 'nom' => 'Nom']);
     }
 
     public function test_stranger_cannot_update_others_animal(): void

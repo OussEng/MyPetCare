@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnimalRequest;
+use App\Http\Requests\AnimalUpdateRequest;
 use App\Services\AnimalService;
 use App\Services\EspeceService;
 use App\Services\SexeServices;
@@ -109,7 +110,7 @@ class AnimalController extends Controller
         ]);
     }
 
-    public function update(int $id, AnimalRequest $request)
+    public function update(int $id, AnimalUpdateRequest $request)
     {
         $this->animalService->updateAnimal($id, $request);
 
