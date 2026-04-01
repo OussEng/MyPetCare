@@ -7,6 +7,7 @@ use App\DTOs\Response\EspeceResponseDTO;
 use App\DTOs\Response\SexeResponseDTO;
 use App\DTOs\Requests\UserRequestDTO;
 use App\Http\Requests\AnimalRequest;
+use App\Http\Requests\AnimalUpdateRequest;
 use App\Models\Animal;
 use App\Models\Espece;
 use App\Models\Sexe;
@@ -179,7 +180,7 @@ class AnimalServiceTest extends TestCase
     {
         $animal = $this->makeFullAnimal(['id' => 4, 'nom' => 'Rex']);
 
-        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock = Mockery::mock(AnimalUpdateRequest::class);
         $requestMock->shouldReceive('validated')->andReturn([
             'nom' => 'Max', 'espece_id' => 1, 'race' => null,
             'dateNaissance' => null, 'poids' => null, 'sexe_id' => 1,
@@ -206,7 +207,7 @@ class AnimalServiceTest extends TestCase
 
         $animal = $this->makeFullAnimal(['id' => 5]);
 
-        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock = Mockery::mock(AnimalUpdateRequest::class);
         $requestMock->shouldReceive('validated')->once()->andReturn($validatedData);
 
         $this->repoMock->shouldReceive('findById')->with(5)->once()->andReturn($animal);
@@ -223,7 +224,7 @@ class AnimalServiceTest extends TestCase
         $this->expectException(AuthorizationException::class);
 
         $animal = $this->makeFullAnimal(['id' => 6]);
-        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock = Mockery::mock(AnimalUpdateRequest::class);
 
         $this->repoMock->shouldReceive('findById')->with(6)->once()->andReturn($animal);
         Gate::shouldReceive('authorize')->with('update', $animal)->once()
@@ -235,7 +236,7 @@ class AnimalServiceTest extends TestCase
     public function test_updateAnimal_does_not_call_update_when_unauthorized(): void
     {
         $animal = $this->makeFullAnimal(['id' => 6]);
-        $requestMock = Mockery::mock(AnimalRequest::class);
+        $requestMock = Mockery::mock(AnimalUpdateRequest::class);
 
         $this->repoMock->shouldReceive('findById')->with(6)->once()->andReturn($animal);
         Gate::shouldReceive('authorize')->andThrow(new AuthorizationException());
