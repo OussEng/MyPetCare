@@ -80,9 +80,9 @@ class UserServiceTest extends TestCase
 
         DB::shouldReceive('transaction')->once()->andReturnUsing(fn($cb) => $cb());
         $this->repoMock->shouldReceive('create')->once()->andReturn($user);
-        $this->repoMock->shouldReceive('attachRole')->once()->with($user, 'veterinarian');
+        $this->repoMock->shouldReceive('attachRole')->once()->with($user, 'user');
 
-        $this->service->register($dto, 'veterinarian');
+        $this->service->register($dto);
 
         $this->assertTrue(true);
     }

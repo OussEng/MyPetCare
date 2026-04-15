@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
 
     Route::get('register-vet', [RegisteredVetController::class, 'create'])
-        ->name('register_vet.form');  // More specific route name
+        ->name('register_vet.form');
 
     Route::post('register-vet', [RegisteredVetController::class, 'store'])
-        ->name('register_vet.save');  // More specific route name
+        ->name('register_vet.save');
 
 
 

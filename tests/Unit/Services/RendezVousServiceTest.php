@@ -11,6 +11,7 @@ use App\DTOs\Response\VeterinaireResponseDTO;
 use App\DTOs\Requests\UserRequestDTO;
 use App\Enums\Etat;
 use App\Http\Requests\RendezVousRequest;
+use App\Managers\RendezVousManager;
 use App\Models\Animal;
 use App\Models\Espece;
 use App\Models\RendezVous;
@@ -35,6 +36,7 @@ class RendezVousServiceTest extends TestCase
     private VeterinaireService $vetServiceMock;
     private AnimalService $animalServiceMock;
     private RendezVousService $service;
+    private RendezVousManager $rendezVousManagerMock;
 
     protected function setUp(): void
     {
@@ -42,10 +44,12 @@ class RendezVousServiceTest extends TestCase
         $this->rvRepoMock       = Mockery::mock(RendezVousRepository::class);
         $this->vetServiceMock   = Mockery::mock(VeterinaireService::class);
         $this->animalServiceMock = Mockery::mock(AnimalService::class);
+        $this->rendezVousManagerMock = Mockery::mock(RendezVousManager::class);
         $this->service = new RendezVousService(
             $this->rvRepoMock,
             $this->vetServiceMock,
             $this->animalServiceMock,
+            $this->rendezVousManagerMock
         );
     }
 
@@ -225,6 +229,7 @@ class RendezVousServiceTest extends TestCase
             ->andReturn($paginator);
 
         Auth::shouldReceive('id')->andReturn(5);
+        $this->rendezVousManagerMock->shouldReceive('handleState')->once();
 
         $result = $this->service->getRendezVousByUser($request);
 
@@ -239,6 +244,7 @@ class RendezVousServiceTest extends TestCase
 
         $builderMock = $this->makeBuilderMock();
         $this->rvRepoMock->shouldReceive('findAllByVet')->with(10)->once()->andReturn($builderMock);
+        $this->rendezVousManagerMock->shouldReceive('handleState')->once();
 
         $result = $this->service->getAllApointementsByVet();
 
@@ -253,6 +259,7 @@ class RendezVousServiceTest extends TestCase
         $builderMock = $this->makeBuilderMock();
         $builderMock->shouldReceive('where')->withArgs(fn($col) => $col === 'etat')->andReturnSelf();
         $this->rvRepoMock->shouldReceive('findAllByVet')->with(10)->once()->andReturn($builderMock);
+        $this->rendezVousManagerMock->shouldReceive('handleState')->once();
 
         $result = $this->service->getAllApointementsByVet(Etat::CONFIRMER->value);
 
@@ -266,6 +273,7 @@ class RendezVousServiceTest extends TestCase
 
         $builderMock = $this->makeBuilderMock();
         $this->rvRepoMock->shouldReceive('findAllByVet')->with(10)->once()->andReturn($builderMock);
+        $this->rendezVousManagerMock->shouldReceive('handleState')->once();
 
         $result = $this->service->getAllApointementsByVet('invalide');
 

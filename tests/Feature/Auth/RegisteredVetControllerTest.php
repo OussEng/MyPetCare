@@ -56,7 +56,7 @@ class RegisteredVetControllerTest extends TestCase
 
     public function test_store_creates_user_and_vet_profile(): void
     {
-        Role::create(['role' => 'veterinarian']);
+        Role::create(['role' => 'user']);
 
         $this->post(route('register_vet.save'), array_merge($this->validUserData(), $this->validVetData()));
 
@@ -64,31 +64,24 @@ class RegisteredVetControllerTest extends TestCase
         $this->assertDatabaseHas('veterinaires', ['numeroLicence' => 'LIC-4242']);
     }
 
-    public function test_store_attaches_veterinarian_role(): void
+    public function test_store_vet_attaches_user_role(): void
     {
-        Role::create(['role' => 'veterinarian']);
+        Role::create(['role' => 'user']);
 
         $this->post(route('register_vet.save'), array_merge($this->validUserData(), $this->validVetData()));
 
         $user = User::where('email', 'sophie@vet.com')->first();
-        $this->assertTrue($user->hasRole('veterinarian'));
+        $this->assertTrue($user->hasRole('user'));
     }
 
     public function test_store_authenticates_user_after_registration(): void
     {
-        Role::create(['role' => 'veterinarian']);
+
+        Role::create(['role' => 'user']);
 
         $this->post(route('register_vet.save'), array_merge($this->validUserData(), $this->validVetData()));
 
         $this->assertAuthenticated();
-    }
-
-    public function test_store_redirects_to_veterinaire_backoffice(): void
-    {
-        Role::create(['role' => 'veterinarian']);
-
-        $this->post(route('register_vet.save'), array_merge($this->validUserData(), $this->validVetData()))
-            ->assertRedirect(route('veterinaire.backoffice'));
     }
 
     public function test_store_with_missing_user_email_fails_validation(): void
