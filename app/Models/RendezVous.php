@@ -18,6 +18,7 @@ class RendezVous extends Model
 
     protected $casts = [
         'etat' => Etat::class,
+        'dateHeureDebut' => 'datetime',
     ];
 
 

@@ -22,7 +22,7 @@ class RendezVousRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'etat' => Etat::EN_ATTENT->value,
+            'etat' => Etat::CONFIRMER->value,
             'veterinaire_id' => $this->route('id'),
             'user_id' => $this->user()->id,
         ]);

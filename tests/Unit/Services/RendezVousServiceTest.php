@@ -22,8 +22,10 @@ use App\Services\AnimalService;
 use App\Services\RendezVousService;
 use App\Services\VeterinaireService;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Mockery;
 use Tests\TestCase;
 
@@ -169,7 +171,7 @@ class RendezVousServiceTest extends TestCase
             'user_id'        => 1,
             'animal_id'      => 1,
             'veterinaire_id' => 1,
-            'etat'           => Etat::EN_ATTENT,
+            'etat'           => Etat::CONFIRMER,
         ]);
 
         $requestMock = Mockery::mock(RendezVousRequest::class);
@@ -213,9 +215,18 @@ class RendezVousServiceTest extends TestCase
     public function test_getRendezVousByUser_returns_paginator(): void
     {
         $paginator = new LengthAwarePaginator(collect(), 0, 10);
-        $this->rvRepoMock->shouldReceive('findAllByUser')->with(5)->once()->andReturn($paginator);
 
-        $result = $this->service->getRendezVousByUser(5);
+        $request = new Request();
+
+        $this->rvRepoMock
+            ->shouldReceive('findAllByUser')
+            ->with(Mockery::any(), Etat::CONFIRMER, false)
+            ->once()
+            ->andReturn($paginator);
+
+        Auth::shouldReceive('id')->andReturn(5);
+
+        $result = $this->service->getRendezVousByUser($request);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
     }
@@ -243,7 +254,7 @@ class RendezVousServiceTest extends TestCase
         $builderMock->shouldReceive('where')->withArgs(fn($col) => $col === 'etat')->andReturnSelf();
         $this->rvRepoMock->shouldReceive('findAllByVet')->with(10)->once()->andReturn($builderMock);
 
-        $result = $this->service->getAllApointementsByVet(Etat::EN_ATTENT->value);
+        $result = $this->service->getAllApointementsByVet(Etat::CONFIRMER->value);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $result);
     }

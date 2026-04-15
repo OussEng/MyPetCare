@@ -45,5 +45,15 @@ class VeterinaireRepository
         return $query->paginate(8);
     }
 
+    public function updateVet(Vet $vet, array $data): void
+    {
+        $vet->update($data);
+
+    }
+
+    public function updateUserInfo(Vet $vet, array $userData): void
+    {
+        $vet->user->update($userData);
+    }
 
 }

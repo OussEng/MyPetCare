@@ -59,7 +59,7 @@ class RendezVousResponseDTOTest extends TestCase
             'id'             => 10,
             'dateHeureDebut' => '2026-05-01 09:00:00',
             'motif'          => 'Visite annuelle',
-            'etat'           => Etat::EN_ATTENT,
+            'etat'           => Etat::CONFIRMER,
             'user_id'        => 1,
             'animal_id'      => 1,
             'veterinaire_id' => 1,
@@ -95,7 +95,7 @@ class RendezVousResponseDTOTest extends TestCase
         $dto = RendezVousResponseDTO::fromModel($rv);
 
         $this->assertInstanceOf(Etat::class, $dto->etat);
-        $this->assertSame(Etat::EN_ATTENT, $dto->etat);
+        $this->assertSame(Etat::CONFIRMER, $dto->etat);
     }
 
     public function test_fromModel_maps_user_as_UserRequestDTO(): void

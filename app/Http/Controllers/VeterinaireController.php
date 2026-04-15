@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vet;
+use App\DTOs\Requests\UpdateUserDTO;
+use App\DTOs\Requests\VetProfileUpdateDTO;
+use App\Http\Requests\VetProfileUpdateRequest;
 use App\Services\AnimalService;
 use App\Services\EspeceService;
 use App\Services\LangueService;
@@ -10,6 +12,7 @@ use App\Services\RendezVousService;
 use App\Services\SexeServices;
 use App\Services\UserService;
 use App\Services\VeterinaireService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,15 +68,12 @@ class VeterinaireController extends Controller
     //veterinarian back office index
     public function backoffice()
     {
-        $rendez_vous = $this->rendezVousService->getTodaysApointement();
-        $pending = $this->rendezVousService->getPendingAponintements();
+        $appointments = $this->rendezVousService->getCurrentAndNextAppointments();
 
-
-        return view('vet.Back Office.veretinarian-backoffice',[
-            'rendez_vous' => $rendez_vous,
-            'pending' => $pending
+        return view('vet.Back Office.veretinarian-backoffice', [
+            'current_appointment' => $appointments['current'],
+            'next_appointment'    => $appointments['next'],
         ]);
-
     }
 
     public function list_clients(Request $request)
@@ -93,49 +93,57 @@ class VeterinaireController extends Controller
 
     public function client_profile(int $id)
     {
-        $client = $this->userService->getClient($id);
-        $especes = $this->especeService->getEspeces();
-        $sexes = $this->sexeService->getSexes();
-
-        return view('vet.Back Office.Clients.client-profile' , [
-            'client' => $client,
-            'especes' => $especes,
-            'sexes' => $sexes,
+        return view('vet.Back Office.Clients.client-profile', [
+            'client'  => $this->userService->getClient($id),
+            'especes' => $this->especeService->getEspeces(),
+            'sexes'   => $this->sexeService->getSexes(),
         ]);
-
     }
 
     public function list(Request $request)
     {
-        $rendezVous = $this->rendezVousService->getAllApointementsByVet($request->get('etat'),$request->get('jour'));
+        $rendezVous = $this->rendezVousService->getAllApointementsByVet(
+            $request->get('etat'),
+            $request->get('jour')
+        );
 
-        return view('vet.Back Office.veterinaire-rendez_vous-list' , [
-            'rendezVous' => $rendezVous
-        ]);
-
+        return view('vet.Back Office.veterinaire-rendez_vous-list', ['rendezVous' => $rendezVous]);
     }
 
+    public function cancel(int $id): RedirectResponse
+    {
+        $cancelled = $this->rendezVousService->cancelByVet($id, Auth::user()->vet->id);
+
+        if (!$cancelled) {
+            return redirect()->route('vet.rendez-vous.list')->with('error', 'Impossible d\'annuler ce rendez-vous.');
+        }
+
+        return redirect()->route('vet.rendez-vous.list')->with('success', 'Rendez-vous annulé avec succès.');
+    }
 
     public function profile()
     {
-        $vet = $this->veterinarianService->getVet(Auth::user()->vet->id);
-        $langues = $this->langueService->getLangues();
-
-
         return view('vet.Back Office.veterinaire-profile', [
-            'vet' => $vet,
-            'langues' => $langues
-
+            'vet'     => $this->veterinarianService->getVet(Auth::user()->vet->id),
+            'langues' => $this->langueService->getLangues(),
         ]);
-
     }
 
-    public function editLangues(Request $request)
+    public function editLangues(Request $request): RedirectResponse
     {
+        $this->veterinarianService->editLangues($request, Auth::user()->vet->id);
 
-        $this->veterinarianService->editLangues($request, auth()->user()->vet->id);
+        return redirect()->back()->with('success', 'Langues mises à jour avec succès.');
+    }
 
-        return redirect()->back()->with('success', 'Langues mises à jour avec succès');
+    public function updateProfile(VetProfileUpdateRequest $request): RedirectResponse
+    {
+        $this->veterinarianService->updateProfile(
+            VetProfileUpdateDTO::fromRequest($request),
+            UpdateUserDTO::fromRequest($request),
+        );
+
+        return redirect()->route('veterinaire.profile')->with('success', 'Profil mis à jour avec succès.');
     }
 
 }

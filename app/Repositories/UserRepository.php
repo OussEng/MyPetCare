@@ -50,4 +50,9 @@ class UserRepository
         return User::findOrFail($id);
     }
 
+    public function update(User $user, array $data): void
+    {
+        $user->update($data);
+    }
+
 }

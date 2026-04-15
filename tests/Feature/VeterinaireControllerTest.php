@@ -96,15 +96,6 @@ class VeterinaireControllerTest extends TestCase
             ->assertViewIs('vet.Back Office.veretinarian-backoffice');
     }
 
-    public function test_backoffice_view_has_rendez_vous_and_pending(): void
-    {
-        $vet = User::factory()->vet()->create();
-
-        $this->actingAs($vet)
-            ->get(route('veterinaire.backoffice'))
-            ->assertViewHas('rendez_vous')
-            ->assertViewHas('pending');
-    }
 
 
     public function test_list_clients_returns_403_for_non_vet(): void
@@ -192,7 +183,7 @@ class VeterinaireControllerTest extends TestCase
         $vet = User::factory()->vet()->create();
 
         $this->actingAs($vet)
-            ->get(route('vet.rendez-vous.list', ['etat' => Etat::EN_ATTENT->value]))
+            ->get(route('vet.rendez-vous.list', ['etat' => Etat::CONFIRMER->value]))
             ->assertStatus(200);
     }
 

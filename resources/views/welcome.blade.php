@@ -12,6 +12,18 @@
 
     </div>
 
+    @if(auth()->check())
+        @if(auth()->user()->isPendingVet())
+                <div class="fixed top-10 right-10 z-50 max-w-sm w-10/12">
+                    <div class="bg-yellow-100 text-yellow-800 border-2 border-yellow-800 px-4 py-3 rounded">
+                        Votre compte de vétérinaire est en attente de validation. Vous serez informé par email et vous aurez l'accès au
+                        <a href="{{ route('veterinaire.backoffice') }}" class="font-semibold underline hover:opacity-75">backoffice</a>
+                        une fois que votre compte aura été approuvé.
+                    </div>
+                </div>
+        @endif
+    @endif
+
 
 
 

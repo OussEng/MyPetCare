@@ -3,7 +3,6 @@
 namespace App\DTOs\Requests;
 
 use App\Http\Requests\AnimalRequest;
-use Illuminate\Http\Request;
 
 
 class AnimalRequestDTO

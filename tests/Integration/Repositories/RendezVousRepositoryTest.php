@@ -125,7 +125,7 @@ class RendezVousRepositoryTest extends TestCase
             'user_id'        => $user->id,
             'veterinaire_id' => $vet->id,
             'animal_id'      => $animal->id,
-            'etat'           => Etat::EN_ATTENT->value,
+            'etat'           => Etat::CONFIRMER->value,
         ];
 
         $result = $this->repository->create($data);
@@ -136,35 +136,9 @@ class RendezVousRepositoryTest extends TestCase
 
 
 
-    public function test_findPending_returns_only_EN_ATTENT_appointments(): void
+    public function test_findTodayApointement_returns_todays_confirmed_appointments(): void
     {
-        RendezVous::factory()->create(['etat' => Etat::EN_ATTENT]);
-        RendezVous::factory()->create(['etat' => Etat::CONFIRMER]);
-        RendezVous::factory()->create(['etat' => Etat::TERMINER]);
 
-        $result = $this->repository->findPending();
-
-        $this->assertCount(1, $result);
-        $this->assertSame(Etat::EN_ATTENT, $result->first()->etat);
-    }
-
-    public function test_findPending_returns_empty_when_none_pending(): void
-    {
-        RendezVous::factory()->create(['etat' => Etat::CONFIRMER]);
-
-        $result = $this->repository->findPending();
-
-        $this->assertCount(0, $result);
-    }
-
-
-
-    public function test_findTodayApointement_returns_todays_confirmed_and_pending(): void
-    {
-        RendezVous::factory()->create([
-            'etat'           => Etat::EN_ATTENT,
-            'dateHeureDebut' => CarbonImmutable::today()->setTime(9, 0)->toDateTimeString(),
-        ]);
         RendezVous::factory()->create([
             'etat'           => Etat::CONFIRMER,
             'dateHeureDebut' => CarbonImmutable::today()->setTime(10, 0)->toDateTimeString(),
@@ -176,13 +150,13 @@ class RendezVousRepositoryTest extends TestCase
 
         $result = $this->repository->findTodayApointement();
 
-        $this->assertCount(2, $result);
+        $this->assertCount(1, $result);
     }
 
     public function test_findTodayApointement_excludes_other_days(): void
     {
         RendezVous::factory()->create([
-            'etat'           => Etat::EN_ATTENT,
+            'etat'           => Etat::TERMINER,
             'dateHeureDebut' => Carbon::yesterday()->setTime(9, 0)->toDateTimeString(),
         ]);
 

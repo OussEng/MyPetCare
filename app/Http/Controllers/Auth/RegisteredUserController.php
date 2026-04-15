@@ -14,6 +14,16 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+
+    private UserService $userService;
+
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+
     /**
      * Display the registration view.
      */
@@ -27,18 +37,14 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(
-        RegisterUserRequest $request,
-        UserRepository $userRepository,
-        UserService $userService,
-    ): RedirectResponse
+    public function store(RegisterUserRequest $request): RedirectResponse
     {
-        $userDTO = RegisterUserDTO::fromRequest($request);
-        $user = $userService->register($userDTO, 'user', $userRepository);
+        $dto = RegisterUserDTO::fromRequest($request);
+        $user = $this->userService->register($dto);
 
         event(new Registered($user));
         Auth::login($user);
 
-        return redirect(route('home', absolute: false));
+        return redirect(route('home', absolute: false))->with("success" , "Vous étes inscrit avec success");
     }
 }

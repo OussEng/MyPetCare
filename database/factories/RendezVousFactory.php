@@ -21,7 +21,7 @@ class RendezVousFactory extends Factory
         return [
             'dateHeureDebut' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d H:i:s'),
             'motif'          => fake()->sentence(),
-            'etat'           => Etat::EN_ATTENT,
+            'etat'           => Etat::CONFIRMER,
             'user_id'        => User::factory(),
             'animal_id'      => Animal::factory(),
             'veterinaire_id' => Vet::factory(),

@@ -18,6 +18,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/mes-animaux', [AnimalController::class, 'list'])->name('animaux');
 
@@ -46,6 +47,9 @@ Route::middleware('auth')->group(function () {
         //Rendez-vous pris
     Route::get('mes-rendez-vous', [RendezVousController::class, 'list'])->name('rendez-vous.list');
 
+    //Annuler un rendez-vous
+    Route::patch('mes-rendez-vous/{id}/cancel', [RendezVousController::class, 'cancel'])->name('rendez-vous.cancel');
+
 });
 
 
@@ -62,9 +66,14 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
     //veterinaire rendez vous list
     Route::get('vet/backoffice/mes-rendez-vous', [VeterinaireController::class, 'list'])->name('vet.rendez-vous.list');
 
+    //Annuler un rendez-vous (vet)
+    Route::patch('vet/backoffice/mes-rendez-vous/{id}/cancel', [VeterinaireController::class, 'cancel'])->name('vet.rendez-vous.cancel');
+
     Route::get('vet/backoffice/profile' , [VeterinaireController::class, 'profile'])->name('veterinaire.profile');
 
     Route::post('vet/backoffice/profile',[VeterinaireController::class, 'editLangues'])->name('veterinaire.add-langues');
+
+    Route::put('vet/backoffice/profile',[VeterinaireController::class, 'updateProfile'])->name('veterinaire.profile.update');
 
     Route::post('/vaccinations/{id}', [AnimalController::class, 'ajouter_vaccinations'])->name('vaccinations.add');
     Route::post('/animals/{animal_id}/vaccinations/{vaccination_id}/remove', [AnimalController::class, 'supprimer_vaccination'])->name('vaccination.remove');

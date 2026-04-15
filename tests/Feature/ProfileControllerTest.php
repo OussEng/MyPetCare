@@ -43,21 +43,29 @@ class ProfileControllerTest extends TestCase
 
         $this->actingAs($user)
             ->patch(route('profile.update'), [
-                'name'  => 'Nouveau Nom',
-                'email' => 'new@test.com',
+                'prenom'  => 'Jean',
+                'nom'     => 'Dupont',
+                'email'   => 'new@test.com',
+                'numero'  => '0612345678',
+                'adresse' => '12 rue de Paris',
             ])
             ->assertRedirect(route('profile.edit'));
     }
 
-    public function test_update_with_missing_name_fails_validation(): void
+    public function test_update_with_missing_prenom_fails_validation(): void
     {
         $user = User::factory()->create();
 
         $this->actingAs($user)
-            ->patch(route('profile.update'), ['email' => 'valid@test.com'])
-            ->assertSessionHasErrors('name');
+            ->patch(route('profile.update'), [
+                // 'prenom' intentionally omitted
+                'nom'     => 'Dupont',
+                'email'   => 'valid@test.com',
+                'numero'  => '0612345678',
+                'adresse' => '12 rue de Paris',
+            ])
+            ->assertSessionHasErrors('prenom');
     }
-
     public function test_update_with_missing_email_fails_validation(): void
     {
         $user = User::factory()->create();

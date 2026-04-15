@@ -2,13 +2,15 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Requests\UpdateUserDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
+use App\DTOs\Requests\VetProfileUpdateDTO;
 use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class VeterinaireService
 {
@@ -50,10 +52,17 @@ class VeterinaireService
     {
 
         $vet = $this->repository->findVet($id);
-        $langues = $request->input("langues" , []);
+        $langues = $request->input("langues", []);
 
         $vet->langues()->sync($langues);
+    }
 
+    public function updateProfile(VetProfileUpdateDTO $vetDto, UpdateUserDTO $userDto): void
+    {
+        $vet = $this->repository->findVet(Auth::user()->vet->id);
+
+        $this->repository->updateVet($vet, $vetDto->toArray());
+        $this->repository->updateUserInfo($vet, $userDto->toArray());
     }
 
     public function getPendingVets()

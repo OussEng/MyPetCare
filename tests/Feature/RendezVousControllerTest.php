@@ -143,7 +143,7 @@ class RendezVousControllerTest extends TestCase
             ->assertSessionHasErrors('animal_id');
     }
 
-    public function test_save_assigns_EN_ATTENT_status_automatically(): void
+    public function test_save_assigns_CONFIRMER_status_automatically(): void
     {
         $client = User::factory()->create();
         $vet    = Vet::factory()->create();
@@ -156,7 +156,7 @@ class RendezVousControllerTest extends TestCase
                 'animal_id'      => $animal->id,
             ]);
 
-        $this->assertDatabaseHas('rendez_vouses', ['etat' => Etat::EN_ATTENT->value]);
+        $this->assertDatabaseHas('rendez_vouses', ['etat' => Etat::CONFIRMER->value]);
     }
 
 

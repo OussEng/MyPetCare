@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('dateHeureDebut');
             $table->text('motif');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('etat')->default(Etat::EN_ATTENT->value);
+            $table->string('etat')->default(Etat::CONFIRMER->value);
             $table->foreignId('veterinaire_id')->constrained('veterinaires')->cascadeOnDelete();
             $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
 
