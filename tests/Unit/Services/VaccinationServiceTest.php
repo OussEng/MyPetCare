@@ -93,7 +93,7 @@ class VaccinationServiceTest extends TestCase
         $vacDto     = new VaccinationResponseDTO(1, 'Rabies', 'Info');
         $especeDto  = new EspeceResponseDTO(1, 'Chien', collect([$vacDto]));
         $sexeDto    = new SexeResponseDTO(1, 'Mâle');
-        $userDto    = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r');
+        $userDto    = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r',null);
         $animalDto  = new AnimalResponseDTO(1, 'Rex', null, $especeDto, null, null, $sexeDto, $userDto, collect());
 
         $this->animalServiceMock->shouldReceive('getAnimalById')->with(1)->once()->andReturn($animalDto);

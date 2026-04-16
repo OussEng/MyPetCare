@@ -34,4 +34,17 @@ class AdminService
         $vet = $this->vetRepository->findVet($id);
         $this->vetRepository->review($vet);
     }
+
+    public function deleteUser(int $id): void
+    {
+        $this->userRepository->findClient($id)->delete();
+
+
+
+    }
+
+    public function restoreUser(int $id): void
+    {
+        $this->userRepository->findTrashedClient($id)->restore();
+    }
 }

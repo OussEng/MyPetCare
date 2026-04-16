@@ -66,7 +66,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
+                    <a href="{{route('admin.users')}}" class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
                         <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5.757a1 1 0 0 1 .707.293l5.243 5.242a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1Z"/></svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Utilisateurs</span>
                     </a>

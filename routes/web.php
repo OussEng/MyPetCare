@@ -89,6 +89,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/admin/vet/accept/{id}', [AdminController::class, 'vetAccept'])->name('admin.vet.accept');
     Route::post('/admin/vet/reject/{id}', [AdminController::class, 'vetReject'])->name('admin.vet.reject');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+
+    Route::patch('/admin/user/{id}/restore', [AdminController::class, 'restoreUser'])->name('admin.user.enable');
+    Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.disable');
 });
 
 

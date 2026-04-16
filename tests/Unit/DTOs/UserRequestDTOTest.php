@@ -16,6 +16,7 @@ class UserRequestDTOTest extends TestCase
         'email'   => 'marie@example.com',
         'numero'  => '0698765432',
         'adresse' => '5 avenue des Fleurs',
+        'deleted_at' => null,
     ];
 
     public function test_fromArray_maps_all_fields_correctly(): void
@@ -28,6 +29,7 @@ class UserRequestDTOTest extends TestCase
         $this->assertSame('marie@example.com', $dto->email);
         $this->assertSame('0698765432', $dto->numero);
         $this->assertSame('5 avenue des Fleurs', $dto->adresse);
+        $this->assertSame(null, $dto->deleted_at);
     }
 
     public function test_fromRequest_calls_validated_and_maps(): void

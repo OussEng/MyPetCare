@@ -13,6 +13,7 @@ class UserRequestDTO
         public string $email,
         public string $numero,
         public string $adresse,
+        public ?string $deleted_at,
     ) {}
 
     public static function fromArray(array $data): self
@@ -24,6 +25,7 @@ class UserRequestDTO
             $data['email'],
             $data['numero'],
             $data['adresse'],
+            $data['deleted_at']
         );
     }
 
@@ -41,6 +43,7 @@ class UserRequestDTO
             $user->email,
             $user->numero,
             $user->adresse,
+            $user->deleted_at,
         );
     }
 
@@ -53,6 +56,7 @@ class UserRequestDTO
             'email' => $this->email,
             'numero' => $this->numero,
             'adresse' => $this->adresse,
+            'deleted_at' => $this->deleted_at,
         ];
     }
 

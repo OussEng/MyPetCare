@@ -42,12 +42,17 @@ class UserRepository
             });
         }
 
-        return $query->paginate(10);
+        return $query->withTrashed()->paginate(10, ['*'], 'clients');
     }
 
     public function findClient(int $id)
     {
         return User::findOrFail($id);
+    }
+
+    public function findTrashedClient(int $id)
+    {
+        return User::withTrashed()->findOrFail($id);
     }
 
     public function update(User $user, array $data): void

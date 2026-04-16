@@ -64,7 +64,7 @@ class RendezVousServiceTest extends TestCase
 
     private function makeVetResponseDTO(): VeterinaireResponseDTO
     {
-        $userDto = new UserRequestDTO(1, 'P', 'V', 'p@v.com', '0600', '1 r');
+        $userDto = new UserRequestDTO(1, 'P', 'V', 'p@v.com', '0600', '1 r',null);
 
         return new VeterinaireResponseDTO(
             1, $userDto, 'LIC-001', 'Clin', '1 av', 5,
@@ -76,7 +76,7 @@ class RendezVousServiceTest extends TestCase
     {
         $especeDto = new EspeceResponseDTO(1, 'Chien', collect());
         $sexeDto   = new SexeResponseDTO(1, 'Mâle');
-        $userDto   = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r');
+        $userDto   = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r', null);
 
         return new AnimalResponseDTO(1, 'Rex', null, $especeDto, null, null, $sexeDto, $userDto, collect());
     }

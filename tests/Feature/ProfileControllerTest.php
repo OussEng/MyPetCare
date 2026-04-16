@@ -112,7 +112,7 @@ class ProfileControllerTest extends TestCase
             ->delete(route('profile.destroy'), ['password' => 'password'])
             ->assertRedirect('/');
 
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
     }
 
     public function test_destroy_logs_out_user_after_deletion(): void

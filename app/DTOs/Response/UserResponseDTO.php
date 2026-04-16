@@ -16,6 +16,7 @@ class UserResponseDTO
         public string $email,
         public string $numero,
         public string $adresse,
+        public ?string $deleted_at,
         public Collection $animaux,
         public Collection $rendezVous,
     )
@@ -30,6 +31,7 @@ class UserResponseDTO
             $user->email,
             $user->numero,
             $user->adresse,
+            $user->deleted_at,
             $user->animals->map(fn ($animal) => AnimalResponseDTO::fromModel($animal)),
             $user->rendervous->map(fn ($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous))
         );
