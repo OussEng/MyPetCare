@@ -12,7 +12,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect('/');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -53,8 +53,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth', 'veterinaire'])->group(function () {
 
+Route::middleware(['auth', 'veterinaire', 'desktop.only'])->group(function () {
     Route::get('/vet/backoffice', [VeterinaireController::class, 'backoffice'])->name('veterinaire.backoffice');
 
     //clients list
@@ -82,7 +82,7 @@ Route::middleware(['auth', 'veterinaire'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin', 'desktop.only'])->group(function () {
     Route::get('/admin/backoffice', [AdminController::class, 'backoffice'])->name('admin.backoffice');
     Route::get("/admin/pending-vets", [AdminController::class, 'pendingVets'])->name('admin.pending-vets');
     Route::get("/admin/vet/{id}", [AdminController::class, 'vetDetail'])->name('admin.vet.detail');

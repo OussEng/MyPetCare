@@ -31,6 +31,7 @@ class VetSeeder extends Seeder
             'licenceExpiration' => '2030-01-01',
             'adresseClinique' => '1 rue du france',
             'created_at' => now(),
+            'isReviewed' => true,
             'user_id' => $userId,
         ]);
 

@@ -25,7 +25,7 @@
                                 <th class="px-6 py-3">Espece</th>
                                 <th class="px-6 py-3">Sexe</th>
                                 <th class="px-6 py-3">Race</th>
-                                <th class="px-6 py-3">Date de Naissance</th>
+                                <th class="px-6 py-3">Age</th>
                                 <th class="px-6 py-3">Poids</th>
                                 <th class="px-6 py-3">Vaccinations</th>
                                 <th class="px-6 py-3">Actions</th>
@@ -56,7 +56,7 @@
                                     @endif
 
                                     @if($animal->dateNaissance)
-                                        <td class="px-6 py-4">{{ $animal->dateNaissance }}</td>
+                                        <td class="px-6 py-4">{{ $animal->age() }} ans</td>
                                     @else
                                         <td class="px-6 py-4">Inconnue</td>
                                     @endif

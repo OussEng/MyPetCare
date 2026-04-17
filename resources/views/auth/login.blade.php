@@ -1,8 +1,10 @@
 @extends('layouts.base')
 @section('content')
 
-    <div class="flex justify-center">
-        <div class="w-1/2">
+
+    <div class="flex justify-center mb-96 mt-52">
+        <div class="w-11/12 lg:w-1/2 bg-white text-gray-500 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
+            <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Se connecter</h2>
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')"/>
 
@@ -35,7 +37,7 @@
                         <input id="remember_me" type="checkbox"
                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
                                name="remember">
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                        <span class="ms-2 text-sm text-gray-600">{{ __('Se souvenir de moi') }}</span>
                     </label>
                 </div>
 
@@ -43,16 +45,25 @@
                     @if (Route::has('password.request'))
                         <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                            href="{{ route('password.request') }}">
-                            {{ __('Forgot your password?') }}
+                            {{ __('Mot de pass oublie ?') }}
                         </a>
                     @endif
 
                     <x-primary-button class="ms-3">
-                        {{ __('Log in') }}
+                        {{ __('Se connecter') }}
                     </x-primary-button>
                 </div>
             </form>
 
+            <div>
+                <p class="mt-6 text-center text-sm text-gray-600">
+                    {{ __("Vous n'avez pas de compte ?") }}
+                    <a href="{{ route('register.options') }}"
+                       class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        {{ __('S\'inscrire') }}
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 @endsection

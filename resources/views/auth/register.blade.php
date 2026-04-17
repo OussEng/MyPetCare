@@ -1,8 +1,10 @@
 @extends('layouts.base')
 @section('content')
 
-    <div class="flex justify-center">
-        <div class="w-1/2">
+    <div class="flex justify-center mb-96 mt-52">
+        <div class="w-11/12 lg:w-1/2 bg-white text-gray-500 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
+            <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Inscription Client</h2>
+
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
@@ -16,7 +18,7 @@
 
                 <!-- Nom -->
                 <div>
-                    <x-input-label for="nom" :value="__('nom')"/>
+                    <x-input-label for="nom" :value="__('Nom')"/>
                     <x-text-input id="nom" class="block mt-1 w-full" type="text" name="nom" :value="old('nom')"
                                   autofocus autocomplete="nom"/>
                     <x-input-error :messages="$errors->get('nom')" class="mt-2"/>
@@ -55,7 +57,7 @@
 
                 <!-- Numero -->
                 <div class="mt-4">
-                    <x-input-label for="numero" :value="__('numero')"/>
+                    <x-input-label for="numero" :value="__('Numero Tel')"/>
                     <x-text-input id="numero" class="block mt-1 w-full" type="text" name="numero" :value="old('numero')"
                                    autocomplete="numero"/>
                     <x-input-error :messages="$errors->get('numero')" class="mt-2"/>
@@ -63,7 +65,7 @@
 
                 <!-- adresse -->
                 <div>
-                    <x-input-label for="adresse" :value="__('adresse')"/>
+                    <x-input-label for="adresse" :value="__('Adresse')"/>
                     <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse"
                                   :value="old('adresse')"  autofocus autocomplete="adresse"/>
                     <x-input-error :messages="$errors->get('adresse')" class="mt-2"/>
@@ -73,11 +75,11 @@
                 <div class="flex items-center justify-end mt-4">
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                        href="{{ route('login') }}">
-                        {{ __('Already registered?') }}
+                        {{ __('Déjà un compte ?') }}
                     </a>
 
                     <x-primary-button class="ms-4">
-                        {{ __('Register') }}
+                        {{ __("S'inscrire") }}
                     </x-primary-button>
                 </div>
             </form>

@@ -32,6 +32,10 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('veterinaire.backoffice', absolute: false));
         }
 
+        if (Auth::user()->isAdmin()){
+            return redirect()->intended(route('admin.backoffice', absolute: false));
+        }
+
         return redirect()->intended(route('home', absolute: false));
     }
 

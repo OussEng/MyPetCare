@@ -27,7 +27,7 @@
             </div>
             <div class="absolute inset-x-0 flex justify-center sm:static sm:flex-none">
                 <a href="{{route('home')}}" class=""
-                   aria-current="page"><img class="h-14 " src="{{asset('imgs/logo.png')}}" width="55px"></a>
+                   aria-current="page"><img class="h-14 " src="{{asset('imgs/logo.png')}}" width="55px" alt="logo"></a>
             </div>
 
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -39,10 +39,10 @@
 
                         @if(Route::is('home'))
                             <a href="{{route('home')}}"
-                               class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Home</a>
+                               class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Accueil</a>
                         @else
                             <a href="{{route('home')}}"
-                               class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
+                               class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Accueil</a>
                         @endif
 
 
@@ -86,31 +86,33 @@
                                         Rendez vous</a>
                             @endif
 
+                            @if(auth()->user()->isVet())
+                                    <a href="{{route('veterinaire.backoffice')}}"
+                                       class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Mon espace Vétérinaire</a>
+
+                            @endif
+
+                                @if(auth()->user()->isAdmin())
+                                    <a href="{{route('admin.backoffice')}}"
+                                       class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Mon espace Admin</a>
+
+                                @endif
+
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                               class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Logout</a>
+                               class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Déconnexion</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
 
                         @else
-                            @if(Route::is('register'))
-                                    <a href="{{route('register')}}"
+                            @if(Route::is('register') || Route::is('register_vet.form') || Route::is('register.options'))
+                                    <a href="{{route('register.options')}}"
                                        class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Inscription</a>
                             @else
-                                    <a href="{{route('register')}}"
+                                    <a href="{{route('register.options')}}"
                                        class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Inscription</a>
-                            @endif
-
-                            @if(Route::is('register_vet.form'))
-                                    <a href="{{route('register_vet.form')}}"
-                                       class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Inscription
-                                        Vet</a>
-                            @else
-                                    <a href="{{route('register_vet.form')}}"
-                                       class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Inscription
-                                        Vet</a>
                             @endif
 
                             @if(Route::is('login'))

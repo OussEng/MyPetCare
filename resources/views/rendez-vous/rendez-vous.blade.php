@@ -40,10 +40,6 @@
                                 <select id="animal_id" name="animal_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                                     <option disabled selected value="">Sélectionnez votre animal</option>
-                                    @if(empty(!$data['animaux']))
-                                        <option class="bg-orange-500">Vous n'avez pas d'animaux !</option>
-                                    @endif
-
                                     @foreach($data['animaux'] as $animal)
                                         <option value="{{ $animal->id }}" >{{$animal->nom}}</option>
                                     @endforeach

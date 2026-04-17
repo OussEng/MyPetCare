@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\BackofficeDesktopAccess;
 use App\Http\Middleware\VeterinarianMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,4 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
+    })
+
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'desktop.only' => BackofficeDesktopAccess::class,
+        ]);
     })->create();

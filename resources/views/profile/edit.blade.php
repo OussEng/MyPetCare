@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mb-96">
 
         <h1 class="mb-8 text-3xl font-bold tracking-tight text-gray-900">
             Mon <span class="underline underline-offset-3 decoration-8 decoration-blue-400">profil</span>

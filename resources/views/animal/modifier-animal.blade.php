@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="flex justify-center mb-52">
+    <div class="flex justify-center mb-96 mt-20">
 
-        <div class="xl:w-1/2 mt-20">
+        <div class="w-11/12 lg:w-2/3">
             <h1 class="xl:ml-40 mb-10 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                 Modifier {{ $animal->nom }}
             </h1>
@@ -73,7 +73,7 @@
                     <div class="flex items-center gap-3 mt-4">
                         <input type="submit" value="Enregistrer"
                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center cursor-pointer">
-                        <a href="{{ url()->previous() }}"
+                        <a href="{{ route('animaux') }}"
                            class="text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
                             Annuler
                         </a>
