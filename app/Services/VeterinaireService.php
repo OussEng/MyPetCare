@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTOs\Requests\UpdateUserDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
-use App\DTOs\Requests\VetProfileUpdateDTO;
+use App\DTOs\Requests\VeterinaireUpdateDTO;
 use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
@@ -57,7 +57,7 @@ class VeterinaireService
         $vet->langues()->sync($langues);
     }
 
-    public function updateProfile(VetProfileUpdateDTO $vetDto, UpdateUserDTO $userDto): void
+    public function updateProfile(VeterinaireUpdateDTO $vetDto, UpdateUserDTO $userDto): void
     {
         $vet = $this->repository->findVet(Auth::user()->vet->id);
 

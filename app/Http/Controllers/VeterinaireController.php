@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Requests\UpdateUserDTO;
-use App\DTOs\Requests\VetProfileUpdateDTO;
+use App\DTOs\Requests\VeterinaireUpdateDTO;
 use App\Http\Requests\VetProfileUpdateRequest;
 use App\Services\AnimalService;
 use App\Services\EspeceService;
@@ -139,7 +139,7 @@ class VeterinaireController extends Controller
     public function updateProfile(VetProfileUpdateRequest $request): RedirectResponse
     {
         $this->veterinarianService->updateProfile(
-            VetProfileUpdateDTO::fromRequest($request),
+            VeterinaireUpdateDTO::fromRequest($request),
             UpdateUserDTO::fromRequest($request),
         );
 

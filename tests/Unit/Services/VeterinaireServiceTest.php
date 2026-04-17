@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Services;
 
+use App\DTOs\Requests\UpdateUserDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
+use App\DTOs\Requests\VeterinaireUpdateDTO;
 use App\DTOs\Response\LangueResponseDTO;
 use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Langue;
@@ -71,7 +73,7 @@ class VeterinaireServiceTest extends TestCase
 
         $this->service->getAllVets();
 
-        $this->assertTrue(true); // Mockery vérifie l'appel au repo
+        $this->assertTrue(true);
     }
 
     public function test_getAllVets_returns_paginator_with_no_items_when_none(): void
@@ -141,7 +143,7 @@ class VeterinaireServiceTest extends TestCase
         $this->assertSame(5, $result->id);
     }
 
-    // --- editLangues() ---
+
 
     public function test_editLangues_syncs_langues_from_request(): void
     {
@@ -184,10 +186,68 @@ class VeterinaireServiceTest extends TestCase
         $this->assertTrue(true);
     }
 
-    protected function tearDown(): void
+    public function test_update_profile()
     {
-        Mockery::close();
-        parent::tearDown();
+        $vet = $this->makeFullVet();
+        $user = $vet->user;
+        $user->setRelation('vet', $vet);
+
+        $this->actingAs($user);
+
+        $vetDto = new VeterinaireUpdateDTO(
+            'new Clinic',
+            $vet->numeroLicence,
+            $vet->NbAnsExperience,
+            $vet->dateDeNaissance,
+            $vet->certification,
+        );
+        $userDto = new UpdateUserDTO(
+            $user->prenom,
+            $user->nom,
+            $user->email,
+            $user->numero,
+            'new address',
+        );
+
+        $repo = Mockery::mock(VeterinaireRepository::class);
+
+        $repo->shouldReceive('findVet')
+            ->once()
+            ->with($vet->id)
+            ->andReturn($vet);
+
+        $repo->shouldReceive('updateVet')
+            ->once()
+            ->with($vet, $vetDto->toArray());
+
+        $repo->shouldReceive('updateUserInfo')
+            ->once()
+            ->with($vet, $userDto->toArray());
+
+        $service = new VeterinaireService($repo);
+
+        $service->updateProfile($vetDto, $userDto);
+
+        $this->assertTrue(true);
+    }
+
+
+    public function test_get_pending_vets()
+    {
+
+        $repo = Mockery::mock(VeterinaireRepository::class);
+
+        $repo->shouldReceive('findPendingVets')
+            ->once()
+            ->andReturn(new LengthAwarePaginator([], 0, 10))
+        ;
+
+        $service = new VeterinaireService($repo);
+        $service->getPendingVets();
+
+        $this->assertTrue(true);
+
+
     }
 }
 

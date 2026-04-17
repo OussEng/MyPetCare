@@ -4,7 +4,7 @@ namespace App\DTOs\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VetProfileUpdateDTO
+class VeterinaireUpdateDTO
 {
     public function __construct(
         public readonly string $nomClinique,
