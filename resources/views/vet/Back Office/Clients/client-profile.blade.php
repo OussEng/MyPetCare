@@ -100,10 +100,12 @@
                                         <label for="espece"
                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espece
                                             :</label>
+
                                         @error('espece_id')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                         <select  id="espece" name="espece_id"
+
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option class="opacity-30" selected disabled value=""> Sélectionnez l'espece
                                                 ...
@@ -116,10 +118,12 @@
                                         <label for="sexe"
                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sexe
                                             :</label>
+
                                         @error('sexe_id')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                         @enderror
                                         <select  id="sexe" name="sexe_id"
+
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option class="opacity-30" value="" selected disabled> Sélectionnez le sexe ...
                                             </option>
