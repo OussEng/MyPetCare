@@ -18,8 +18,6 @@ jobs:
       run: cp .env.example .env
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
     - name: Generate key for testing
       run: php artisan key:generate --env=testing
     - name: Directory Permissions
