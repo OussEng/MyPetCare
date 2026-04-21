@@ -10,10 +10,10 @@ jobs:
   ci-pipeline:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.2'
-    - uses: actions/checkout@v4
     - name: Copy .env
       run: cp .env.example .env
     - name: Install Dependencies
