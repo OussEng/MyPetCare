@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ "dev","main" ]
+    branches: [ "dev","main", "sec-patches-test" ]
   pull_request:
-    branches: [ "dev","main" ]
+    branches: [ "dev","main", "sec-patches-test" ]
 
 jobs:
   ci-pipeline:
