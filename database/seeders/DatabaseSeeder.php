@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             SexeSeeder::class,
             VaccinationSeeder::class,
+            ClientSeeder::class,
+            VetSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

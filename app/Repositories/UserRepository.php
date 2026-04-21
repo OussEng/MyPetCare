@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Vet;
 
 class UserRepository
 {
@@ -18,9 +19,20 @@ class UserRepository
     $user -> roles() ->attach($role);
     }
 
-    public function findAllClients(string $search=null)
+    public function switchRole(User $user, string $role): void
     {
-        $query = User::doesntHave('vet');
+        $role = Role::where('role', $role)->firstOrFail();
+
+        $user->roles()->sync([$role->id]);
+    }
+
+
+
+    public function findAllClients(string $search = null)
+    {
+        $query = User::whereDoesntHave('roles', function ($q) {
+            $q->whereIn('role', ['veterinarian', 'admin']);
+        });
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -30,13 +42,22 @@ class UserRepository
             });
         }
 
-
-        return $query->paginate(10);
+        return $query->withTrashed()->paginate(10, ['*'], 'clients');
     }
 
     public function findClient(int $id)
     {
-        return User::find($id);
+        return User::findOrFail($id);
+    }
+
+    public function findTrashedClient(int $id)
+    {
+        return User::withTrashed()->findOrFail($id);
+    }
+
+    public function update(User $user, array $data): void
+    {
+        $user->update($data);
     }
 
 }

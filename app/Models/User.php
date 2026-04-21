@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -13,6 +14,8 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use SoftDeletes;
+
 
 
     /**
@@ -26,7 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'numero',
-        'adresse'
+        'adresse',
     ];
 
     /**
@@ -69,7 +72,15 @@ class User extends Authenticatable
 
     public function isVet()
     {
-        return $this->vet()->exists();
+        return $this->hasRole('veterinarian');
+    }
+
+    public function isPendingVet(){
+        return $this->vet()->exists() && $this->hasRole("user");
+    }
+
+    public function isAdmin(){
+        return $this->hasRole('admin');
     }
 
 

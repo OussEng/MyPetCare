@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\Requests\UpdateUserDTO;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function __construct(private readonly UserService $userService) {}
+
     /**
      * Display the user's profile form.
      */
@@ -27,15 +31,19 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $this->userService->updateProfile($request->user(), UpdateUserDTO::fromRequest($request));
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        return redirect()->route('profile.edit')->with('success', 'Informations personnelles mises à jour avec succès.');
+    }
 
-        $request->user()->save();
+    /**
+     * Update the user's password.
+     */
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
+    {
+        $this->userService->updatePassword($request->user(), $request->validated('password'));
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.edit')->with('success', 'Mot de passe mis à jour avec succès.');
     }
 
     /**
@@ -50,12 +58,11 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
-
         $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return redirect('/');
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Vet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,10 +27,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'prenom' => fake()->firstName(),
+            'nom' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'numero' => fake()->phoneNumber(),
+            'adresse' => fake()->address(),
             'remember_token' => Str::random(10),
         ];
     }
@@ -40,5 +45,15 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function vet(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            Vet::factory()->create(['user_id' => $user->id]);
+
+            $role = Role::firstOrCreate(['role' => 'veterinarian']);
+            $user->roles()->attach($role->id);
+        });
     }
 }

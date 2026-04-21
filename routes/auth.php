@@ -10,15 +10,19 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\RegisteredVetController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Main;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
 
     Route::get('register-vet', [RegisteredVetController::class, 'create'])
-        ->name('register_vet.form');  // More specific route name
+        ->name('register_vet.form');
 
     Route::post('register-vet', [RegisteredVetController::class, 'store'])
-        ->name('register_vet.save');  // More specific route name
+        ->name('register_vet.save');
+
+    Route::get('register-options', [Main::class, 'registerOptions'])
+        ->name('register.options');
 
 
 

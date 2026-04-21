@@ -12,6 +12,31 @@
 </head>
 @include('layouts._sidebar')
 <body>
+<div class="fixed mt-10 z-50 w-80 left-1/2 -translate-x-1/2">
+    @if (session('success'))
+        <div class="bg-green-100 text-green-800 px-4 py-3 rounded mb-4 border-green-800 border-2">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="bg-red-100 text-red-800 border-red-800 px-4 py-3 rounded mb-4 border-2">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('warning'))
+        <div class="bg-yellow-100 text-yellow-800 border-yellow-800 px-4 py-3 rounded mb-4 border-2">
+            {{ session('warning') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-800 border-red-800 px-4 py-3 rounded mb-4 border-2">
+            Vous avez {{ $errors->count() }} erreur(s).
+        </div>
+    @endif
+</div>
 @yield('content')
 
 

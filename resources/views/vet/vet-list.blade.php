@@ -39,4 +39,8 @@
                 </div>
     </div>
 
+    <div class="mt-10 ml-24">
+        {{ $vets->withQueryString()->links('pagination.custom') }}
+    </div>
+
 @endsection

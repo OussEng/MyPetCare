@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="mb-96">
-        <div class="ml-32 mt-10">
+        <div class="ml-2 xl:ml-32 mt-10">
         <a href="{{route('animaux')}}"
            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition">
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
@@ -38,29 +38,12 @@
 
             @else
 
-                <div class="w-2/3 mx-auto my-auto mb-28 mt-10">
+                <div class="w-11/12 xl:w-2/3 mx-auto my-auto mb-28 mt-10">
 
                     <div>
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white inline-flex items-center">
-                            Vaccination list
+                        <h1 class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white inline-flex items-center">
+                            Vaccination:
                         </h1>
-                        <div class="relative inline-block group ml-4 self-center"> <!-- Added ml-4 for spacing -->
-                            <!-- Trigger Button (SVG Icon) -->
-                            <button class="text-gray-500 hover:text-gray-700">
-                                <svg width="30px" height="30px" viewBox="0 0 1024 1024"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="#000000"
-                                          d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 192a58.432 58.432 0 0 0-58.24 63.744l23.36 256.384a35.072 35.072 0 0 0 69.76 0l23.296-256.384A58.432 58.432 0 0 0 512 256zm0 512a51.2 51.2 0 1 0 0-102.4 51.2 51.2 0 0 0 0 102.4z"/>
-                                </svg>
-                            </button>
-
-                            <!-- Popover Content -->
-                            <div
-                                class="absolute hidden group-hover:block bg-white text-gray-700 text-sm rounded-lg shadow-lg p-4 mt-2 w-64 left-1/2 transform -translate-x-1/2">
-                                <p>⚠️ Veuillez ne pas ajouter ni retirer une vaccination sauf si vous êtes certain(e)
-                                    qu’elle a bien été faite.</p>
-                            </div>
-                        </div>
                     </div>
 
 
@@ -79,17 +62,6 @@
                             <div class="mt-2 mb-4 text-sm">
                                 {{$vaccination->info}}
                             </div>
-                            <div class="flex">
-                                <form action="{{ route('vaccination.remove', [$animal->id , $vaccination->id]) }}"
-                                      method="POST">
-                                    @csrf
-                                    <button
-                                        type="submit"
-                                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-200">
-                                        Retirer
-                                    </button>
-                                </form>
-                            </div>
                         </div>
 
                         <div>
@@ -101,44 +73,19 @@
                                     <span class="font-medium">Attention</span> cet animal n'est pas vacciné
                                 </div>
 
-                            @endforelse
-                        </div>
-                </div>
-                <div class="w-1/2 mx-auto my-auto">
-                    <h2 class="text-4xl font-extrabold dark:text-white mb-10">Ajouter des vaccins :</h2>
-
-                    <div>
-
-                        <form action="{{ route('vaccinations.add' , $animal->id) }}" method="POST">
-                            @csrf
-                            <label class="block mb-5 text-sm font-medium text-gray-900 dark:text-white">Select
-                                Vaccinations:</label>
-
-
-                            @foreach($vaccinations as $vaccination)
-
-                                <div
-                                    class="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
-                                    <input id="bordered-checkbox-1" type="checkbox" value="{{ $vaccination->id }}"
-                                           name="vaccinations[]"
-                                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="bordered-checkbox-1"
-                                           class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $vaccination->nom_vaccine }}</label>
+                                <div>
+                                    <a
+                                        href="{{route('list.vets')}}"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                                        <span
+                                        class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                                        Prendre un rendez vous
+                                        </span>
+                                    </a>
                                 </div>
 
-                            @endforeach
-
-
-                            <button type="submit"
-                                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-                                Ajouter
-                            </button>
-
-                        </form>
-
-                    </div>
-
-
+                            @endforelse
+                        </div>
                 </div>
             @endif
         </div>

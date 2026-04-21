@@ -14,7 +14,7 @@ class Vet extends Model
 
     protected $table = 'veterinaires';
 
-    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','horaires', 'user_id'];
+    protected $fillable = ['numeroLicence', 'nomClinique','NbAnsExperience','dateDeNaissance','certification','licenceExpiration','adresseClinique','isReviewed', 'user_id'];
 
 
 
@@ -25,12 +25,17 @@ class Vet extends Model
 
     public function langues(): belongsToMany
     {
-        return $this->belongsToMany(Langues::class);
+        return $this->belongsToMany(Langue::class);
     }
 
     public function rendez_vous(): HasMany
     {
         return $this->hasMany(RendezVous::class);
 
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->isReviewed === true;
     }
 }

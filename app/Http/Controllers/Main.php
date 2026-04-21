@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 class Main extends Controller
 {
 
-    public function home()
+    public function redirect()
     {
+        return redirect('/');
+    }
 
-        return view('home');
+    public function registerOptions()
+    {
+        return view('auth.register-options');
     }
 
 }

@@ -1,0 +1,188 @@
+<?php
+
+namespace Tests\Integration\Repositories;
+
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Vet;
+use App\Repositories\UserRepository;
+use App\Repositories\VeterinaireRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class VeterinaireRepositoryTest extends TestCase
+{
+    use RefreshDatabase;
+
+    private VeterinaireRepository $repository;
+    private UserRepository $userRepository;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->repository = new VeterinaireRepository();
+        $this->userRepository = new UserRepository();
+    }
+
+
+    public function test_create_persists_vet_in_database(): void
+    {
+        $user = User::factory()->create();
+        $data = Vet::factory()->make(['user_id' => $user->id])->toArray();
+
+        $result = $this->repository->create($data);
+
+        $this->assertInstanceOf(Vet::class, $result);
+        $this->assertDatabaseHas('veterinaires', ['user_id' => $user->id]);
+    }
+
+    public function test_create_stores_licence_number(): void
+    {
+        $user = User::factory()->create();
+        $data = Vet::factory()->make(['user_id' => $user->id, 'numeroLicence' => 'LIC-9999'])->toArray();
+
+        $result = $this->repository->create($data);
+
+        $this->assertSame('LIC-9999', $result->numeroLicence);
+    }
+
+
+    public function test_findAllVets_returns_all_vets(): void
+    {
+        User::factory()->count(3)->create()->each(function ($user) {
+            Vet::factory()->create(['user_id' => $user->id]);
+        });
+
+        $result = $this->repository->findAllVets();
+
+        $this->assertCount(3, $result);
+    }
+
+    public function test_findAllVets_returns_empty_collection_when_none(): void
+    {
+        $result = $this->repository->findAllVets();
+
+        $this->assertCount(0, $result);
+    }
+
+
+    public function test_findVet_returns_correct_vet(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'numeroLicence' => 'LIC-7777']);
+
+        $result = $this->repository->findVet($vet->id);
+
+        $this->assertSame($vet->id, $result->id);
+        $this->assertSame('LIC-7777', $result->numeroLicence);
+    }
+
+    public function test_findVet_throws_ModelNotFoundException_for_unknown_id(): void
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $this->repository->findVet(99999);
+    }
+
+    public function test_vet_does_get_reviewed(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id]);
+        $this->repository->review($vet);
+        $this->assertSame(true, $vet->isReviewed);
+
+    }
+
+    public function test_find_pending_vets(): void
+    {
+
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id]);
+        Role::firstOrCreate(['role' => 'user']);
+        $this->userRepository->switchRole($user, 'user');
+
+        $pendingVets = $this->repository->findPendingVets();
+
+        $this->assertTrue($pendingVets->contains($vet));
+
+    }
+
+
+    public function test_findActiveVets_returns_reviewed_veterinarian(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+        $user->roles()->attach($role->id);
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertTrue($result->contains($vet));
+    }
+
+    public function test_findActiveVets_excludes_vet_without_veterinarian_role(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+        $role = Role::firstOrCreate(['role' => 'user']);
+        $user->roles()->attach($role->id);
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertFalse($result->contains($vet));
+    }
+
+    public function test_findActiveVets_excludes_unreviewed_veterinarian(): void
+    {
+        $user = User::factory()->create();
+        $vet = Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => false]);
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+        $user->roles()->attach($role->id);
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertFalse($result->contains($vet));
+    }
+
+    public function test_findActiveVets_returns_empty_paginator_when_no_active_vets(): void
+    {
+        $result = $this->repository->findActiveVets();
+
+        $this->assertCount(0, $result);
+    }
+
+    public function test_findActiveVets_paginates_8_per_page(): void
+    {
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+
+        for ($i = 0; $i < 10; $i++) {
+            $user = User::factory()->create();
+            Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+            $user->roles()->attach($role->id);
+        }
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertInstanceOf(\Illuminate\Pagination\LengthAwarePaginator::class, $result);
+        $this->assertEquals(8, $result->perPage());
+        $this->assertCount(8, $result->items());
+    }
+
+    public function test_findActiveVets_returns_multiple_active_vets(): void
+    {
+        $role = Role::firstOrCreate(['role' => 'veterinarian']);
+
+        for ($i = 0; $i < 3; $i++) {
+            $user = User::factory()->create();
+            Vet::factory()->create(['user_id' => $user->id, 'isReviewed' => true]);
+            $user->roles()->attach($role->id);
+        }
+
+        $result = $this->repository->findActiveVets();
+
+        $this->assertCount(3, $result);
+    }
+}
+
+

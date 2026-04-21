@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('language_vet', function (Blueprint $table) {
+        Schema::create('langue_vet', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vet_id')->constrained('veterinaires')->onDelete('cascade');
-            $table->foreignId('language_id')->constrained('langues')->onDelete('cascade');
+            $table->foreignId('langue_id')->constrained('langues')->onDelete('cascade');
             $table->timestamps();
         });
 

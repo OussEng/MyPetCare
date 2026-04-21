@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Animal;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AnimalPolicy
 {
@@ -37,7 +36,7 @@ class AnimalPolicy
      */
     public function update(User $user, Animal $animal): bool
     {
-        return false;
+        return $animal->user->id === $user->id || $user->hasRole('veterinarian');
     }
 
     /**

@@ -15,7 +15,7 @@ class AnimalRepository
 
     public function findById(int $id) : Animal
     {
-        return Animal::find($id);
+        return Animal::findOrFail($id);
     }
 
     public function create(array $data)
@@ -26,6 +26,13 @@ class AnimalRepository
     public function delete(int $id)
     {
         Animal::destroy($id);
+    }
+
+    public function update(int $id, array $data): Animal
+    {
+        $animal = Animal::findOrFail($id);
+        $animal->update($data);
+        return $animal;
     }
 
 }

@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Requests\UpdateUserDTO;
 use App\DTOs\Requests\VeterinaireCreateDTO;
-use App\DTOs\Response\VeterinaireViewDTO;
+use App\DTOs\Requests\VeterinaireUpdateDTO;
+use App\DTOs\Response\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class VeterinaireService
 {
@@ -30,20 +33,43 @@ class VeterinaireService
 
 
 
-    public function getAllVets() : Collection
+    public function getAllVets()
     {
-         $vets = $this->repository->findAllVets();
+         $vets = $this->repository->findActiveVets();
 
 
-        return $vets->map(fn($vet) => VeterinaireViewDTO::fromModel($vet) );
+        return $vets->through(fn($vet) => VeterinaireResponseDTO::fromModel($vet) );
     }
 
 
-    public function getVet(int $id) : VeterinaireViewDTO
+    public function getVet(int $id) : VeterinaireResponseDTO
     {
         $vet = $this->repository->findVet($id);
+        return VeterinaireResponseDTO::fromModel($vet);
+    }
 
-        return VeterinaireViewDTO::fromModel($vet);
+    public function editLangues(Request $request,int $id): void
+    {
+
+        $vet = $this->repository->findVet($id);
+        $langues = $request->input("langues", []);
+
+        $vet->langues()->sync($langues);
+    }
+
+    public function updateProfile(VeterinaireUpdateDTO $vetDto, UpdateUserDTO $userDto): void
+    {
+        $vet = $this->repository->findVet(Auth::user()->vet->id);
+
+        $this->repository->updateVet($vet, $vetDto->toArray());
+        $this->repository->updateUserInfo($vet, $userDto->toArray());
+    }
+
+    public function getPendingVets()
+    {
+        $vets = $this->repository->findPendingVets();
+
+        return $vets->through(fn($vet) => VeterinaireResponseDTO::fromModel($vet));
     }
 
 

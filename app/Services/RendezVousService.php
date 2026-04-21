@@ -6,11 +6,12 @@ use App\DTOs\Requests\RendezVousRequestDTO;
 use App\DTOs\Response\RendezVousResponseDTO;
 use App\Enums\Etat;
 use App\Http\Requests\RendezVousRequest;
-use App\Models\RendezVous;
+use App\Managers\RendezVousManager;
 use App\Repositories\RendezVousRepository;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,13 +21,15 @@ class RendezVousService
     private RendezVousRepository $rendezVousRepository;
     private VeterinaireService $veterinarianService;
     private AnimalService $animalService;
+    private RendezVousManager $rendezVousManager;
 
 
-    public function __construct(RendezVousRepository $rendezVousRepository, VeterinaireService $veterinarianService, AnimalService $animalService)
+    public function __construct(RendezVousRepository $rendezVousRepository, VeterinaireService $veterinarianService, AnimalService $animalService, RendezVousManager $rendezVousManager)
     {
         $this->rendezVousRepository = $rendezVousRepository;
         $this->veterinarianService = $veterinarianService;
         $this->animalService = $animalService;
+        $this->rendezVousManager = $rendezVousManager;
 
     }
 
@@ -34,6 +37,8 @@ class RendezVousService
 
     public function getAllApointementsByVet(?string $etat = null,?string $jour = null)
     {
+
+        $this->rendezVousManager->handleState();
 
         $etat = $etat ? Etat::tryFrom($etat) : null;
         $today = CarbonImmutable::now();
@@ -47,7 +52,7 @@ class RendezVousService
 
         if($jour){
             $query->where('dateHeureDebut', 'like', "%{$today->format('Y-m-d')}%")
-            ->whereIn('etat',[Etat::CONFIRMER, Etat::EN_ATTENT]);
+            ->where('etat', Etat::CONFIRMER);
         }
 
         $paginatedRvs = $query
@@ -99,15 +104,27 @@ class RendezVousService
     }
 
 
-    public function getRendezVousByUser(int $userId) : Collection
+
+
+    public function getRendezVousByUser(Request $request)
     {
+        $this->rendezVousManager->handleState();
 
-        $rendezVouss =  $this->rendezVousRepository->findAllByUser($userId);
 
+        $filterByDay = $request->get('jour') !== null;
+        $etat = $request->get('etat');
 
-        return $rendezVouss->map(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
+        $etatEnum = match (true) {
+            $filterByDay, $etat === 'tous' => null,
+            $etat !== null   => Etat::tryFrom($etat),
+            default          => Etat::CONFIRMER,
+        };
 
+        $paginatedRvs = $this->rendezVousRepository->findAllByUser(Auth::id(), $etatEnum, $filterByDay);
+
+        return $paginatedRvs->through(fn($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous));
     }
+
 
     public function create(RendezVousRequest $request)
     {
@@ -127,6 +144,17 @@ class RendezVousService
 
     }
 
+    public function getCurrentAndNextAppointments(): array
+    {
+        $this->rendezVousManager->handleState();
+        $vetId = auth()->user()->vet->id;
+
+        return [
+            'current' => $this->rendezVousRepository->findCurrentAppointment($vetId),
+            'next'    => $this->rendezVousRepository->findNextAppointment($vetId),
+        ];
+    }
+
     public function getRendezVousByVet()
     {
         $this->rendezVousRepository->findAllByVet(auth()->user()->vet->id);
@@ -142,6 +170,15 @@ class RendezVousService
 
     }
 
+    public function cancel(int $id, int $userId) : bool
+    {
+        return $this->rendezVousRepository->cancel($id, $userId);
+    }
+
+    public function cancelByVet(int $id, int $vetId) : bool
+    {
+        return $this->rendezVousRepository->cancelByVet($id, $vetId);
+    }
 
 
 

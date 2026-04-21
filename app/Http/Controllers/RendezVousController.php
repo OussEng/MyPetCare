@@ -44,19 +44,28 @@ class RendezVousController extends Controller
 
             $this->rendezVousService->create($request);
 
-        return redirect('/rendez-vous');
-
+    return redirect('/mes-rendez-vous')->with('success', 'Rendez-vous réservé avec succès');
     }
 
 
-    public function list(){
+    public function list(Request $request){
 
-        $rendezvous = $this->rendezVousService->getRendezVousByUser(Auth::id());
+        $rendezvous = $this->rendezVousService->getRendezVousByUser($request);
 
-
-        return view('animal.mes-rendez-vous' , [
-            'rendezvous' => $rendezvous
+        return view('animal.mes-rendez-vous', [
+            'rendezvous' => $rendezvous,
         ]);
+    }
+
+    public function cancel(int $id)
+    {
+        $cancelled = $this->rendezVousService->cancel($id, Auth::id());
+
+        if (!$cancelled) {
+            return redirect()->route('rendez-vous.list')->with('error', 'Impossible d\'annuler ce rendez-vous.');
+        }
+
+        return redirect()->route('rendez-vous.list')->with('success', 'Rendez-vous annulé avec succès.');
     }
 
 }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('numero');
             $table->string('adresse');
+            $table->softDeletes('deleted_at');
+            $table->string('email_verified_at')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();
         });

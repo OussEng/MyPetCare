@@ -42,7 +42,7 @@ class RegisteredVetController extends Controller
         $vetDTO = VeterinaireCreateDTO::fromRequest($vetRequest);
 
 
-        $user = $userService->register($userDTO, 'veterinarian', $userRepository);
+        $user = $userService->register($userDTO);
 
         $vetService->createVeterinarian($vetDTO, $user->id,$veterinarianRepository);
 
@@ -50,6 +50,6 @@ class RegisteredVetController extends Controller
         event(new Registered($user));
         Auth::login($user);
 
-        return redirect(route('veterinaire.backoffice', absolute: false));
+        return redirect(route('home', absolute: false));
     }
 }
