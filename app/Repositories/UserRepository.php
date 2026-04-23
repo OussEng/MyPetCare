@@ -84,4 +84,30 @@ class UserRepository
             ->findOrFail($id);
     }
 
+    public function deleteWithRelations(User $user)
+    {
+        foreach ($user->rendezvous as $rendezVous) {
+            $rendezVous->delete();
+        }
+
+        foreach ($user->animals as $animal) {
+            $animal->delete();
+        }
+
+        $user->delete();
+    }
+
+    public function restore($user)
+    {
+        $user->restore();
+
+        foreach ($user->animals as $animal) {
+            $animal->restore();
+        }
+
+        foreach ($user->rendezvous as $rendezVous) {
+            $rendezVous->restore();
+        }
+    }
+
 }

@@ -41,54 +41,28 @@ class AdminService
     {
         $user = $this->userRepository->findClient($id);
 
-        foreach ($user->rendezvous as $rendezVous) {
-            $rendezVous->delete();
-        }
-
-        foreach ($user->animals as $animal) {
-            $animal->delete();
-        }
-
-        $user->delete();
+        $this->userRepository->deleteWithRelations($user);
 
     }
 
     public function restoreUser(int $id): void
     {
         $user = $this->userRepository->findTrashedClient($id);
-        $user->restore();
-
-        foreach ($user->animals as $animal) {
-            $animal->restore();
-        }
-
-        foreach ($user->rendezvous as $rendezVous) {
-            $rendezVous->restore();
-        }
-
+        $this->userRepository->restore($user);
     }
 
     public function deleteVet(int $id)
     {
         $vet = $this->vetRepository->findVet($id);
 
-        foreach ($vet->rendez_vous as $rendezVous) {
-            $rendezVous->delete();
-        }
-
-        $vet->delete();
-        $vet->user->delete();
+        $this->vetRepository->deleteWithRelations($vet);
     }
 
     public function restoreVet(int $id): void
     {
         $vet = $this->vetRepository->findTrashedVet($id);
-        $vet->user->restore();
-        $vet->restore();
 
-        foreach ($vet->rendez_vous as $rendezVous) {
-            $rendezVous->restore();
-        }
+        $this->vetRepository->restore($vet);
     }
 
     public function getClientsWithTrashed()

@@ -87,5 +87,93 @@ class AdminServiceTest extends TestCase
         $this->service->rejectVet($vet->id);
     }
 
+    public function test_delete_user(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $user = User::factory()->make(['id' => 1]);
+
+        $this->userRepoMock
+            ->shouldReceive('findClient')
+            ->with(1)
+            ->once()
+            ->andReturn($user);
+
+        $this->userRepoMock
+            ->shouldReceive('deleteWithRelations')
+            ->with($user)
+            ->once();
+
+
+        $this->service->deleteUser(1);
+    }
+
+    public function test_delete_vet(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $user = User::factory()->make(['id' => 1]);
+        $vet = Vet::factory()->make(['id' => 99, 'user_id' => 1]);
+
+        $this->vetRepoMock
+            ->shouldReceive('findVet')
+            ->with(99)
+            ->once()
+            ->andReturn($vet);
+
+        $this->vetRepoMock
+            ->shouldReceive('deleteWithRelations')
+            ->with($vet)
+            ->once();
+
+        $this->service->deleteVet(99);
+    }
+
+    public function test_restore_user(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $user = User::factory()->make(['id' => 1]);
+
+
+        $this->userRepoMock
+            ->shouldReceive('findTrashedClient')
+            ->with(1)
+            ->once()
+            ->andReturn($user);
+
+        $this->userRepoMock
+            ->shouldReceive('restore')
+            ->with($user)
+            ->once();
+
+        $this->service->restoreUser(1);
+    }
+
+    public function test_restore_vet(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $user = User::factory()->make(['id' => 1]);
+        $vet = Vet::factory()->make(['id' => 99, 'user_id' => 1]);
+
+
+        $this->vetRepoMock
+            ->shouldReceive('findTrashedVet')
+            ->with(99)
+            ->once()
+            ->andReturn($vet);
+
+        $this->vetRepoMock
+            ->shouldReceive('restore')
+            ->with($vet)
+            ->once();
+
+        $this->service->restoreVet(99);
+    }
+
+
+
+
 
 }

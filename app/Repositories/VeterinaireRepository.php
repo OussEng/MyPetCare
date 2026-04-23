@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Vet;
+use Illuminate\Database\Eloquent\Model;
 
 class VeterinaireRepository
 {
@@ -81,6 +82,26 @@ class VeterinaireRepository
     public function updateUserInfo(Vet $vet, array $userData): void
     {
         $vet->user->update($userData);
+    }
+
+    public function deleteWithRelations($vet): void
+    {
+        foreach ($vet->rendez_vous as $rendezVous) {
+            $rendezVous->delete();
+        }
+
+        $vet->delete();
+        $vet->user->delete();
+    }
+
+    public function restore($vet): void
+    {
+        $vet->user->restore();
+        $vet->restore();
+
+        foreach ($vet->rendez_vous as $rendezVous) {
+            $rendezVous->restore();
+        }
     }
 
 }
