@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\UpdateUserDTO;
-use App\DTOs\Requests\VeterinaireCreateDTO;
-use App\DTOs\Requests\VeterinaireUpdateDTO;
-use App\DTOs\Response\VeterinaireResponseDTO;
+use App\DTOs\Requests\User\UpdateUserDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireCreateDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireUpdateDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class VeterinaireService

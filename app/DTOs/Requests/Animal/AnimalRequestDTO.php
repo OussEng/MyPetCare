@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Requests;
+namespace App\DTOs\Requests\Animal;
 
 use App\Http\Requests\AnimalRequest;
 

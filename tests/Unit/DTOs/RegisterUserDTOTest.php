@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\RegisterUserDTO;
+use App\DTOs\Requests\User\RegisterUserDTO;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 

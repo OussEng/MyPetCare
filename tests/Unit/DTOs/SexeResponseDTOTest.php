@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Response\SexeResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
 use App\Models\Sexe;
 use Tests\TestCase;
 

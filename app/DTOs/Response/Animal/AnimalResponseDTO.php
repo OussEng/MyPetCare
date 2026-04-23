@@ -1,15 +1,13 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\Animal;
 
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Response\Espece\EspeceResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Vaccination\VaccinationResponseDTO;
 use App\Models\Animal;
-use App\Models\Espece;
-use App\Models\Sexe;
-use App\Models\User;
-use App\Models\Vaccination;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class AnimalResponseDTO
@@ -22,7 +20,7 @@ class AnimalResponseDTO
         public ?string           $dateNaissance = null,
         public ?string           $poids = null,
         public SexeResponseDTO   $sexe,
-        public UserRequestDTO    $user,
+        public UserSimpleDTO    $user,
         public Collection        $vaccinations,
     ) {}
 
@@ -36,7 +34,7 @@ class AnimalResponseDTO
             $animal->dateNaissance,
             $animal->poids,
             SexeResponseDTO::fromModel($animal->sexe),
-            UserRequestDTO::fromModel($animal->user),
+            UserSimpleDTO::fromModel($animal->user),
             $animal->vaccinations->map(
                 fn ($v) => VaccinationResponseDTO::fromModel($v)
             )

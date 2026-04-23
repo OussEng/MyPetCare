@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rendez_vouses', function (Blueprint $table) {
+        Schema::create('rendez_vous', function (Blueprint $table) {
             $table->id();
             $table->dateTime('dateHeureDebut');
             $table->text('motif');
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('etat')->default(Etat::CONFIRMER->value);
             $table->foreignId('veterinaire_id')->constrained('veterinaires')->cascadeOnDelete();
             $table->foreignId('animal_id')->constrained('animals')->cascadeOnDelete();
+            $table->softDeletes();
 
             $table->timestamps();
 

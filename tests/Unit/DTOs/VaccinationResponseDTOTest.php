@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Response\VaccinationResponseDTO;
+use App\DTOs\Response\Vaccination\VaccinationResponseDTO;
 use App\Models\Vaccination;
 use Tests\TestCase;
 

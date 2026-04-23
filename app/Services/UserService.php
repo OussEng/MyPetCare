@@ -2,13 +2,11 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\RegisterUserDTO;
-use App\DTOs\Requests\UpdateUserDTO;
-use App\DTOs\Response\UserResponseDTO;
-use App\Http\Requests\RegisterUserRequest;
+use App\DTOs\Requests\User\RegisterUserDTO;
+use App\DTOs\Requests\User\UpdateUserDTO;
+use App\DTOs\Response\User\UserResponseDTO;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -63,7 +61,7 @@ class UserService
         return $clientsPaginated->through(fn($client) => UserResponseDTO::fromModel($client));
     }
 
-    public function getClient(int $id)
+    public function getClient(int $id): UserResponseDTO
     {
         $client = $this->userRepository->findClient($id);
 

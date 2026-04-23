@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('sexe_id')->constrained('sexes');
             $table->foreignId('espece_id')->constrained('especes');
             $table->foreignId('user_id')->constrained('users');
+            $table->softDeletes();
         });
     }
 

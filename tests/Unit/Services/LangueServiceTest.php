@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Services;
 
+use App\Models\Langue;
 use App\Repositories\LangueRepository;
 use App\Services\LangueService;
-use App\Models\Langue;
 use Illuminate\Support\Collection;
 use Mockery;
 use Tests\TestCase;
@@ -39,7 +39,7 @@ class LangueServiceTest extends TestCase
         $result = $this->service->getLangues();
 
         $this->assertCount(1, $result);
-        $this->assertInstanceOf(\App\DTOs\Response\LangueResponseDTO::class, $result->first());
+        $this->assertInstanceOf(\App\DTOs\Response\Langue\LangueResponseDTO::class, $result->first());
         $this->assertSame('Français', $result->first()->libelle);
     }
 

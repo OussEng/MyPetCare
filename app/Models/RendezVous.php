@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Enums\Etat;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RendezVous extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $table = 'rendez_vouses';
+    protected $table = 'rendez_vous';
 
     protected $fillable = ['dateHeureDebut', 'motif','user_id','animal_id','veterinaire_id','etat'];
 

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Services;
 
-use App\DTOs\Requests\RegisterUserDTO;
-use App\DTOs\Response\UserResponseDTO;
+use App\DTOs\Requests\User\RegisterUserDTO;
+use App\DTOs\Response\User\UserResponseDTO;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
@@ -31,7 +31,7 @@ class UserServiceTest extends TestCase
             'email' => 'jean@test.com', 'numero' => '0600', 'adresse' => '1 r',
         ], $override));
         $user->setRelation('animals', collect());
-        $user->setRelation('rendervous', collect());
+        $user->setRelation('rendezvous', collect());
 
         return $user;
     }

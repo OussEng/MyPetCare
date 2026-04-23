@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\Espece;
 
+use App\DTOs\Response\Vaccination\VaccinationResponseDTO;
 use App\Models\Espece;
-use App\Models\Vaccination;
 use Illuminate\Support\Collection;
 
 class EspeceResponseDTO

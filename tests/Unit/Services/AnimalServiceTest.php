@@ -2,10 +2,7 @@
 
 namespace Tests\Unit\Services;
 
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\EspeceResponseDTO;
-use App\DTOs\Response\SexeResponseDTO;
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
 use App\Http\Requests\AnimalRequest;
 use App\Http\Requests\AnimalUpdateRequest;
 use App\Models\Animal;

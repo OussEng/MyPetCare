@@ -2,20 +2,16 @@
 
 namespace Tests\Unit\Services;
 
-use App\DTOs\Requests\RendezVousRequestDTO;
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\EspeceResponseDTO;
-use App\DTOs\Response\RendezVousResponseDTO;
-use App\DTOs\Response\SexeResponseDTO;
-use App\DTOs\Response\VeterinaireResponseDTO;
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Requests\User\UserRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\Espece\EspeceResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Enums\Etat;
 use App\Http\Requests\RendezVousRequest;
 use App\Managers\RendezVousManager;
-use App\Models\Animal;
-use App\Models\Espece;
 use App\Models\RendezVous;
-use App\Models\Sexe;
 use App\Models\User;
 use App\Models\Vet;
 use App\Repositories\RendezVousRepository;
@@ -64,7 +60,7 @@ class RendezVousServiceTest extends TestCase
 
     private function makeVetResponseDTO(): VeterinaireResponseDTO
     {
-        $userDto = new UserRequestDTO(1, 'P', 'V', 'p@v.com', '0600', '1 r',null);
+        $userDto = new UserSimpleDTO(1, 'P', 'V', 'p@v.com', '0600', '1 r',"2 rue de france", null);
 
         return new VeterinaireResponseDTO(
             1, $userDto, 'LIC-001', 'Clin', '1 av', 5,
@@ -76,7 +72,7 @@ class RendezVousServiceTest extends TestCase
     {
         $especeDto = new EspeceResponseDTO(1, 'Chien', collect());
         $sexeDto   = new SexeResponseDTO(1, 'Mâle');
-        $userDto   = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r', null);
+        $userDto   = new UserSimpleDTO(1, 'J', 'D', 'j@t.com', '0600', '0202020202', "2 rue de france", null);
 
         return new AnimalResponseDTO(1, 'Rex', null, $especeDto, null, null, $sexeDto, $userDto, collect());
     }

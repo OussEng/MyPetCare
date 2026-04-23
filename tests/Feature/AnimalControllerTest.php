@@ -53,7 +53,7 @@ class AnimalControllerTest extends TestCase
             ->delete(route('animaux.delete', ['animal' => $animal->id]))
             ->assertRedirect(route('animaux'));
 
-        $this->assertDatabaseMissing('animals', ['id' => $animal->id]);
+        $this->assertSoftDeleted('animals', ['id' => $animal->id]);
     }
 
     public function test_client_delete_unowned_animal()

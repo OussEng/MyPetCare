@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Requests;
+namespace App\DTOs\Requests\RendezVous;
 
 use App\Http\Requests\RendezVousRequest;
 use DateTimeImmutable;

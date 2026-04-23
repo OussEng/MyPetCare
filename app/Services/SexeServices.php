@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\Response\SexeResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
 use App\Repositories\SexeRepository;
 use Illuminate\Support\Collection;
 

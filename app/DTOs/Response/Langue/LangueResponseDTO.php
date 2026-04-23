@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\Langue;
 
 use App\Models\Langue;
 

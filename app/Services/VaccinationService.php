@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\Response\VaccinationResponseDTO;
-use App\Models\Vaccination;
+use App\DTOs\Response\Vaccination\VaccinationResponseDTO;
 use App\Repositories\AnimalRepository;
 use App\Repositories\VaccinationRepository;
 use Illuminate\Http\Request;

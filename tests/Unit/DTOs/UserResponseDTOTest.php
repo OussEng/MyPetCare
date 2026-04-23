@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\RendezVousResponseDTO;
-use App\DTOs\Response\UserResponseDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\User\UserResponseDTO;
 use App\Models\Animal;
 use App\Models\Espece;
 use App\Models\Sexe;
@@ -37,7 +36,7 @@ class UserResponseDTOTest extends TestCase
 
         $dto = UserResponseDTO::fromModel($user);
 
-        $this->assertSame('5', $dto->id);  // UserResponseDTO::$id is typed string
+        $this->assertSame(5 , $dto->id);
         $this->assertSame('Sophie', $dto->prenom);
         $this->assertSame('Leclerc', $dto->nom);
         $this->assertSame('sophie@example.com', $dto->email);

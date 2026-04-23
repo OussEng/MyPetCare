@@ -1,26 +1,22 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\User;
 
-use App\Models\Animal;
 use App\Models\User;
-use Illuminate\Support\Collection;
 
-class UserResponseDTO
+
+class UserSimpleDTO
 {
-
     public function __construct(
-        public string $id,
+        public int $id,
         public string $prenom,
         public string $nom,
         public string $email,
+        public string $password,
         public string $numero,
         public string $adresse,
-        public ?string $deleted_at,
-        public Collection $animaux,
-        public Collection $rendezVous,
-    )
-    {}
+        public ?string    $deleted_at,
+    ) {}
 
     public static function fromModel(User $user): self
     {
@@ -29,12 +25,16 @@ class UserResponseDTO
             $user->prenom,
             $user->nom,
             $user->email,
+            $user->password,
             $user->numero,
             $user->adresse,
             $user->deleted_at,
-            $user->animals->map(fn ($animal) => AnimalResponseDTO::fromModel($animal)),
-            $user->rendervous->map(fn ($rendezVous) => RendezVousResponseDTO::fromModel($rendezVous))
         );
+
     }
 
+
+
 }
+
+

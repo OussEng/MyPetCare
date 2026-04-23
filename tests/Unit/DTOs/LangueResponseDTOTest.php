@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Response\LangueResponseDTO;
+use App\DTOs\Response\Langue\LangueResponseDTO;
 use App\Models\Langue;
 use Tests\TestCase;
 

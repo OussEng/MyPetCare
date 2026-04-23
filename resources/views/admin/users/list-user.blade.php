@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div x-data="{open: false,message: '',form: null,show(form, message) {this.form = form;this.message = message;this.open = true;},close() {this.open = false;this.form = null;this.message = '';},
+    <div class="ml-64" x-data="{open: false,message: '',form: null,show(form, message) {this.form = form;this.message = message;this.open = true;},close() {this.open = false;this.form = null;this.message = '';},
 
     confirm() {
         if (this.form) this.form.submit();
@@ -74,7 +74,7 @@
                                                 @if($vet->user->deleted_at)
 
                                                     <form method="POST"
-                                                          action="{{ route('admin.user.enable', $vet->user->id) }}">
+                                                          action="{{ route('admin.vet.enable', $vet->id) }}">
                                                         @csrf
                                                         @method('PATCH')
 
@@ -87,7 +87,7 @@
                                                 @else
 
                                                     <form method="POST"
-                                                          action="{{ route('admin.user.disable', $vet->user->id) }}"
+                                                          action="{{ route('admin.vet.disable', $vet->id) }}"
                                                           @submit.prevent="show($el, 'Désactiver cet utilisateur ?')">
 
                                                         @csrf

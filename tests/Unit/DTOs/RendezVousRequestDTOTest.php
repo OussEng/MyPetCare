@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\RendezVousRequestDTO;
+use App\DTOs\Requests\RendezVous\RendezVousRequestDTO;
 use App\Http\Requests\RendezVousRequest;
 use DateTimeImmutable;
 use Tests\TestCase;

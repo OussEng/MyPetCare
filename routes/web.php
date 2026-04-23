@@ -93,6 +93,9 @@ Route::middleware(['auth', 'admin', 'desktop.only'])->group(function () {
 
     Route::patch('/admin/user/{id}/restore', [AdminController::class, 'restoreUser'])->name('admin.user.enable');
     Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.disable');
+
+    Route::patch('/admin/vet/{id}/restore', [AdminController::class, 'restoreVet'])->name('admin.vet.enable');
+    Route::delete('/admin/vet/{id}', [AdminController::class, 'deleteVet'])->name('admin.vet.disable');
 });
 
 

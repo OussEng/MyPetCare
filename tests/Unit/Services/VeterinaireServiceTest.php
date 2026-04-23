@@ -2,12 +2,10 @@
 
 namespace Tests\Unit\Services;
 
-use App\DTOs\Requests\UpdateUserDTO;
-use App\DTOs\Requests\VeterinaireCreateDTO;
-use App\DTOs\Requests\VeterinaireUpdateDTO;
-use App\DTOs\Response\LangueResponseDTO;
-use App\DTOs\Response\VeterinaireResponseDTO;
-use App\Models\Langue;
+use App\DTOs\Requests\User\UpdateUserDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireCreateDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireUpdateDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Models\User;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;

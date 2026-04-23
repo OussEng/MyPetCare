@@ -95,7 +95,7 @@ class RendezVousControllerTest extends TestCase
             ])
             ->assertRedirect('/mes-rendez-vous');
 
-        $this->assertDatabaseHas('rendez_vouses', [
+        $this->assertDatabaseHas('rendez_vous', [
             'motif'          => 'Visite',
             'user_id'        => $client->id,
             'veterinaire_id' => $vet->id,
@@ -156,7 +156,7 @@ class RendezVousControllerTest extends TestCase
                 'animal_id'      => $animal->id,
             ]);
 
-        $this->assertDatabaseHas('rendez_vouses', ['etat' => Etat::CONFIRMER->value]);
+        $this->assertDatabaseHas('rendez_vous', ['etat' => Etat::CONFIRMER->value]);
     }
 
 

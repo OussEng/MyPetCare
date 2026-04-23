@@ -2,10 +2,11 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\UserRequestDTO;
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\EspeceResponseDTO;
-use App\DTOs\Response\SexeResponseDTO;
+use App\DTOs\Requests\User\UserRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\Espece\EspeceResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
 use App\Models\Animal;
 use App\Models\Espece;
 use App\Models\Sexe;
@@ -83,7 +84,7 @@ class AnimalResponseDTOTest extends TestCase
 
         $dto = AnimalResponseDTO::fromModel($animal);
 
-        $this->assertInstanceOf(UserRequestDTO::class, $dto->user);
+        $this->assertInstanceOf(UserSimpleDTO::class, $dto->user);
         $this->assertSame(1, $dto->user->id);
     }
 

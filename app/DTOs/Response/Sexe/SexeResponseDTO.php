@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\Sexe;
 
 use App\Models\Sexe;
 

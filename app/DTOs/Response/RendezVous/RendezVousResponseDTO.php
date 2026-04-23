@@ -1,8 +1,11 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\RendezVous;
 
-use App\DTOs\Requests\UserRequestDTO;
+
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Enums\Etat;
 use App\Models\RendezVous;
 use DateTimeImmutable;
@@ -15,7 +18,7 @@ class RendezVousResponseDTO
         public int                    $id,
         public DateTimeImmutable      $dateHeureDebut,
         public string                 $motif,
-        public UserRequestDTO         $user,
+        public UserSimpleDTO         $user,
         public VeterinaireResponseDTO $veterinaire,
         public AnimalResponseDTO      $animal,
         public Etat                   $etat,
@@ -32,7 +35,7 @@ class RendezVousResponseDTO
         $rendezVous->id,
         new DateTimeImmutable($rendezVous->dateHeureDebut),
         $rendezVous->motif,
-        UserRequestDTO::fromModel($rendezVous->user),
+        UserSimpleDTO::fromModel($rendezVous->user),
         VeterinaireResponseDTO::fromModel($rendezVous->veterinaire),
         AnimalResponseDTO::fromModel($rendezVous->animal),
         $rendezVous->etat,

@@ -2,12 +2,11 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\UserRequestDTO;
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\EspeceResponseDTO;
-use App\DTOs\Response\RendezVousResponseDTO;
-use App\DTOs\Response\SexeResponseDTO;
-use App\DTOs\Response\VeterinaireResponseDTO;
+use App\DTOs\Requests\User\UserRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\RendezVous\RendezVousResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Enums\Etat;
 use App\Models\Animal;
 use App\Models\Espece;
@@ -98,12 +97,12 @@ class RendezVousResponseDTOTest extends TestCase
         $this->assertSame(Etat::CONFIRMER, $dto->etat);
     }
 
-    public function test_fromModel_maps_user_as_UserRequestDTO(): void
+    public function test_fromModel_maps_user_as_UserSimpleDTO(): void
     {
         $rv  = $this->makeFullRendezVous();
         $dto = RendezVousResponseDTO::fromModel($rv);
 
-        $this->assertInstanceOf(UserRequestDTO::class, $dto->user);
+        $this->assertInstanceOf(UserSimpleDTO::class, $dto->user);
         $this->assertSame(1, $dto->user->id);
     }
 

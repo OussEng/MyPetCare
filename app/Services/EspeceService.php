@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\Response\EspeceResponseDTO;
+use App\DTOs\Response\Espece\EspeceResponseDTO;
 use App\Models\Espece;
 use App\Repositories\EspeceRepository;
 use Illuminate\Support\Collection;

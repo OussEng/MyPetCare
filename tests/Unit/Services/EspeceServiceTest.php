@@ -49,7 +49,7 @@ class EspeceServiceTest extends TestCase
         $result = $this->service->getEspeces();
 
         $this->assertCount(1, $result);
-        $this->assertInstanceOf(\App\DTOs\Response\EspeceResponseDTO::class, $result->first());
+        $this->assertInstanceOf(\App\DTOs\Response\Espece\EspeceResponseDTO::class, $result->first());
         $this->assertSame('Chien', $result->first()->libelle);
     }
 

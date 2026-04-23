@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\AnimalRequestDTO;
-use App\DTOs\Response\AnimalResponseDTO;
+use App\DTOs\Requests\Animal\AnimalRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
 use App\Http\Requests\AnimalRequest;
 use App\Http\Requests\AnimalUpdateRequest;
 use App\Models\Animal;
 use App\Repositories\AnimalRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 

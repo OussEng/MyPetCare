@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Requests\UpdateUserDTO;
+use App\DTOs\Requests\User\UpdateUserDTO;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Services\UserService;

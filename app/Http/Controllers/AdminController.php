@@ -60,8 +60,8 @@ class AdminController
 
     public function users()
     {
-        $vets = $this->veterinaireService->getAllVets();
-        $clients = $this->userService->getAllClients();
+        $vets = $this->adminService->getVetsWithTrashed();
+        $clients = $this->adminService->getClientsWithTrashed();
 
         return view('admin.users.list-user',[
             'vets' => $vets,
@@ -82,4 +82,20 @@ class AdminController
 
         return redirect()->route('admin.users')->with('success','Utilisateur réactivé avec succès.');
     }
+
+    public function deleteVet(int $id)
+    {
+        $this->adminService->deleteVet($id);
+
+        return redirect()->route('admin.users')->with('success','Vétérinaire réactivé avec succès.');
+    }
+
+    public function restoreVet(int $id)
+    {
+         $this->adminService->restoreVet($id);
+
+         return redirect()->route('admin.users')->with('success','Vétérinaire réactivé avec succès.');
+    }
+
+
 }

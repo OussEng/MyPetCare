@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\DTOs\Requests\RendezVousRequestDTO;
-use App\DTOs\Response\RendezVousResponseDTO;
+use App\DTOs\Requests\RendezVous\RendezVousRequestDTO;
+use App\DTOs\Response\RendezVous\RendezVousResponseDTO;
 use App\Enums\Etat;
 use App\Http\Requests\RendezVousRequest;
 use App\Managers\RendezVousManager;
@@ -11,7 +11,6 @@ use App\Repositories\RendezVousRepository;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 

@@ -42,7 +42,7 @@ class UserRepository
             });
         }
 
-        return $query->withTrashed()->paginate(10, ['*'], 'clients');
+        return $query->paginate(10, ['*'], 'clients');
     }
 
     public function findClient(int $id)
@@ -50,14 +50,38 @@ class UserRepository
         return User::findOrFail($id);
     }
 
-    public function findTrashedClient(int $id)
-    {
-        return User::withTrashed()->findOrFail($id);
-    }
+
 
     public function update(User $user, array $data): void
     {
         $user->update($data);
+    }
+
+    public function findAllClientsWithTrashed()
+    {
+        return User::withTrashed()
+            ->with([
+                'animals' => fn($q) => $q->withTrashed()
+                    ->with(['user' => fn($q) => $q->withTrashed()]),
+                'rendezvous' => fn($q) => $q->withTrashed()
+                    ->with([
+                        'veterinaire' => fn($q) => $q->withTrashed()
+                            ->with(['user' => fn($q) => $q->withTrashed()]),
+                        'animal' => fn($q) => $q->withTrashed()
+                            ->with(['user' => fn($q) => $q->withTrashed()]),
+                        'user' => fn($q) => $q->withTrashed(),
+                    ])
+            ])
+            ->whereHas('roles', fn($q) => $q->where('role', 'user'))
+            ->paginate(10, ['*'], 'clients');
+    }
+
+    public function findTrashedClient(int $id)
+    {
+        return User::withTrashed()
+            ->with(['animals' => fn($q) => $q->withTrashed()])
+            ->with(['rendezvous' => fn($q) => $q->withTrashed()])
+            ->findOrFail($id);
     }
 
 }

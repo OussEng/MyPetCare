@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Requests\UpdateUserDTO;
-use App\DTOs\Requests\VeterinaireUpdateDTO;
+use App\DTOs\Requests\User\UpdateUserDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireUpdateDTO;
 use App\Http\Requests\VetProfileUpdateRequest;
 use App\Services\AnimalService;
 use App\Services\EspeceService;

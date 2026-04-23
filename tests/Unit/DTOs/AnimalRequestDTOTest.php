@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\AnimalRequestDTO;
+use App\DTOs\Requests\Animal\AnimalRequestDTO;
 use App\Http\Requests\AnimalRequest;
-use Mockery;
 use Tests\TestCase;
 
 class AnimalRequestDTOTest extends TestCase

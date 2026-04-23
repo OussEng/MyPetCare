@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->hasMany(Animal::class);
     }
 
-    public function rendervous() : hasMany
+    public function rendezvous() : hasMany
     {
         return $this->hasMany(RendezVous::class);
     }

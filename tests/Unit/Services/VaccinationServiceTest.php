@@ -2,26 +2,22 @@
 
 namespace Tests\Unit\Services;
 
-use App\DTOs\Response\AnimalResponseDTO;
-use App\DTOs\Response\EspeceResponseDTO;
-use App\DTOs\Response\SexeResponseDTO;
-use App\DTOs\Response\VaccinationResponseDTO;
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Requests\User\UserRequestDTO;
+use App\DTOs\Response\Animal\AnimalResponseDTO;
+use App\DTOs\Response\Espece\EspeceResponseDTO;
+use App\DTOs\Response\Sexe\SexeResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Vaccination\VaccinationResponseDTO;
 use App\Models\Animal;
-use App\Models\Espece;
-use App\Models\Sexe;
-use App\Models\User;
 use App\Models\Vaccination;
 use App\Repositories\AnimalRepository;
 use App\Repositories\VaccinationRepository;
 use App\Services\AnimalService;
 use App\Services\EspeceService;
 use App\Services\VaccinationService;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Gate;
 use Mockery;
 use Tests\TestCase;
 
@@ -93,7 +89,7 @@ class VaccinationServiceTest extends TestCase
         $vacDto     = new VaccinationResponseDTO(1, 'Rabies', 'Info');
         $especeDto  = new EspeceResponseDTO(1, 'Chien', collect([$vacDto]));
         $sexeDto    = new SexeResponseDTO(1, 'Mâle');
-        $userDto    = new UserRequestDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r',null);
+        $userDto    = new UserSimpleDTO(1, 'J', 'D', 'j@t.com', '0600', '1 r',"2 rue de france", null);
         $animalDto  = new AnimalResponseDTO(1, 'Rex', null, $especeDto, null, null, $sexeDto, $userDto, collect());
 
         $this->animalServiceMock->shouldReceive('getAnimalById')->with(1)->once()->andReturn($animalDto);

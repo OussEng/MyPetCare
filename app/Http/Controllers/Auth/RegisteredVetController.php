@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\DTOs\Requests\RegisterUserDTO;
-use App\DTOs\Requests\VeterinaireCreateDTO;
+use App\DTOs\Requests\User\RegisterUserDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireCreateDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VeterinaireRequest;

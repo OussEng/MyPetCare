@@ -39,7 +39,7 @@ class SexeServicesTest extends TestCase
         $result = $this->service->getSexes();
 
         $this->assertCount(1, $result);
-        $this->assertInstanceOf(\App\DTOs\Response\SexeResponseDTO::class, $result->first());
+        $this->assertInstanceOf(\App\DTOs\Response\Sexe\SexeResponseDTO::class, $result->first());
         $this->assertSame('Mâle', $result->first()->libelle);
     }
 

@@ -35,21 +35,42 @@ class VeterinaireRepository
         $vet->update(['isReviewed' => true]);
     }
 
+    public function findVetsWithTrashed()
+    {
+        $query = Vet::withTrashed()
+            ->with(['user' => fn($q) => $q->withTrashed()])
+            ->whereHas('user', fn($q) => $q->withTrashed()
+                ->whereHas('roles', fn($q) => $q
+                    ->where('role', 'veterinarian')
+                    ->where('isReviewed', true)
+                )
+            );
+
+        return $query->paginate(8, ['*'], 'veterinarians');
+    }
+
+    public function findTrashedVet(int $id)
+    {
+        return Vet::withTrashed()
+            ->with(['user' => fn($q) => $q->withTrashed()])
+            ->with(['rendez_vous' => fn($q) => $q->withTrashed()])
+            ->findOrFail($id);
+    }
+
     public function findActiveVets()
     {
-        $query = Vet::with(['user' => function ($query) {
-            $query->withTrashed();
-        }])
+        $query = Vet::with(['user'])
             ->whereHas('user', function ($q) {
-                $q->withTrashed()
-                    ->whereHas('roles', function ($query) {
-                        $query->where('role', 'veterinarian')
-                            ->where('isReviewed', true);
-                    });
+                $q->whereHas('roles', function ($query) {
+                    $query->where('role', 'veterinarian')
+                        ->where('isReviewed', true);
+                });
             });
 
         return $query->paginate(8, ['*'], 'veterinarians');
     }
+
+
 
     public function updateVet(Vet $vet, array $data): void
     {

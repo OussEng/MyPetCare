@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\DTOs\Response\LangueResponseDTO;
-use App\Models\Langue;
+use App\DTOs\Response\Langue\LangueResponseDTO;
 use App\Repositories\LangueRepository;
 
 class LangueService

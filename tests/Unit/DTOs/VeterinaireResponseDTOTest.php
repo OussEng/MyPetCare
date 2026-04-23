@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\UserRequestDTO;
-use App\DTOs\Response\LangueResponseDTO;
-use App\DTOs\Response\VeterinaireResponseDTO;
+use App\DTOs\Requests\User\UserRequestDTO;
+use App\DTOs\Response\Langue\LangueResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
+use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Models\Langue;
 use App\Models\User;
 use App\Models\Vet;
@@ -58,13 +59,13 @@ class VeterinaireResponseDTOTest extends TestCase
         $this->assertSame(1, $dto->user_id);
     }
 
-    public function test_fromModel_maps_user_as_UserRequestDTO(): void
+    public function test_fromModel_maps_user_as_UserSimpleDTO(): void
     {
         $vet = $this->makeFullVet();
 
         $dto = VeterinaireResponseDTO::fromModel($vet);
 
-        $this->assertInstanceOf(UserRequestDTO::class, $dto->user);
+        $this->assertInstanceOf(UserSimpleDTO::class, $dto->user);
         $this->assertSame('Paul', $dto->user->prenom);
     }
 

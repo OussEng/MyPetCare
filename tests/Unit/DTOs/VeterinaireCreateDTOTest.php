@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\DTOs;
 
-use App\DTOs\Requests\VeterinaireCreateDTO;
+use App\DTOs\Requests\Veterinaire\VeterinaireCreateDTO;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 

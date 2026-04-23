@@ -131,7 +131,7 @@ class RendezVousRepositoryTest extends TestCase
         $result = $this->repository->create($data);
 
         $this->assertInstanceOf(RendezVous::class, $result);
-        $this->assertDatabaseHas('rendez_vouses', ['motif' => 'Contrôle annuel']);
+        $this->assertDatabaseHas('rendez_vous', ['motif' => 'Contrôle annuel']);
     }
 
 

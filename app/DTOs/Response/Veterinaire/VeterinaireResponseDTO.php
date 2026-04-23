@@ -1,8 +1,9 @@
 <?php
 
-namespace App\DTOs\Response;
+namespace App\DTOs\Response\Veterinaire;
 
-use App\DTOs\Requests\UserRequestDTO;
+use App\DTOs\Response\Langue\LangueResponseDTO;
+use App\DTOs\Response\User\UserSimpleDTO;
 use App\Models\Vet;
 use Illuminate\Support\Collection;
 
@@ -10,7 +11,7 @@ class VeterinaireResponseDTO
 {
     public function __construct(
         public int            $id,
-        public UserRequestDTO $user,
+        public UserSimpleDTO $user,
         public string         $numeroLicence,
         public string         $nomClinique,
         public string         $adresseClinique,
@@ -26,9 +27,11 @@ class VeterinaireResponseDTO
 
     public static function fromModel(Vet $vet): VeterinaireResponseDTO
     {
+
+
         return new self(
             $vet->id,
-            UserRequestDTO::fromModel($vet->user),
+            UserSimpleDTO::fromModel($vet->user),
             $vet->numeroLicence,
             $vet->nomClinique,
             $vet->adresseClinique,

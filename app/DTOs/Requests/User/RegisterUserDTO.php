@@ -1,8 +1,7 @@
 <?php
 
-namespace App\DTOs\Requests;
+namespace App\DTOs\Requests\User;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 

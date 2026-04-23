@@ -106,15 +106,6 @@ class AnimalRepositoryTest extends TestCase
     }
 
 
-    public function test_delete_removes_animal_from_database(): void
-    {
-        $animal = Animal::factory()->create();
-
-        $this->repository->delete($animal->id);
-
-        $this->assertDatabaseMissing('animals', ['id' => $animal->id]);
-    }
-
     public function test_delete_only_removes_target_animal(): void
     {
         $animal1 = Animal::factory()->create();
@@ -122,8 +113,8 @@ class AnimalRepositoryTest extends TestCase
 
         $this->repository->delete($animal1->id);
 
-        $this->assertDatabaseMissing('animals', ['id' => $animal1->id]);
-        $this->assertDatabaseHas('animals', ['id' => $animal2->id]);
+        $this->assertSoftDeleted('animals', ['id' => $animal1->id]);
+        $this->assertNotSoftDeleted('animals', ['id' => $animal2->id]);
     }
 }
 
