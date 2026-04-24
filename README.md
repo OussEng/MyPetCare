@@ -24,15 +24,38 @@ Plateforme dédiée au bien-être animal, permettant aux propriétaires de gére
 ---
 
 ## Prérequis
+- [Docker](https://docs.docker.com/get-started/get-docker/)
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- Aucune installation locale de PHP requise.
+**Windows :** [WSL](https://learn.microsoft.com/en-us/windows/wsl/) est requis avec une distro Linux [installée via WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 ---
 
 ## Installation
 
-### 1. Installer les dépendances
+### 1. Cloner le projet
+
+```
+git clone https://github.com/OussEng/MyLittlePet.git
+```
+
+### Windows :
+ Si vous êtes sur Windows il est recommandé de cloner le repo dans l'environnement WSL pour de meilleures performances.
+```
+User@DESKTOP-XXXXXXX:/mnt/c/Users/User$ ❌
+```
+
+```
+User@DESKTOP-XXXXXXX:/$ ✅
+```
+
+### 2. Se déplacer dans le dossier du projet
+
+```
+cd MyLittlePet/
+```
+
+
+### 3. Installer les dépendances
 
 ```bash
 docker run --rm \
@@ -43,31 +66,31 @@ docker run --rm \
     composer install
 ```
 
-### 2. Configuration de l'environnement
+### 4. Configuration de l'environnement
 
 ```bash
 cp .env.example .env
 ```
 
-### 3. Démarrer les conteneurs
+### 5. Démarrer les conteneurs
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-### 4. Générer la clé d'application
+### 6. Générer la clé d'application
 
 ```bash
 ./vendor/bin/sail artisan key:generate
 ```
 
-### 5. Migrations & Seeders
+### 7. Migrations & Seeders
 
 ```bash
 ./vendor/bin/sail artisan migrate --seed
 ```
 
-### 6. Dépendances frontend & serveur de développement
+### 8. Dépendances frontend & serveur de développement
 
 ```bash
 ./vendor/bin/sail npm install
