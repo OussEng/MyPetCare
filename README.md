@@ -9,7 +9,11 @@
 
 Plateforme dédiée au bien-être animal, permettant aux propriétaires de gérer leurs animaux, suivre leurs vaccinations et prendre rendez-vous avec des vétérinaires vérifiés. Les vétérinaires disposent d'un espace dédié pour gérer leurs clients, leurs dossiers animaux et leur planning — le tout-en-un seul endroit.
 
----
+
+## Documentation
+
+La documentation complète (conception, choix techniques ....) est disponible sur le [Wiki](https://github.com/OussEng/MyLittlePet/wiki
+).
 
 ## Stack
 
@@ -39,7 +43,7 @@ git clone https://github.com/OussEng/MyLittlePet.git
 ```
 
 ### Windows :
- Si vous êtes sur Windows il est recommandé de cloner le repo dans l'environnement WSL pour de meilleures performances.
+ Si vous êtes sur Windows il est recommandé de cloner le projet dans l'environnement WSL pour de meilleures performances.
 ```
 User@DESKTOP-XXXXXXX:/mnt/c/Users/User$ ❌
 ```
@@ -118,6 +122,29 @@ L'application est disponible sur **http://localhost**.
 | Client      | client@mypet.com | Pa$$w0rd     |
 
 ---
+
+## Tests
+
+### Générer la clé d'application (environnement de test)
+
+```bash
+./vendor/bin/sail artisan key:generate --env=testing
+```
+
+### Lancer les tests
+
+```bash
+./vendor/bin/sail artisan test
+```
+
+### Avec couverture de code
+
+```bash
+./vendor/bin/sail artisan test --coverage
+```
+
+---
+
 
 ## Commandes utiles
 
