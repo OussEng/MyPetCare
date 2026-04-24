@@ -13,7 +13,7 @@
                                     @else
                                     <div class="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                                         <div class="flex flex-col items-center pb-10 pt-10">
-                                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ asset('imgs/pfp.PNG') }}" alt="Vet image"/>
+                                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ asset('imgs/pfp.png') }}" alt="Vet image"/>
                                             <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
                                                 {{ $vet->user->nom }} {{ $vet->user->prenom }}
                                             </h5>
