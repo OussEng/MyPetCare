@@ -25,20 +25,18 @@ class VeterinaireController extends Controller
     private UserService $userService;
     private EspeceService $especeService;
     private SexeServices $sexeService;
-    private AnimalService $animalService;
     private LangueService $langueService;
 
     /**
      * @param VeterinaireService $veterinarianService
      */
-    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, UserService $userService, EspeceService $especeService, SexeServices $sexeService, AnimalService $animalService, LangueService $langueService)
+    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, UserService $userService, EspeceService $especeService, SexeServices $sexeService, LangueService $langueService)
     {
         $this->veterinarianService = $veterinarianService;
         $this->rendezVousService = $rendezVousService;
         $this->userService = $userService;
         $this->especeService = $especeService;
         $this->sexeService = $sexeService;
-        $this->animalService = $animalService;
         $this->langueService = $langueService;
     }
 

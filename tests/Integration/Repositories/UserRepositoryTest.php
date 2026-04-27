@@ -89,8 +89,13 @@ class UserRepositoryTest extends TestCase
 
     public function test_findAllClients_with_search_filters_by_nom(): void
     {
-        User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Jean', 'email' => 'j@d.com']);
-        User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'p@m.com']);
+        $client = User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Jean', 'email' => 'j@d.com']);
+        $client2 = User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'p@m.com']);
+
+        Role::firstOrCreate(['role' => 'user']);
+        $this->repository->attachRole($client, 'user');
+
+
 
         $result = $this->repository->findAllClients('Dupont');
 
@@ -100,8 +105,11 @@ class UserRepositoryTest extends TestCase
 
     public function test_findAllClients_with_search_filters_by_prenom(): void
     {
-        User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Alicia', 'email' => 'a@d.com']);
-        User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'p@m.com']);
+        $client = User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Alicia', 'email' => 'a@d.com']);
+        $client2 = User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'p@m.com']);
+
+        Role::firstOrCreate(['role' => 'user']);
+        $this->repository->attachRole($client, 'user');
 
         $result = $this->repository->findAllClients('Alicia');
 
@@ -110,8 +118,12 @@ class UserRepositoryTest extends TestCase
 
     public function test_findAllClients_with_search_filters_by_email(): void
     {
-        User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Jean', 'email' => 'unique@search.com']);
-        User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'other@mail.com']);
+        $client = User::factory()->create(['nom' => 'Dupont', 'prenom' => 'Jean', 'email' => 'unique@search.com']);
+        $client2 = User::factory()->create(['nom' => 'Martin', 'prenom' => 'Paul', 'email' => 'other@mail.com']);
+
+        Role::firstOrCreate(['role' => 'user']);
+        $this->repository->attachRole($client, 'user');
+
 
         $result = $this->repository->findAllClients('unique@search.com');
 
@@ -120,7 +132,12 @@ class UserRepositoryTest extends TestCase
 
     public function test_findAllClients_returns_all_when_no_search(): void
     {
-        User::factory()->count(3)->create();
+        $clients = User::factory()->count(3)->create();
+        Role::firstOrCreate(['role' => 'user']);
+
+        foreach ($clients as $client) {
+            $this->repository->attachRole($client, 'user');
+        }
 
         $result = $this->repository->findAllClients();
 

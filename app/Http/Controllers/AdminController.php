@@ -12,13 +12,11 @@ class AdminController
 
     private AdminService  $adminService;
     private VeterinaireService $veterinaireService;
-    private UserService $userService;
 
-    public function __construct(VeterinaireService $veterinaireService, AdminService $adminService, UserService $userService)
+    public function __construct(VeterinaireService $veterinaireService, AdminService $adminService)
     {
         $this->veterinaireService = $veterinaireService;
         $this->adminService = $adminService;
-        $this->userService = $userService;
     }
 
     public function backoffice(){

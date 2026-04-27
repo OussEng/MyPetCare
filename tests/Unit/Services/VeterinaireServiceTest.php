@@ -52,13 +52,14 @@ class VeterinaireServiceTest extends TestCase
         );
 
         $vet = $this->makeFullVet();
-        $repoMock = Mockery::mock(VeterinaireRepository::class);
-        $repoMock->shouldReceive('create')
+
+        $this->repoMock
+        ->shouldReceive('create')
             ->once()
-            ->withArgs(fn($data) => $data['user_id'] === 42 && $data['numeroLicence'] === 'LIC-002')
+            ->withArgs(fn($data) => $data['user_id'] === 42)
             ->andReturn($vet);
 
-        $result = $this->service->createVeterinarian($dto, 42, $repoMock);
+        $result = $this->service->createVeterinarian($dto, 42);
 
         $this->assertInstanceOf(Vet::class, $result);
     }

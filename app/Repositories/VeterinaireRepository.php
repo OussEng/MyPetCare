@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Vet;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class VeterinaireRepository
 {
@@ -12,7 +15,7 @@ class VeterinaireRepository
     }
 
 
-    public function findAllVets()
+    public function findAllVets() : Collection
     {
         return Vet::all();
     }
@@ -31,12 +34,12 @@ class VeterinaireRepository
         return $query->paginate(10);
     }
 
-    public function review(Vet $vet)
+    public function review(Vet $vet): void
     {
         $vet->update(['isReviewed' => true]);
     }
 
-    public function findVetsWithTrashed()
+    public function findVetsWithTrashed() : LengthAwarePaginator
     {
         $query = Vet::withTrashed()
             ->with(['user' => fn($q) => $q->withTrashed()])
@@ -58,7 +61,7 @@ class VeterinaireRepository
             ->findOrFail($id);
     }
 
-    public function findActiveVets()
+    public function findActiveVets(): LengthAwarePaginator
     {
         $query = Vet::with(['user'])
             ->whereHas('user', function ($q) {
@@ -84,24 +87,40 @@ class VeterinaireRepository
         $vet->user->update($userData);
     }
 
-    public function deleteWithRelations($vet): void
+    /**
+     * @throws \Throwable
+     */
+    public function delete($vet): void
     {
-        foreach ($vet->rendez_vous as $rendezVous) {
-            $rendezVous->delete();
-        }
 
-        $vet->delete();
-        $vet->user->delete();
+        DB::transaction( function () use ($vet) {
+
+            foreach ($vet->rendez_vous as $rendezVous) {
+                $rendezVous->delete();
+            }
+
+            $vet->delete();
+            $vet->user->delete();
+
+        });
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function restore($vet): void
     {
-        $vet->user->restore();
-        $vet->restore();
 
-        foreach ($vet->rendez_vous as $rendezVous) {
-            $rendezVous->restore();
-        }
+        DB::transaction( function () use ($vet) {
+            $vet->user->restore();
+            $vet->restore();
+
+            foreach ($vet->rendez_vous as $rendezVous) {
+                $rendezVous->restore();
+            }
+        });
+
+
     }
 
 }

@@ -100,7 +100,7 @@ class AdminServiceTest extends TestCase
             ->andReturn($user);
 
         $this->userRepoMock
-            ->shouldReceive('deleteWithRelations')
+            ->shouldReceive('delete')
             ->with($user)
             ->once();
 
@@ -122,7 +122,7 @@ class AdminServiceTest extends TestCase
             ->andReturn($vet);
 
         $this->vetRepoMock
-            ->shouldReceive('deleteWithRelations')
+            ->shouldReceive('delete')
             ->with($vet)
             ->once();
 

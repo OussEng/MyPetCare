@@ -9,6 +9,7 @@ use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Models\Vet;
 use App\Repositories\VeterinaireRepository;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class VeterinaireService
@@ -21,18 +22,18 @@ class VeterinaireService
 
 
 
-    public function createVeterinarian(VeterinaireCreateDTO $dto, int $user_id, VeterinaireRepository $repository): Vet
+    public function createVeterinarian(VeterinaireCreateDTO $dto, int $user_id): Vet
     {
         $data = $dto->toArray();
         $data['user_id'] = $user_id;
 
-        return $repository->create($data);
+        return $this->repository->create($data);
 
     }
 
 
 
-    public function getAllVets()
+    public function getAllVets() : LengthAwarePaginator
     {
          $vets = $this->repository->findActiveVets();
 

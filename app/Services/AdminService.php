@@ -6,6 +6,7 @@ use App\DTOs\Response\User\UserResponseDTO;
 use App\DTOs\Response\Veterinaire\VeterinaireResponseDTO;
 use App\Repositories\UserRepository;
 use App\Repositories\VeterinaireRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AdminService
 {
@@ -41,7 +42,7 @@ class AdminService
     {
         $user = $this->userRepository->findClient($id);
 
-        $this->userRepository->deleteWithRelations($user);
+        $this->userRepository->delete($user);
 
     }
 
@@ -51,11 +52,11 @@ class AdminService
         $this->userRepository->restore($user);
     }
 
-    public function deleteVet(int $id)
+    public function deleteVet(int $id): void
     {
         $vet = $this->vetRepository->findVet($id);
 
-        $this->vetRepository->deleteWithRelations($vet);
+        $this->vetRepository->delete($vet);
     }
 
     public function restoreVet(int $id): void
@@ -65,14 +66,14 @@ class AdminService
         $this->vetRepository->restore($vet);
     }
 
-    public function getClientsWithTrashed()
+    public function getClientsWithTrashed() : LengthAwarePaginator
     {
         $users = $this->userRepository->findAllClientsWithTrashed();
 
         return $users->through(fn($user) => UserResponseDTO::fromModel($user));
     }
 
-    public function getVetsWithTrashed()
+    public function getVetsWithTrashed() : LengthAwarePaginator
     {
         $vets = $this->vetRepository->findVetsWithTrashed();
 

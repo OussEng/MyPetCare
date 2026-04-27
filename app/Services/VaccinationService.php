@@ -12,14 +12,12 @@ class VaccinationService
 {
     private VaccinationRepository $vaccinationRepository;
     private AnimalService $animalService;
-    private EspeceService $especeService;
     private AnimalRepository $animalRepository;
 
-    public function __construct(VaccinationRepository $vaccinationRepository, AnimalService $animalService, EspeceService $especeService, AnimalRepository $animalRepository)
+    public function __construct(VaccinationRepository $vaccinationRepository, AnimalService $animalService, AnimalRepository $animalRepository)
     {
         $this->vaccinationRepository = $vaccinationRepository;
         $this->animalService = $animalService;
-        $this->especeService = $especeService;
         $this->animalRepository = $animalRepository;
     }
 

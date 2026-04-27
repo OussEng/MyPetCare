@@ -9,14 +9,17 @@ enum Etat : string
     case ANULLER = 'annulé';
 
 
-    public function isConfirmed(){
+    public function isConfirmed(): bool
+    {
         return $this === self::CONFIRMER;
     }
-    public function isFinished(){
+    public function isFinished(): bool
+    {
         return $this === self::TERMINER;
     }
 
-    public function isCancelled(){
+    public function isCancelled(): bool
+    {
         return $this === self::ANULLER;
     }
 

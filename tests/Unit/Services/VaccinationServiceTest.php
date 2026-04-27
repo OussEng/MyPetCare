@@ -34,12 +34,10 @@ class VaccinationServiceTest extends TestCase
         parent::setUp();
         $this->vacRepoMock       = Mockery::mock(VaccinationRepository::class);
         $this->animalServiceMock = Mockery::mock(AnimalService::class);
-        $this->especeServiceMock = Mockery::mock(EspeceService::class);
         $this->animalRepoMock    = Mockery::mock(AnimalRepository::class);
         $this->service = new VaccinationService(
             $this->vacRepoMock,
             $this->animalServiceMock,
-            $this->especeServiceMock,
             $this->animalRepoMock,
         );
     }
@@ -60,7 +58,6 @@ class VaccinationServiceTest extends TestCase
         return new AnimalResponseDTO(1, 'Rex', null, $especeDto, null, null, $sexeDto, $userDto, collect());
     }
 
-    // --- getVaccinations() ---
 
     public function test_getVaccinations_returns_empty_collection_when_none(): void
     {

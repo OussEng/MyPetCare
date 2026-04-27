@@ -13,7 +13,7 @@ class VeterinaireCreateDTO
         public int $NbAnsExperience,
         public string $dateDeNaissance,
         public string $licenceExpiration,
-        public ?string $certification,
+        public string $certification,
     ) {}
 
     public static function fromArray(array $data): self

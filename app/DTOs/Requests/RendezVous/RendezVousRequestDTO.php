@@ -33,6 +33,9 @@ class RendezVousRequestDTO
     }
 
 
+    /**
+     * @throws \Exception
+     */
     public static function fromRequest(RendezVousRequest $request): self
     {
         return self::fromArray($request->validated());

@@ -58,7 +58,7 @@ class AnimalService
 
     }
 
-    public function deleteAnimal(int $id)
+    public function deleteAnimal(int $id): void
     {
         $animal = $this->repository->findById($id);
 

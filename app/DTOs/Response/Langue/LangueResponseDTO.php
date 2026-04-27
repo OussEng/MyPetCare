@@ -11,7 +11,7 @@ class LangueResponseDTO
         public string $libelle,
     ){}
 
-    public static function fromModel(Langue $langue)
+    public static function fromModel(Langue $langue): LangueResponseDTO
     {
         return new self(
             $langue->id,

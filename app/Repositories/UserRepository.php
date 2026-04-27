@@ -5,6 +5,9 @@ namespace App\Repositories;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Vet;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
@@ -13,7 +16,7 @@ class UserRepository
         return User::create($data);
     }
 
-    public function attachRole(User $user, string $role)
+    public function attachRole(User $user, string $role): void
     {
     $role = Role::where('role', $role)->firstOrFail();
     $user -> roles() ->attach($role);
@@ -30,15 +33,21 @@ class UserRepository
 
     public function findAllClients(string $search = null)
     {
-        $query = User::whereDoesntHave('roles', function ($q) {
-            $q->whereIn('role', ['veterinarian', 'admin']);
-        });
+        $query = User::whereHas('roles', function ($q) {
+            $q->whereIn('role', ['user']);
+        })
+            ->where(function ($q) {
+                $q->whereDoesntHave('vet')
+                    ->orWhereHas('vet', function ($q) {
+                        $q->where('isReviewed', true);
+                    });
+            });
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('nom', 'like', "%{$search}%")
-                    ->orWhere('prenom', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+                $q->where('nom', 'like', "%$search%")
+                    ->orWhere('prenom', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%");
             });
         }
 
@@ -57,7 +66,7 @@ class UserRepository
         $user->update($data);
     }
 
-    public function findAllClientsWithTrashed()
+    public function findAllClientsWithTrashed() : LengthAwarePaginator
     {
         return User::withTrashed()
             ->with([
@@ -84,30 +93,47 @@ class UserRepository
             ->findOrFail($id);
     }
 
-    public function deleteWithRelations(User $user)
+    /**
+     * @throws \Throwable
+     */
+    public function delete(User $user): void
     {
-        foreach ($user->rendezvous as $rendezVous) {
-            $rendezVous->delete();
-        }
 
-        foreach ($user->animals as $animal) {
-            $animal->delete();
-        }
+        DB::transaction(function () use ($user) {
 
-        $user->delete();
+            foreach ($user->rendezvous as $rendezVous) {
+                $rendezVous->delete();
+            }
+
+            foreach ($user->animals as $animal) {
+                $animal->delete();
+            }
+
+            $user->delete();
+
+        });
     }
 
-    public function restore($user)
+    /**
+     * @throws \Throwable
+     */
+    public function restore($user): void
     {
-        $user->restore();
 
-        foreach ($user->animals as $animal) {
-            $animal->restore();
-        }
+        DB::transaction(function () use ($user) {
 
-        foreach ($user->rendezvous as $rendezVous) {
-            $rendezVous->restore();
-        }
+            $user->restore();
+
+            foreach ($user->animals as $animal) {
+                $animal->restore();
+            }
+
+            foreach ($user->rendezvous as $rendezVous) {
+                $rendezVous->restore();
+            }
+
+        });
+
     }
 
 }

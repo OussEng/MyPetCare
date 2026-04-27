@@ -31,14 +31,6 @@ class VeterinaireCreateDTOTest extends TestCase
         $this->assertSame('CPAV', $dto->certification);
     }
 
-    public function test_fromArray_allows_null_certification(): void
-    {
-        $data = array_merge($this->validData, ['certification' => null]);
-
-        $dto = VeterinaireCreateDTO::fromArray($data);
-
-        $this->assertNull($dto->certification);
-    }
 
     public function test_fromRequest_calls_validated_and_maps(): void
     {

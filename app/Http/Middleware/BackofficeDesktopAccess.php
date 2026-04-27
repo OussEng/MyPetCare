@@ -13,7 +13,7 @@ class BackofficeDesktopAccess
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if ($this->isMobile($request)) {
             abort(403, 'Cette fonctionnalité n’est pas disponible sur mobile.');

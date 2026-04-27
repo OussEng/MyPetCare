@@ -16,16 +16,12 @@ use Illuminate\Support\Facades\Auth;
 
 class RendezVousController extends Controller
 {
-    private VeterinaireService $veterinarianService;
     private RendezVousService $rendezVousService;
-    private AnimalService $animalService;
 
 
-    public function __construct(VeterinaireService $veterinarianService, RendezVousService $rendezVousService, AnimalService $animalService)
+    public function __construct(RendezVousService $rendezVousService)
     {
-        $this->veterinarianService = $veterinarianService;
         $this->rendezVousService = $rendezVousService;
-        $this->animalService = $animalService;
     }
 
 

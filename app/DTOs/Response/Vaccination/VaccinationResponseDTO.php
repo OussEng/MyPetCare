@@ -16,7 +16,7 @@ class VaccinationResponseDTO
     {
     }
 
-    public static function fromModel(Vaccination $vac)
+    public static function fromModel(Vaccination $vac): VaccinationResponseDTO
     {
         return new self(
             $vac->id,

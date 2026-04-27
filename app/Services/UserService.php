@@ -19,6 +19,9 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function register(RegisterUserDTO $dto): User
     {
         $userRepository = $this->userRepository;
