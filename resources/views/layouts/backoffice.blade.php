@@ -7,6 +7,9 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
+
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+
     @if(Auth::user()->isVet())
         <title>Dr. {{Auth::user()->nom}}</title>
     @endif

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Animal;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AnimalRepository
 {
@@ -25,7 +26,16 @@ class AnimalRepository
 
     public function delete(int $id): void
     {
-        Animal::destroy($id);
+        DB::transaction(function () use ($id) {
+            $animal = Animal::findOrFail($id);
+
+
+            $animal->vaccinations()->detach();
+
+            $animal->rendezvous()->delete();
+
+            $animal->delete();
+        });
     }
 
     public function update(int $id, array $data): Animal
