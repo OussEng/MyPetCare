@@ -37,11 +37,9 @@
                class="group w-full flex items-center justify-between p-6 bg-white border rounded-xl shadow-sm hover:shadow-md hover:border-blue-300 transition">
 
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M17 20h5V4H2v16h5m10 0v-6a4 4 0 10-8 0v6m8 0H9"/>
+                    <div class="p-3 bg-blue-500 rounded-lg group-hover:bg-blue-200 transition">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                         </svg>
                     </div>
 

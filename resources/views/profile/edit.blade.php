@@ -11,18 +11,17 @@
 
             <div class="bg-white shadow rounded-lg border overflow-hidden"
                  x-data="{ editInfo: {{ $errors->any() && !$errors->updatePassword->any() ? 'true' : 'false' }} }"
-                 @keydown.escape.window="editInfo = false"
-                 x-cloak>
+                 @keydown.escape.window="editInfo = false">
 
                 <div class="px-6 py-4 flex items-center justify-between border-b">
                     <h2 class="text-lg font-semibold text-gray-800">Informations personnelles</h2>
-                    <button @click="editInfo = true" x-show="!editInfo"
+                    <button @click="editInfo = true" x-show="!editInfo" x-cloak
                             class="text-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium px-4 py-2 rounded">
                         Modifier
                     </button>
                 </div>
 
-                <div x-show="!editInfo" class="border-t border-gray-100 px-6 py-5">
+                <div x-show="!editInfo" x-cloak class="border-t border-gray-100 px-6 py-5">
                     <dl class="divide-y divide-gray-100">
                         <div class="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                             <dt class="text-sm font-medium text-gray-500">Prénom</dt>
@@ -47,8 +46,7 @@
                     </dl>
                 </div>
 
-                {{-- Edit form --}}
-                <div x-show="editInfo" x-transition class="px-6 py-5">
+                <div x-show="editInfo" x-cloak x-transition class="px-6 py-5">
                     <form method="POST" action="{{ route('profile.update') }}" class="space-y-4">
                         @csrf
                         @method('PATCH')
@@ -107,22 +105,21 @@
 
             <div class="bg-white shadow rounded-lg border overflow-hidden"
                  x-data="{ editPwd: {{ $errors->updatePassword->any() ? 'true' : 'false' }} }"
-                 @keydown.escape.window="editPwd = false"
-                 x-cloak>
+                 @keydown.escape.window="editPwd = false">
 
                 <div class="px-6 py-4 flex items-center justify-between border-b">
                     <h2 class="text-lg font-semibold text-gray-800">Mot de passe</h2>
-                    <button @click="editPwd = true" x-show="!editPwd"
+                    <button @click="editPwd = true" x-show="!editPwd" x-cloak
                             class="text-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium px-4 py-2 rounded">
                         Changer le mot de passe
                     </button>
                 </div>
 
-                <div x-show="!editPwd" class="px-6 py-5">
+                <div x-show="!editPwd" x-cloak class="px-6 py-5">
                     <p class="text-sm text-gray-500">Cliquez sur le bouton pour changer votre mot de passe.</p>
                 </div>
 
-                <div x-show="editPwd" x-transition class="px-6 py-5">
+                <div x-show="editPwd" x-cloak x-transition class="px-6 py-5">
                     <form method="POST" action="{{ route('profile.password') }}" class="space-y-4">
                         @csrf
                         @method('PUT')
@@ -160,6 +157,9 @@
             </div>
 
         </div>
+        <div class="bg-white shadow rounded-lg border overflow-hidden px-6 py-4 mt-5" >
+            @include('profile.partials.delete-user-form')
+        </div>
+
     </div>
 @endsection
-

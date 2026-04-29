@@ -45,7 +45,7 @@
         <div class="space-y-6 mt-6">
             <div x-data="{ show: false, selectedItem: {}, showCancelModal: false, cancelRdvId: null }"
                  @keydown.escape.window="show = false; showCancelModal = false; cancelRdvId = null">
-                @foreach($rendezVous as $rv)
+                @forelse($rendezVous as $rv)
 
                     <div class="bg-white shadow-md rounded-xl border border-gray-200 p-6 hover:shadow-lg transition">
 
@@ -78,7 +78,11 @@
                             </div>
 
                             <div class="flex items-center">
-                                <img class="w-14 h-14 rounded-full text-3xl font-bold" alt="" src="{{asset('imgs/user-pfp.png')}}">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0 mr-6">
+                                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
                                 <span class="tracking-tight text-heading">{{$rv->user->nom}} {{$rv->user->prenom}}</span>
                             </div>
 
@@ -99,15 +103,27 @@
 
                         </div>
                     </div>
+                @empty
+                    <div class="text-center py-16 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">Aucun rendez-vous trouvé.</p>
+                    </div>
+                @endforelse
 
-                @endforeach
 
 
                 <div x-show="show"
-                     x-transition
-                     x-cloak
-                     class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md">
-
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        x-cloak
+                        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+                    >
                     <div @click.away="show = false" class="bg-white rounded-lg p-6 w-1/3 max-w-xl">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-bold flex items-center">Rendez-vous Détails</h3>

@@ -14,15 +14,16 @@
         </h1>
 
         <div class="flex flex-wrap justify-between gap-2 mb-4">
-            <a href="{{ route('rendez-vous.list', ['etat' => 'confirmé']) }}"
-               class="flex-1 min-w-[100px] text-center text-sm text-white active:scale-95 transition-all h-10 rounded-md flex items-center justify-center
-               {{ !request()->get('jour') && (request()->get('etat') === 'confirmé' || !request()->get('etat')) ? 'bg-indigo-800 ring-2 ring-indigo-300' : 'bg-indigo-600 hover:bg-indigo-700' }}">
-                Confirmés
-            </a>
+
             <a href="{{ route('rendez-vous.list', ['etat' => 'tous']) }}"
                class="flex-1 min-w-[100px] text-center text-sm text-white active:scale-95 transition-all h-10 rounded-md flex items-center justify-center
                {{ !request()->get('jour') && request()->get('etat') === 'tous' ? 'bg-indigo-800 ring-2 ring-indigo-300' : 'bg-indigo-600 hover:bg-indigo-700' }}">
                 Tous
+            </a>
+            <a href="{{ route('rendez-vous.list', ['etat' => 'confirmé']) }}"
+               class="flex-1 min-w-[100px] text-center text-sm text-white active:scale-95 transition-all h-10 rounded-md flex items-center justify-center
+               {{ !request()->get('jour') && (request()->get('etat') === 'confirmé' || !request()->get('etat')) ? 'bg-indigo-800 ring-2 ring-indigo-300' : 'bg-indigo-600 hover:bg-indigo-700' }}">
+                Confirmés
             </a>
             <a href="{{ route('rendez-vous.list', ['etat' => 'terminé']) }}"
                class="flex-1 min-w-[100px] text-center text-sm text-white active:scale-95 transition-all h-10 rounded-md flex items-center justify-center

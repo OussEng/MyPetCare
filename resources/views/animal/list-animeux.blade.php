@@ -2,11 +2,12 @@
 
 @section('content')
 
-    <div x-data="{open: false,message: '',form: null, show(form, message) {this.form = form; this.message = message;this.open = true;}, close() { this.open = false; this.form = null; this.message = '';},
-        confirm() {
-            if (this.form) this.form.submit();
-        }
+    <div x-data="{open: false, message: '', form: null,
+    show(form, message) { this.form = form; this.message = message; this.open = true; },
+    close() { this.open = false; this.form = null; this.message = ''; },
+    confirm() { if (this.form) this.form.submit(); }
     }"
+         @keydown.escape.window="close()"
     >
         <div class="flex justify-center mt-14 mb-96">
             <div class="w-11/12 lg:w-2/3">
@@ -111,11 +112,13 @@
                 </div>
 
                 <div>
-                    <a href="{{route('animaux.form')}}"
-                       class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 text-sm font-medium text-gray-900 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 hover:text-white">
-                    <span class="px-5 py-2.5 bg-white rounded-md">
-                        Ajouter
-                    </span>
+                    <a
+                        href="{{route('animaux.form')}}"
+                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                                        Ajouter un animal
+                                        </span>
                     </a>
                 </div>
 
@@ -123,40 +126,51 @@
         </div>
 
 
-        <div x-show="open"
-             x-transition
-             x-cloak
-             class="fixed inset-0 flex items-center justify-center z-50">
+        <div
+            x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+        >
+            <div
+                @click.away="close()"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4"
+            >
 
-            <div class="absolute inset-0 bg-black/50" @click="close()"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-gray-800">Confirmation</h2>
+                    <button @click="close()" class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
+                </div>
 
-            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md z-10">
+                <p class="text-gray-700 mb-6" x-text="message"></p>
 
-                <h2 class="text-lg font-semibold text-gray-800 mb-4">
-                    Confirmation
-                </h2>
-
-                <p class="text-gray-600 mb-6" x-text="message"></p>
-
-                <div class="flex justify-end gap-3">
-
-                    <button type="button"
-                            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                            @click="close()">
+                <div class="flex gap-3 justify-end">
+                    <button
+                        type="button"
+                        class="text-gray-800 bg-white hover:bg-gray-100 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
+                        @click="close()">
                         Annuler
                     </button>
 
-                    <button type="button"
-                            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                            @click="confirm()">
-                        Confirmer
+                    <button
+                        type="button"
+                        class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
+                        @click="confirm()">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Supprimer
                     </button>
-
                 </div>
-
             </div>
         </div>
-
-    </div>
 
 @endsection

@@ -136,8 +136,16 @@
 
 
         <div x-show="showEditInfoModal"
-             x-transition
-             class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md">
+            x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+        >
             <div @click.away="showEditInfoModal = false"
                  class="bg-white rounded-lg p-6 w-1/3">
                 <div class="flex justify-between items-center mb-4">
@@ -203,8 +211,16 @@
         </div>
 
         <div x-show="showEditVetModal"
-             x-transition
-             class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md">
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+        >
+
             <div @click.away="showEditVetModal = false"
                  class="bg-white rounded-lg p-6 w-1/3">
                 <div class="flex justify-between items-center mb-4">
@@ -269,9 +285,17 @@
         </div>
 
         <div x-show="showLanguagesModal"
-             x-transition
-             class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md">
-            <div @click.away="showLanguagesModal = false"
+            x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+        >
+             <div @click.away="showLanguagesModal = false"
                  class="bg-white rounded-lg p-6 w-1/3">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold">Ajouter des langues:</h3>
@@ -300,7 +324,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </>
 
     </div>
 

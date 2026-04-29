@@ -46,9 +46,15 @@
                     </button>
 
                     <div
-                        class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-                        x-transition
                         x-show="showModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        x-cloak
+                        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
                     >
                         <div
                             class="px-6 py-4 mx-auto text-left bg-white rounded shadow-lg w-1/3 sm:w-1/2 absolute"
@@ -58,7 +64,7 @@
                             x-transition:enter-end="opacity-100 scale-100"
                         >
 
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between mb-4">
                                 <h5 class="mr-3 text-black max-w-none mb-3 font-bold">Ajouter un animal :</h5>
 
                                 <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
@@ -70,12 +76,8 @@
                                 </button>
                             </div>
 
-                            <div>
-
-
-                                <form method="POST" action="{{route('animaux.save')}}" class="max-w-sm mx-auto">
+                                <form method="POST" action="{{route('animaux.save')}}">
                                     @csrf
-                                    <div class="mb-5">
 
                                         <label for="nom"
                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Client
@@ -158,12 +160,8 @@
                                                 type="submit" value="Ajouter">
                                         </div>
 
-                                    </div>
-
                                 </form>
 
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -252,8 +250,14 @@
 
                 <div
                     x-show="showDeleteModal"
-                    x-transition
-                    class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    x-cloak
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
                 >
                     <div
                         @click.away="showDeleteModal = false"
@@ -289,8 +293,14 @@
 
                 <div
                     x-show="showEditModal"
-                    x-transition
-                    class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    x-cloak
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md"
                 >
                     <div
                         @click.away="showEditModal = false"
@@ -384,6 +394,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </>
 
 @endsection

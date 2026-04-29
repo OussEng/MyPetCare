@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\Requests\User\UpdateUserDTO;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Services\AdminService;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function __construct(private readonly UserService $userService) {}
+    public function __construct(private readonly UserService $userService, private AdminService $adminService) {}
 
     /**
      * Display the user's profile form.
@@ -58,7 +59,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
-        $user->delete();
+        $this->adminService->deleteUser($user->id);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

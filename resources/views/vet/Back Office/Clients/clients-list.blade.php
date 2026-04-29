@@ -26,8 +26,9 @@
             </form>
         </div>
 
+        <div>
         @forelse($clients as $client)
-            <div class="border rounded-xl w-10/12 p-5 shadow-md mt-5">
+            <div class="border rounded-xl p-5 shadow-md mt-5 mr-8">
                 <ul role="list" class="divide-y divide-gray-100  h-full ml-5">
                     <li class="flex justify-between gap-x-6 py-5">
                         <div class="flex min-w-0 gap-x-4">
@@ -73,6 +74,7 @@
             </div>
 
         @endforelse
+        </div>
 
     </div>
 
