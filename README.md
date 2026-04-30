@@ -1,4 +1,4 @@
-# My Little Pet
+# My Pet Care
 
 ![Laravel](https://img.shields.io/badge/Laravel-12.8.1-FF2D20?style=flat&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)
