@@ -55,7 +55,7 @@ User@DESKTOP-XXXXXXX:/$ ✅
 ### 2. Se déplacer dans le dossier du projet
 
 ```
-cd MyLittlePet/
+cd MyPetCare/
 ```
 
 
