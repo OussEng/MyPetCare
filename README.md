@@ -39,7 +39,7 @@ La documentation complète (conception, choix techniques ....) est disponible su
 ### 1. Cloner le projet
 
 ```
-git clone https://github.com/OussEng/MyLittlePet.git
+git clone https://github.com/OussEng/MyPetCare.git
 ```
 
 ### Windows :
@@ -55,7 +55,7 @@ User@DESKTOP-XXXXXXX:/$ ✅
 ### 2. Se déplacer dans le dossier du projet
 
 ```
-cd MyLittlePet/
+cd MyPetCare/
 ```
 
 
