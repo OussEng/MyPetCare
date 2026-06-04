@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -18,10 +20,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(UrlGenerator $url): void
     {
-        // Fix for MySQL key length error
-        Schema::defaultStringLength(191);
+     if (App::environment('production')) {
+         $url->forceScheme('https');
+     }
     }
 }
 
