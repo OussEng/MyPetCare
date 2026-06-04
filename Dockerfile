@@ -5,13 +5,10 @@ ARG POSTGRES_VERSION=18
 WORKDIR /var/www/html
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
-
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
     echo "Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99custom
-
 RUN apt-get update && apt-get upgrade -y \
     && mkdir -p /etc/apt/keyrings \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python3 dnsutils librsvg2-bin \
@@ -30,18 +27,15 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 COPY . .
-
+RUN rm -f .env
+RUN sed -i 's/;clear_env = no/clear_env = no/' /etc/php/8.2/fpm/pool.d/www.conf
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
 RUN npm install && npm run build
-
 RUN groupadd --force -g 1000 sail \
     && useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail \
     && chown -R sail:sail /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
 COPY docker/8.2/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/8.2/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
 COPY docker/8.2/nginx.conf /etc/nginx/sites-available/default
@@ -49,5 +43,3 @@ COPY docker/8.2/start-container-prod /usr/local/bin/start-container-prod
 RUN chmod +x /usr/local/bin/start-container-prod
 EXPOSE 80
 ENTRYPOINT ["start-container-prod"]
-
-
