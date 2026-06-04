@@ -23,5 +23,13 @@ class AppServiceProvider extends ServiceProvider
         // Fix for MySQL key length error
         Schema::defaultStringLength(191);
     }
+
+
+    public function boot()
+{
+    if (app()->environment('production')) {
+        URL::forceScheme('https');
+    }
+}
 }
 
